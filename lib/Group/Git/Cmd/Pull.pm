@@ -61,6 +61,20 @@ This documentation refers to Group::Git::Cmd::Pull version 0.1.
 
 =head1 SUBROUTINES/METHODS
 
+=over 4
+
+=item C<pull ()>
+
+Runs git pull on all repositories, if a repository doesn't exist on disk this
+will clone that repository.
+
+=item C<update ()>
+
+Runs git update on all repositories, if a repository doesn't exist on disk this
+will clone that repository.
+
+=back
+
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT

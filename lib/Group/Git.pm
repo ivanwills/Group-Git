@@ -110,7 +110,7 @@ __END__
 
 =head1 NAME
 
-Group::Git - Base module for group of git repository opperations.
+Group::Git - Base module for group of git repository operations.
 
 =head1 VERSION
 

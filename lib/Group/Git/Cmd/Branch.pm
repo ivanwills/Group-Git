@@ -72,6 +72,19 @@ This documentation refers to Group::Git::Cmd::Branch version 0.1.
 
 =head1 SUBROUTINES/METHODS
 
+=over 4
+
+=item C<branch ()>
+
+Runs a git branch -a over each repository and if other arguments are supplied
+the branch is pipped through grep with the other arguments
+
+ eg $ group-git branch feature
+
+will return each repository that has that C<feature> branch
+
+=back
+
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT

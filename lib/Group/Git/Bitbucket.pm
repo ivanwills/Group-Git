@@ -19,7 +19,7 @@ our $VERSION     = version->new('0.0.1');
 
 extends 'Group::Git';
 
-sub _httpenc($) {
+sub _httpenc {
     my ($str) = @_;
     $str =~ s/(\W)/sprintf "%%%x", ord $1/egxms;
     return $str;

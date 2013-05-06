@@ -92,7 +92,7 @@ __DATA__
 
 =head1 NAME
 
-group-git - Perform opperations over many git repositories at once
+group-git - Perform operations over many git repositories at once
 
 =head1 VERSION
 
@@ -122,7 +122,7 @@ This documentation refers to group-git version 0.1.
 Run any git command over all repositories in the current directory. If you
 have a config file set up in the current directory (group-git.yml or some
 other suffix group-git file supported by L<Config::Any>) some extra functionality
-becomes available inparticular both pull and update will clone any missing
+becomes available in particular both pull and update will clone any missing
 repositories.
 
  eg group-git.yml
