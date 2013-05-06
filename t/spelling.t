@@ -35,5 +35,6 @@ add_stopwords(qw/
     gitosis
     Gitosis
     eg
+    yml
 /);
 all_pod_files_spelling_ok();
