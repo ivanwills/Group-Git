@@ -49,8 +49,8 @@ sub _github {
     my $conf = $self->conf;
 
     return Net::GitHub->new(
-        login => $conf->{username} ? $conf->{username} : prompt( -prompt => 'github.com username : ' );,
-        pass  => $conf->{password} ? $conf->{password} : prompt( -prompt => 'github.com password : ', -echo => '*' );,
+        login => $conf->{username} ? $conf->{username} : prompt( -prompt => 'github.com username : ' ),
+        pass  => $conf->{password} ? $conf->{password} : prompt( -prompt => 'github.com password : ', -echo => '*' ),
     );
 }
 
@@ -105,7 +105,6 @@ Patches are welcome.
 =head1 AUTHOR
 
 Ivan Wills - (ivan.wills@gmail.com)
-<Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
 
