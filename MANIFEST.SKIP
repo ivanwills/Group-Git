@@ -61,3 +61,7 @@ Debian_CPANTS.txt
 
 # Avoid archives of this distribution
 \bGroup-Git-[\d\.\_]+
+
+.prove
+errors.err
+tags

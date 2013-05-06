@@ -6,7 +6,15 @@ MANIFEST.SKIP
 META.yml
 Makefile.PL
 README
+bin/group-git
 lib/Group/Git.pm
+lib/Group/Git/Bitbucket.pm
+lib/Group/Git/Cmd.pm
+lib/Group/Git/Cmd/Branch.pm
+lib/Group/Git/Cmd/Pull.pm
+lib/Group/Git/Github.pm
+lib/Group/Git/Gitosis.pm
+lib/Group/Git/Repo.pm
 t/00-load.t
 t/boilerplate.t
 t/critic.t
@@ -15,3 +23,5 @@ t/pod-coverage.t
 t/pod.t
 t/perlcriticrc
 t/spelling.t
+META.json
+
