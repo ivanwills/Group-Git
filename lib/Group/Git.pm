@@ -19,6 +19,7 @@ use File::chdir;
 use Group::Git::Repo;
 
 our $VERSION     = version->new('0.0.1');
+our $AUTOLOAD;
 
 has conf => (
     is  => 'rw',
@@ -39,6 +40,24 @@ has test => (
     isa => 'Boolean',
 );
 
+# load all roles in the namespace Group::Git::Cmd::*
+my %modules;
+for my $dir (@INC) {
+    next if !-d "$dir/Group/Git/Cmd";
+    my @commands = glob "$dir/Group/Git/Cmd/*.pm";
+
+    for my $command (@commands) {
+        my $module = $command;
+        $module =~ s{$dir/}{};
+        $module =~ s{/}{::}g;
+        $module =~ s{[.]pm$}{};
+        if ( !$modules{$module}++ ) {
+            require $command;
+            with $module;
+        }
+    }
+}
+
 sub _repos {
     my ($self) = @_;
     my %repos;
@@ -57,49 +76,32 @@ sub _repos {
     return \%repos;
 }
 
-sub update { $_[0]->pull('update') }
-sub pull {
-    my ($self, $type) = @_;
-    $type ||= 'pull';
+sub cmd {
+    my ($self, $command) = @_;
 
-    for my $name (sort keys %{ $self->repos }) {
-        my $repo = $self->repos->{$name};
-
-        if ( -d $name ) {
-            local $CWD = $name;
-            system 'git', $type, $repo->url;
-        }
-        else {
-            system 'git', 'clone', $repo->url;
-        }
+    for my $project ( keys %{ $self->repos } ) {
+        next if !-d $project;
+        print "\n$project\n" if $self->verbose;
+        local $CWD = $project;
+        system 'git', $command, @ARGV;
     }
 }
 
-sub branch {
-    my ($self) = @_;
+sub AUTOLOAD {
 
-    for my $name ( sort keys %{ $self->repos } ) {
-        my $repo = $self->repos->{$name};
+    # ignore the method if it is the DESTROY method
+    return if $AUTOLOAD =~ /DESTROY$/;
 
-        if ( -d $name ) {
-            local $CWD = $name;
-            my $cmd = "git branch -a";
-            $cmd .= " | grep " . join ' ', @ARGV if @ARGV;
-            print  "$cmd\n" if $self->verbose || $self->test;
-            if ( !$self->test ) {
-                if ( @ARGV ) {
-                    my $out = `$cmd`;
-                    if ( $out !~ /^\s*$/xms ) {
-                        print "$name\n$out";
-                    }
-                }
-                else {
-                    print "$name\n";
-                    system $cmd if !$self->test;
-                }
-            }
-        }
-    }
+    # make sure that this is being called as a method
+    croak( "AUTOLOAD(): This function is not being called by a ref: $AUTOLOAD( ".join (', ', @_)." )\n" ) unless ref $_[0];
+
+    # get the object
+    my $self = shift;
+
+    # get the function name sans package name
+    my ($method) = $AUTOLOAD =~ /::([^:]+)$/;
+
+    return $self->cmd($method);
 }
 
 1;
@@ -108,84 +110,51 @@ __END__
 
 =head1 NAME
 
-Group::Git - <One-line description of module's purpose>
+Group::Git - Base module for group of git repository opperations.
 
 =head1 VERSION
 
 This documentation refers to Group::Git version 0.1.
 
-
 =head1 SYNOPSIS
 
    use Group::Git;
 
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
+   my $group = Group::Git->new( conf => {...} );
 
+   # pull remote versions for all repositories
+   $group->pull();
+
+   # any other arbitary command
+   $group->log;
 
 =head1 DESCRIPTION
 
-A full description of the module and its features.
-
-May include numerous subsections (i.e., =head2, =head3, etc.).
-
+This is the base module it will try to use all roles in the C<Group::Git::Cmd::*>
+namespace. This allows the creation of new command by just putting a role in that
+namespace. Classes may extend this class to implement their own methods for
+finding repositories (eg L<Group::Git::Github>, L<Group::Git::Bitbucket> and
+L<Group::Git::Gitosis>)
 
 =head1 SUBROUTINES/METHODS
 
-A separate section listing the public components of the module's interface.
+=over 4
 
-These normally consist of either subroutines that may be exported, or methods
-that may be called on objects belonging to the classes that the module
-provides.
+=item C<cmd ($name)>
 
-Name the section accordingly.
+Run the git command C<$name> for each repository.
 
-In an object-oriented module, this section should begin with a sentence (of the
-form "An object of this class represents ...") to give the reader a high-level
-context to help them understand the methods that are subsequently described.
-
-
-
+=back
 
 =head1 DIAGNOSTICS
 
-A list of every error and warning message that the module can generate (even
-the ones that will "never happen"), with a full explanation of each problem,
-one or more likely causes, and any suggested remedies.
-
 =head1 CONFIGURATION AND ENVIRONMENT
-
-A full explanation of any configuration system(s) used by the module, including
-the names and locations of any configuration files, and the meaning of any
-environment variables or properties that can be set. These descriptions must
-also include details of any configuration language used.
 
 =head1 DEPENDENCIES
 
-A list of all of the other modules that this module relies upon, including any
-restrictions on versions, and an indication of whether these required modules
-are part of the standard Perl distribution, part of the module's distribution,
-or must be installed separately.
-
 =head1 INCOMPATIBILITIES
 
-A list of any modules that this module cannot be used in conjunction with.
-This may be due to name conflicts in the interface, or competition for system
-or program resources, or due to internal limitations of Perl (for example, many
-modules that use source code filters are mutually incompatible).
-
 =head1 BUGS AND LIMITATIONS
-
-A list of known problems with the module, together with some indication of
-whether they are likely to be fixed in an upcoming release.
-
-Also, a list of restrictions on the features the module does provide: data types
-that cannot be handled, performance issues and the circumstances in which they
-may arise, practical limitations on the size of data sets, special cases that
-are not (yet) handled, etc.
-
-The initial template usually just has:
 
 There are no known bugs in this module.
 
@@ -196,7 +165,6 @@ Patches are welcome.
 =head1 AUTHOR
 
 Ivan Wills - (ivan.wills@gmail.com)
-<Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
 
