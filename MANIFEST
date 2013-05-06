@@ -9,7 +9,6 @@ README
 bin/group-git
 lib/Group/Git.pm
 lib/Group/Git/Bitbucket.pm
-lib/Group/Git/Cmd.pm
 lib/Group/Git/Cmd/Branch.pm
 lib/Group/Git/Cmd/Pull.pm
 lib/Group/Git/Github.pm
