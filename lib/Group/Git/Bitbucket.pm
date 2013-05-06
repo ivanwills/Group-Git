@@ -44,8 +44,9 @@ sub _repos {
     my $repos = decode_json $mech->content;
     for my $repo ( @$repos ) {
         $repos{$repo->{name}} = Group::Git::Repo->new(
-            url => "https://bitbucket.org/$repo->{owner}/$repo->{name}",
-            git => "git\@bitbucket.org:$repo->{owner}/$repo->{name}.git",
+            name => $repo->{name},
+            url  => "https://bitbucket.org/$repo->{owner}/$repo->{name}",
+            git  => "git\@bitbucket.org:$repo->{owner}/$repo->{name}.git",
         );
     }
 

@@ -37,7 +37,7 @@ sub _repos {
     for my $repo ( $self->github->repos->list ) {
         $repos{ $repo->{name} } = Group::Git::Repo->new(
             name => $repo->{name},
-            url  => $repo->{git_url},
+            git  => $repo->{git_url},
         );
     }
 

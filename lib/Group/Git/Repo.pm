@@ -24,6 +24,10 @@ has url => (
     is  => 'rw',
     isa => 'Str',
 );
+has git => (
+    is  => 'rw',
+    isa => 'Str',
+);
 
 1;
 

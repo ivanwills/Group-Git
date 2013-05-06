@@ -59,7 +59,7 @@ sub _repos {
                 for my $name ( split /\s+/, $data->{$group}{$sub_group}{$type} ) {
                     $repos{$name} = Group::Git::Repo->new(
                         name => $name,
-                        url  => "$base$name.git",
+                        git  => "$base$name.git",
                     );
                 }
             }
