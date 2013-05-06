@@ -18,16 +18,13 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use FindBin qw/$Bin/;
 use Path::Class;
+use Group::Git;
+use Config::Any;
 
 our $VERSION = version->new('0.0.1');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 my %option = (
-    out     => undef,
-    verbose => 0,
-    man     => 0,
-    help    => 0,
-    VERSION => 0,
 );
 
 if ( !@ARGV ) {
@@ -39,17 +36,15 @@ exit 0;
 
 sub main {
 
-
     Getopt::Long::Configure('bundling');
     GetOptions(
         \%option,
-        'out|o=s',
+        'test|t!',
         'verbose|v+',
         'man',
         'help',
         'VERSION!',
     ) or pod2usage(2);
-    #my $file = join ' ', @ARGV;
 
     if ( $option{'VERSION'} ) {
         print "$name Version = $VERSION\n";
@@ -62,9 +57,32 @@ sub main {
         pod2usage( -verbose => 1 );
     }
 
-
     # do stuff here
+    my $conf = Config::Any->load_stems({
+        stems   => [ qw/group group-git/ ],
+        use_ext => 1,
+    });
+    $conf = {
+        map {
+            %$_
+        }
+        map {
+            values $_
+        }
+        @{$conf}
+    };
 
+    my $module = "Group::Git::$conf->{type}";
+    my $file   = "$module.pm";
+    $file =~ s{::}{/}g;
+    require $file;
+    my $group = $module->new(
+        %option,
+        conf => $conf,
+    );
+
+    my $action = shift @ARGV;
+    $group->$action() if $group->can($action);
 
     return;
 }
