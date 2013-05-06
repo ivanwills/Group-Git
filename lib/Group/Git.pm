@@ -14,14 +14,95 @@ use List::Util;
 #use List::MoreUtils;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
-
+use Path::Class;
+use File::chdir;
+use Group::Git::Repo;
 
 our $VERSION     = version->new('0.0.1');
-our @EXPORT_OK   = qw//;
-our %EXPORT_TAGS = ();
-#our @EXPORT      = qw//;
 
+has conf => (
+    is  => 'rw',
+    isa => 'HashRef',
+);
+has repos => (
+    is          => 'rw',
+    isa         => 'HashRef[Group::Git::Repo]',
+    builder     => '_repos',
+    lazy_build => 1,
+);
+has verbose => (
+    is  => 'rw',
+    isa => 'Int',
+);
+has test => (
+    is  => 'rw',
+    isa => 'Boolean',
+);
 
+sub _repos {
+    my ($self) = @_;
+    my %repos;
+
+    for my $config (map {file $_} glob('*/.git/config')) {
+        my ($url) = grep {/^\s*url\s*=\s*/} $config->slurp;
+        chomp $url;
+        $url =~ s/^\s*url\s*=\s*//;
+
+        $repos{ $config->parent->parent->basename } = Group::Git::Repo->new(
+            name => $config->parent->parent->basename,
+            url  => $url,
+        );
+    }
+
+    return \%repos;
+}
+
+sub update { $_[0]->pull('update') }
+sub pull {
+    my ($self, $type) = @_;
+    $type ||= 'pull';
+
+    for my $name (sort keys %{ $self->repos }) {
+        my $repo = $self->repos->{$name};
+
+        if ( -d $name ) {
+            local $CWD = $name;
+            system 'git', $type, $repo->url;
+        }
+        else {
+            dir($name)->mkpath or die "Couldn't create $name: $!\n";;
+            local $CWD = $name;
+            system 'git', 'clone', $repo->url;
+        }
+    }
+}
+
+sub branch {
+    my ($self) = @_;
+
+    for my $name ( sort keys %{ $self->repos } ) {
+        my $repo = $self->repos->{$name};
+
+        if ( -d $name ) {
+            local $CWD = $name;
+            my $cmd = "git branch -a";
+            $cmd .= " | grep " . join ' ', @ARGV if @ARGV;
+            print  "$cmd\n" if $self->verbose || $self->test;
+            if ( !$self->test ) {
+                if ( @ARGV ) {
+                    my $out = `$cmd`;
+                    if ( $out !~ /^\s*$/xms ) {
+                        print "$name\n$out";
+                    }
+                }
+                else {
+                    print "$name\n";
+                    system $cmd if !$self->test;
+                }
+            }
+        }
+    }
+}
 
 1;
 
