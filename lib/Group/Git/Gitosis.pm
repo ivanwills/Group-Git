@@ -15,37 +15,58 @@ use List::Util;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use Path::Class;
+use File::chdir;
 
 our $VERSION     = version->new('0.0.1');
 
+extends 'Group::Git';
+
 sub _repos {
     my ($self) = @_;
-    my %conf;
-    my $data = file( $self->conf->{file} )->slurp;
 
-    # remove uninteresting stuff
-    $data =~ s/#.*$//g;
-    $data =~ s/\n\n//g;
+    if ( -d '.gitosis' ) {
+        local $CWD = '.gitosis';
+        system 'git', 'pull';
+    }
+    else {
+        system 'git', 'clone', $self->conf->{gitosis}, '.gitosis';
+    }
 
-    my (undef, %sections) = split /\[ \s* ( [\w\s]+? ) \s* \]\n/xms, $data;
-
-    for my $section ( keys %sections ) {
-        my @parts = split /\s+/, $section;
-        my $point = \%conf;
-        for my $part (@parts) {
-            $point->{$part} ||= {};
-            $point = $point->{$part};
+    my $data = Config::Any->load_files({
+        files         => ['.gitosis/gitosis.conf'],
+        use_ext       => 0,
+        force_plugins => ['Config::Any::INI'],
+    });
+    $data = {
+        map {
+            %$_
         }
+        map {
+            values $_
+        }
+        @{$data}
+    };
 
-        my @lines = split /\n/, $sections{$section};
-        for my $line ( @lines ) {
-            my ($name, $value) = split /\s*=\s*/, $line, 2;
-            my @values = split /\s+/, $value;
-            $point->{$name} = \@values;
+    my $base = $self->conf->{gitosis};
+    $base =~ s{([:/]).*?$}{$1};
+
+    my %repos;
+    for my $group ( keys %$data ) {
+        for my $sub_group ( keys %{ $data->{$group} } ) {
+            for my $type (qw/readonly writable/) {
+                next if !$data->{$group}{$sub_group}{$type};
+
+                for my $name ( split /\s+/, $data->{$group}{$sub_group}{$type} ) {
+                    $repos{$name} = Group::Git::Repo->new(
+                        name => $name,
+                        url  => "$base$name.git",
+                    );
+                }
+            }
         }
     }
 
-    return %conf;
+    return \%repos;
 }
 
 1;
