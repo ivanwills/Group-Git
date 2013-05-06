@@ -70,8 +70,6 @@ sub pull {
             system 'git', $type, $repo->url;
         }
         else {
-            dir($name)->mkpath or die "Couldn't create $name: $!\n";;
-            local $CWD = $name;
             system 'git', 'clone', $repo->url;
         }
     }
