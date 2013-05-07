@@ -1,5 +1,10 @@
 Revision history for Group-Git
 
+0.0.2   2013-05-08
+        Fixed bug with Perl 5.12 and older. Dam you perl 5.14 & references being allowed to in keys, values, etc
+        Remved todo from test
+
+
 0.0.1   2013-05-06
         First version, released on an unsuspecting world.
 
