@@ -39,7 +39,7 @@ sub _repos {
             %$_
         }
         map {
-            values $_
+            values %$_
         }
         @{$data}
     };

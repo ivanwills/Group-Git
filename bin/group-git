@@ -65,7 +65,7 @@ sub main {
             %$_
         }
         map {
-            values $_
+            values %$_
         }
         @{$conf}
     };
