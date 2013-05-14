@@ -27,7 +27,7 @@ sub _httpenc {
 
 sub _repos {
     my ($self) = @_;
-    my %repos;
+    my %repos = %{ $self->SUPER::_repos() };
 
     my ($conf) = $self->conf;
     #EG curl --user buserbb:2934dfad https://api.bitbucket.org/1.0/user/repositories

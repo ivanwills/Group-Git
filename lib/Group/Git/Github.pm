@@ -29,7 +29,7 @@ has github => (
 
 sub _repos {
     my ($self) = @_;
-    my %repos;
+    my %repos = %{ $self->SUPER::_repos() };
 
     for my $repo ( $self->github->repos->list ) {
         $repos{ $repo->{name} } = Group::Git::Repo->new(

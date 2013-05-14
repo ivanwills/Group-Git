@@ -47,7 +47,7 @@ sub _repos {
     my $base = $self->conf->{gitosis};
     $base =~ s{([:/]).*?$}{$1};
 
-    my %repos;
+    my %repos = %{ $self->SUPER::_repos() };
     for my $group ( keys %$data ) {
         for my $sub_group ( keys %{ $data->{$group} } ) {
             for my $type (qw/readonly writable/) {
