@@ -66,7 +66,7 @@ sub _repos {
 
         $repos{ $config->parent->parent->basename } = Group::Git::Repo->new(
             name => $config->parent->parent->basename,
-            url  => $url,
+            git  => $url,
         );
     }
 
