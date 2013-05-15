@@ -31,11 +31,23 @@ sub _repos {
     my ($self) = @_;
     my %repos = %{ $self->SUPER::_repos() };
 
-    for my $repo ( $self->github->repos->list ) {
-        $repos{ $repo->{name} } = Group::Git::Repo->new(
-            name => $repo->{name},
-            git  => $repo->{git_url},
-        );
+    my $repo = $self->github->repos;
+    my @list = $repo->list;
+    my $page = 1;
+    my $last_url = '';
+
+    while (@list) {
+        for my $repo (@list) {
+            $repos{ $repo->{name} } = Group::Git::Repo->new(
+                name => $repo->{name},
+                git  => $repo->{git_url},
+            );
+        }
+
+        last if !defined $last_url;
+
+        @list = $repo->next_page if $repo->has_next_page && $repo->next_url ne $last_url;
+        $last_url = $repo->next_url;
     }
 
     return \%repos;
