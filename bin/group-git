@@ -81,7 +81,7 @@ sub main {
 
     my $action = shift @ARGV;
 
-    for my $project ( keys %{ $group->repos } ) {
+    for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
         print "\n$project\n" if $option{verbose};
         $group->$action($project) if $action;
     }
