@@ -80,7 +80,11 @@ sub main {
     );
 
     my $action = shift @ARGV;
-    $group->$action() if $action;
+
+    for my $project ( keys %{ $group->repos } ) {
+        print "\n$project\n" if $option{verbose};
+        $group->$action($project) if $action;
+    }
 
     return;
 }

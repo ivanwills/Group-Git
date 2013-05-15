@@ -20,30 +20,29 @@ requires 'verbose';
 requires 'test';
 
 sub branch {
-    my ($self) = @_;
+    my ($self, $name) = @_;
+    return unless -d $name;
 
-    for my $name ( sort keys %{ $self->repos } ) {
-        my $repo = $self->repos->{$name};
+    my $repo = $self->repos->{$name};
 
-        if ( -d $name ) {
-            local $CWD = $name;
-            my $cmd = "git branch -a";
-            $cmd .= " | grep " . join ' ', @ARGV if @ARGV;
-            print  "$cmd\n" if $self->verbose || $self->test;
-            if ( !$self->test ) {
-                if ( @ARGV ) {
-                    my $out = `$cmd`;
-                    if ( $out !~ /^\s*$/xms ) {
-                        print "$name\n$out";
-                    }
-                }
-                else {
-                    print "$name\n";
-                    system $cmd if !$self->test;
-                }
+    local $CWD = $name;
+    my $cmd = "git branch -a";
+    $cmd .= " | grep " . join ' ', @ARGV if @ARGV;
+    print  "$cmd\n" if $self->verbose || $self->test;
+    if ( !$self->test ) {
+        if ( @ARGV ) {
+            my $out = `$cmd`;
+            if ( $out !~ /^\s*$/xms ) {
+                print "$name\n$out";
             }
         }
+        else {
+            print "$name\n";
+            system $cmd if !$self->test;
+        }
     }
+
+    return;
 }
 
 1;

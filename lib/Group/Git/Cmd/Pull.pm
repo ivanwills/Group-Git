@@ -17,22 +17,22 @@ our $VERSION     = version->new('0.0.2');
 
 requires 'repos';
 
-sub update { $_[0]->pull('update') }
+sub update { shift->pull($_[0], 'update') }
 sub pull {
-    my ($self, $type) = @_;
+    my ($self, $name, $type) = @_;
     $type ||= 'pull';
 
-    for my $name (sort keys %{ $self->repos }) {
-        my $repo = $self->repos->{$name};
+    my $repo = $self->repos->{$name};
 
-        if ( -d $name ) {
-            local $CWD = $name;
-            system 'git', $type, $repo->git;
-        }
-        else {
-            system 'git', 'clone', $repo->git;
-        }
+    if ( -d $name ) {
+        local $CWD = $name;
+        system 'git', $type, $repo->git;
     }
+    else {
+        system 'git', 'clone', $repo->git;
+    }
+
+    return;
 }
 
 1;
