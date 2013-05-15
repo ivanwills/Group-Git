@@ -1,9 +1,15 @@
 Revision history for Group-Git
 
+0.0.3   2013-05-15
+        Started sorting project order
+        Moved the processing of each repository to one spot, rather than each command doing it
+        Added getting any directory local repos into the list of repos when using one of the standard remote stores
+        Fixed git url to being "git"
+        Changed use_ok to require_ok to fix issues with windows
+
 0.0.2   2013-05-08
         Fixed bug with Perl 5.12 and older. Dam you perl 5.14 & references being allowed to in keys, values, etc
         Remved todo from test
-
 
 0.0.1   2013-05-06
         First version, released on an unsuspecting world.

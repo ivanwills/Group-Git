@@ -12,7 +12,7 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 
-our $VERSION     = version->new('0.0.2');
+our $VERSION     = version->new('0.0.3');
 
 extends 'Group::Git';
 
@@ -39,7 +39,7 @@ Group::Git::Repo - <One-line description of module's purpose>
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Repo version 0.0.2.
+This documentation refers to Group::Git::Repo version 0.0.3.
 
 
 =head1 SYNOPSIS
