@@ -1,5 +1,11 @@
 Revision history for Group-Git
 
+0.0.4   2013-05-19
+        Added new dependency
+        Changed to using Getopt::Alt for sub command handling
+        Added pagination support for github repo listings
+        Fixed executability
+
 0.0.3   2013-05-15
         Started sorting project order
         Moved the processing of each repository to one spot, rather than each command doing it
