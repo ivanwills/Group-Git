@@ -9,7 +9,7 @@
 use strict;
 use warnings;
 use version;
-use Getopt::Long;
+use Getopt::Alt qw/get_options/;
 use Pod::Usage;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
@@ -21,37 +21,29 @@ use Config::Any;
 our $VERSION = version->new('0.0.3');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
-my %option = (
-);
-
-if ( !@ARGV ) {
-    pod2usage( -verbose => 1 );
-}
 
 main();
 exit 0;
 
 sub main {
 
-    Getopt::Long::Configure('bundling');
-    GetOptions(
-        \%option,
-        'local|l!',
-        'test|t!',
-        'verbose|v+',
-        'man',
-        'help',
-        'VERSION!',
-    ) or pod2usage(2);
+    my $opt = get_options(
+        { sub_command => 1, },
+        [
+            'local|l!',
+            'test|t!',
+            'verbose|v+',
+        ]
+    );
 
-    if ( $option{'VERSION'} ) {
+    if ( $opt->opt->VERSION ) {
         print "$name Version = $VERSION\n";
         exit 1;
     }
-    elsif ( $option{'man'} ) {
+    elsif ( $opt->opt->man ) {
         pod2usage( -verbose => 2 );
     }
-    elsif ( $option{'help'} ) {
+    elsif ( $opt->opt->help ) {
         pod2usage( -verbose => 1 );
     }
 
@@ -61,28 +53,24 @@ sub main {
         use_ext => 1,
     });
     $conf = {
-        map {
-            %$_
-        }
-        map {
-            values %$_
-        }
+        map { %$_        }
+        map { values %$_ }
         @{$conf}
     };
 
-    my $module = $conf->{type} && !$option{local} ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
+    my $module = $conf->{type} && !$opt->opt->local ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
     my $file   = "$module.pm";
     $file =~ s{::}{/}g;
     require $file;
     my $group = $module->new(
-        %option,
+        %{ $opt->opt },
         conf => $conf,
     );
 
-    my $action = shift @ARGV;
+    my $action = $opt->cmd;
 
     for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
-        print "\n$project\n" if $option{verbose};
+        print "\n$project\n" if $opt->opt->verbose;
         $group->$action($project) if $action;
     }
 
@@ -109,7 +97,7 @@ This documentation refers to group-git version 0.0.3.
                 Bitbucked or Gitosis types.
 
   -v --verbose  Show more detailed option
-     --version  Prints the version information
+     --VERSION  Prints the version information
      --help     Prints this help information
      --man      Prints the full documentation for group-git
 
