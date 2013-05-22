@@ -101,11 +101,16 @@ This documentation refers to group-git version 0.0.4.
    group-git [option] (git-command) -- [args]
 
  OPTIONS:
+  -s --skip[=]regexp
+                Skip any project matching this regexp
+  -m --match[=]regexp
+                Only process any project matching this regexp
   -l --local    Ignore any management type and just look at what is checked out
                 Only useful if you have a group-git.yml file defining Github,
                 Bitbucked or Gitosis types.
 
-  -v --verbose  Show more detailed option
+  -q --quiet    Don't show project names before running git on the directory
+  -v --verbose  Show more details
      --VERSION  Prints the version information
      --help     Prints this help information
      --man      Prints the full documentation for group-git
@@ -117,11 +122,18 @@ This documentation refers to group-git version 0.0.4.
 
 =head1 DESCRIPTION
 
-Run any git command over all repositories in the current directory. If you
-have a config file set up in the current directory (group-git.yml or some
-other suffix group-git file supported by L<Config::Any>) some extra functionality
-becomes available in particular both pull and update will clone any missing
-repositories.
+Run any git command over all repositories in the current directory.
+
+=head2 Configuration
+
+If you have a config file set up in the current directory (group-git.yml or some
+other suffix group-git file supported by L<Config::Any>) extra functionality
+becomes available if you use GitHub, Bitbucket or Gitosis as your repository
+remote store. The config file will be read to supply the appropriate user
+credetials or in the case of gitosis the admin project location.
+
+With this extra information both the pull and the update commands will try to
+clone any repository that are not currently checked out in the current directory.
 
  eg group-git.yml
  ---
@@ -132,6 +144,9 @@ repositories.
  password: securepass
  # Gitosis uses it's git url which needs to be defined or will be prompted for
  #gitosis: gituser@gitosis.server.com:gitosis-admin.git
+
+For Github and Bitbucket if username or password are missing you will be
+prompted to enter the details.
 
 =head1 SUBROUTINES/METHODS
 
