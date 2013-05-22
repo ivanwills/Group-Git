@@ -30,9 +30,12 @@ sub main {
     my $opt = get_options(
         { sub_command => 1, },
         [
+            'skip|s=s',
+            'match|m=s',
             'local|l!',
             'test|t!',
             'verbose|v+',
+            'quiet|q',
         ]
     );
 
@@ -68,10 +71,16 @@ sub main {
     );
 
     my $action = $opt->cmd;
+    my $skip   = $opt->opt->skip;
+    my $match  = $opt->opt->match;
 
     for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
-        print "\n$project\n" if $opt->opt->verbose;
+        next if $skip  && $project =~ /$skip/;
+        next if $match && $project !~ /$match/;
+
+        print "\n$project\n" unless $opt->opt->quiet;
         $group->$action($project) if $action;
+        print "-- $project --\n" if $opt->opt->verbose;
     }
 
     return;
