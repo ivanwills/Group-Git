@@ -130,7 +130,7 @@ If you have a config file set up in the current directory (group-git.yml or some
 other suffix group-git file supported by L<Config::Any>) extra functionality
 becomes available if you use GitHub, Bitbucket or Gitosis as your repository
 remote store. The config file will be read to supply the appropriate user
-credetials or in the case of gitosis the admin project location.
+credentials or in the case of gitosis the admin project location.
 
 With this extra information both the pull and the update commands will try to
 clone any repository that are not currently checked out in the current directory.

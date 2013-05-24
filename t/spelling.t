@@ -36,5 +36,7 @@ add_stopwords(qw/
     Gitosis
     eg
     yml
+    username
+    admin
 /);
 all_pod_files_spelling_ok();
