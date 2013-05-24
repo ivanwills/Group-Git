@@ -1,5 +1,8 @@
 Revision history for Group-Git
 
+0.0.5   2013-05-24
+        Gave up of auto generating modules now manually specify them all (fix for windows)
+
 0.0.4   2013-05-19
         Added new dependency
         Changed to using Getopt::Alt for sub command handling

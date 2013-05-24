@@ -15,7 +15,7 @@ use IO::Prompt qw/prompt/;
 use JSON qw/decode_json/;
 use WWW::Mechanize;
 
-our $VERSION     = version->new('0.0.4');
+our $VERSION     = version->new('0.0.5');
 
 extends 'Group::Git';
 
@@ -63,7 +63,7 @@ Group::Git::Bitbucket - Adds reading all repositories you have access to on bitb
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Bitbucket version 0.0.4.
+This documentation refers to Group::Git::Bitbucket version 0.0.5.
 
 =head1 SYNOPSIS
 

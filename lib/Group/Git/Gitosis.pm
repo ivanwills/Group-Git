@@ -14,7 +14,7 @@ use English qw/ -no_match_vars /;
 use Path::Class;
 use File::chdir;
 
-our $VERSION     = version->new('0.0.4');
+our $VERSION     = version->new('0.0.5');
 
 extends 'Group::Git';
 
@@ -76,7 +76,7 @@ Group::Git::Gitosis - <One-line description of module's purpose>
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Gitosis version 0.0.4.
+This documentation refers to Group::Git::Gitosis version 0.0.5.
 
 
 =head1 SYNOPSIS
