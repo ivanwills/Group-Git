@@ -61,8 +61,13 @@ sub _repos {
 
     for my $config (map {file $_} glob('*/.git/config')) {
         my ($url) = grep {/^\s*url\s*=\s*/} $config->slurp;
-        chomp $url;
-        $url =~ s/^\s*url\s*=\s*//;
+        if ($url) {
+            chomp $url;
+            $url =~ s/^\s*url\s*=\s*//;
+        }
+        else {
+            $url = '';
+        }
 
         $repos{ $config->parent->parent->basename } = Group::Git::Repo->new(
             name => $config->parent->parent->basename,
