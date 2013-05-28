@@ -16,6 +16,7 @@ use File::chdir;
 our $VERSION     = version->new('0.0.5');
 
 requires 'repos';
+requires 'verbose';
 
 sub status {
     my ($self, $name) = @_;
@@ -26,6 +27,8 @@ sub status {
     local $CWD = $name;
     $cmd = join ' ', 'git', 'status', @ARGV;
     my $out = `$cmd`;
+
+    return $out if $self->verbose;
 
     return if $out =~ /nothing \s+ to \s+ commit/xms;
 
