@@ -13,7 +13,7 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
 
-our $VERSION     = version->new('0.0.4');
+our $VERSION     = version->new('0.0.5');
 
 requires 'repos';
 
@@ -42,7 +42,7 @@ Group::Git::Cmd::Status - <One-line description of module's purpose>
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Status version 0.0.4.
+This documentation refers to Group::Git::Cmd::Status version 0.0.5.
 
 
 =head1 SYNOPSIS
