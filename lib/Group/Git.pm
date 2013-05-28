@@ -83,9 +83,9 @@ sub cmd {
     return unless -d $project;
 
     local $CWD = $project;
-    system 'git', $command, @ARGV;
+    my $cmd = join ' ', 'git', $command, @ARGV;
 
-    return;
+    return `$cmd`;
 }
 
 sub AUTOLOAD {

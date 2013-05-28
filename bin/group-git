@@ -78,9 +78,14 @@ sub main {
         next if $skip  && $project =~ /$skip/;
         next if $match && $project !~ /$match/;
 
-        print "\n$project\n" unless $opt->opt->quiet;
-        $group->$action($project) if $action;
-        print "-- $project --\n" if $opt->opt->verbose;
+        my $out;
+        $out = $group->$action($project) if $action;
+
+        if ($out) {
+            print "\n$project\n" unless $opt->opt->quiet;
+            print $out;
+            print "-- $project --\n" if $opt->opt->verbose;
+        }
     }
 
     return;

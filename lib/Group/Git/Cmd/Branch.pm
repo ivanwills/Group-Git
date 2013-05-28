@@ -33,12 +33,11 @@ sub branch {
         if ( @ARGV ) {
             my $out = `$cmd`;
             if ( $out !~ /^\s*$/xms ) {
-                print "$name\n$out";
+                return $out;
             }
         }
         else {
-            print "$name\n";
-            system $cmd if !$self->test;
+            return `$cmd` if !$self->test;
         }
     }
 

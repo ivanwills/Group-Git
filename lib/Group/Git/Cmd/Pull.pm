@@ -23,16 +23,17 @@ sub pull {
     $type ||= 'pull';
 
     my $repo = $self->repos->{$name};
+    my $cmd;
 
     if ( -d $name ) {
         local $CWD = $name;
-        system 'git', $type, $repo->git;
+        $cmd = join ' ', 'git', $type, $repo->git;
     }
     else {
-        system 'git', 'clone', $repo->git;
+        $cmd = join ' ', 'git', 'clone', $repo->git;
     }
 
-    return;
+    return `$cmd`;
 }
 
 1;
