@@ -73,10 +73,12 @@ sub main {
     my $action = $opt->cmd;
     my $skip   = $opt->opt->skip;
     my $match  = $opt->opt->match;
+    my %exclude = map { $_ => 1 } @{ $conf->{exclude} || [] };
 
     for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
         next if $match && $project !~ /$match/;
+        next if $exclude{$project};
 
         my $out;
         $out = $group->$action($project) if $action;
