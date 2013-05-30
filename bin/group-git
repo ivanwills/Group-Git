@@ -74,11 +74,13 @@ sub main {
     my $skip   = $opt->opt->skip;
     my $match  = $opt->opt->match;
     my %exclude = map { $_ => 1 } @{ $conf->{exclude} || [] };
+    my %include = map { $_ => 1 } @{ $conf->{include} || [] };
 
     for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
         next if $match && $project !~ /$match/;
         next if $exclude{$project};
+        next if %include && !$include{$project};
 
         my $out = $group->$action($project);
 
@@ -145,11 +147,27 @@ clone any repository that are not currently checked out in the current directory
  ---
  # Type may be any of Github, Bitbucket or Gitosis
  type: Github
+ #type: Bitbucket
+ #type: Gitosis
+
  # if username or password are missing they will be prompted for
- username: joeblogs@gmail.com
+ username: joeblogs@example.com
  password: securepass
+
  # Gitosis uses it's git url which needs to be defined or will be prompted for
  #gitosis: gituser@gitosis.server.com:gitosis-admin.git
+
+ # Exclude a git project
+ #exluce:
+ #  - project_not_to_be_managed
+ #  - ...
+
+ # Include only these projects (if mentioned only projects listed will be
+ # processed any others found will be ignored)
+ #include:
+ #  - project_of_interest_1
+ #  - project_of_interest_2
+ #  - ...
 
 For Github and Bitbucket if username or password are missing you will be
 prompted to enter the details.
