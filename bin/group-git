@@ -70,7 +70,7 @@ sub main {
         conf => $conf,
     );
 
-    my $action = $opt->cmd;
+    my $action = $opt->cmd || ( warn "No command specified!\n" && pod2usage( -verbose => 1 ) );
     my $skip   = $opt->opt->skip;
     my $match  = $opt->opt->match;
     my %exclude = map { $_ => 1 } @{ $conf->{exclude} || [] };
@@ -80,8 +80,7 @@ sub main {
         next if $match && $project !~ /$match/;
         next if $exclude{$project};
 
-        my $out;
-        $out = $group->$action($project) if $action;
+        my $out = $group->$action($project);
 
         if ($out) {
             print "\n$project\n" unless $opt->opt->quiet;
