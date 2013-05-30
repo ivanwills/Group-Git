@@ -41,7 +41,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Status - <One-line description of module's purpose>
+Group::Git::Cmd::Status - Runs git status on a git project
 
 =head1 VERSION
 
@@ -63,15 +63,14 @@ This documentation refers to Group::Git::Cmd::Status version 0.0.5.
 
 =over 4
 
-=item C<pull ()>
+=item C<status ()>
 
-Runs git pull on all repositories, if a repository doesn't exist on disk this
-will clone that repository.
+Runs git status on each directory if the status message includes:
 
-=item C<update ()>
+ "nothing to commit"
 
-Runs git update on all repositories, if a repository doesn't exist on disk this
-will clone that repository.
+The status is suppressed to keep the output clean. This can be overridden
+if verbose is set.
 
 =back
 

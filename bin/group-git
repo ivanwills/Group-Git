@@ -136,7 +136,7 @@ Run any git command over all repositories in the current directory.
 
 If you have a config file set up in the current directory (group-git.yml or some
 other suffix group-git file supported by L<Config::Any>) extra functionality
-becomes available if you use GitHub, Bitbucket or Gitosis as your repository
+becomes available if you use Github, Bitbucket or Gitosis as your repository
 remote store. The config file will be read to supply the appropriate user
 credentials or in the case of gitosis the admin project location.
 
