@@ -24,15 +24,18 @@ sub pull {
 
     my $repo = $self->repos->{$name};
     my $cmd;
+    my $dir;
 
     if ( -d $name ) {
-        local $CWD = $name;
-        $cmd = join ' ', 'git', $type, $repo->git;
+        $dir = $name;
+        $cmd = join ' ', 'git', $type, @ARGV;
     }
     else {
         $cmd = join ' ', 'git', 'clone', $repo->git;
     }
 
+    local $CWD = $dir if $dir;
+    warn "$cmd\n" if $self->verbose > 1;
     return `$cmd`;
 }
 
