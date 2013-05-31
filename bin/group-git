@@ -18,7 +18,7 @@ use Path::Class;
 use Group::Git;
 use Config::Any;
 
-our $VERSION = version->new('0.0.5');
+our $VERSION = version->new('0.1.0');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 
@@ -102,7 +102,7 @@ group-git - Perform operations over many git repositories at once
 
 =head1 VERSION
 
-This documentation refers to group-git version 0.0.5.
+This documentation refers to group-git version 0.1.0.
 
 =head1 SYNOPSIS
 

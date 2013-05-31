@@ -1,5 +1,16 @@
 Revision history for Group-Git
 
+0.1.0   2013-06-01
+        Fixed switching directories
+        Fixed some author tests
+        Added inlude key and documented include/exclude in config
+        Added excluding projects if mentioned in the exclude key of the config file, mobed checking for an action
+        Added the ability to exclude projects via the config file
+        Added showing all output if verbose is set
+        Fixed version
+        New command that only returns the status if there are changes to commit
+        Changed code so that commands return their output TODO pipe through less
+
 0.0.5   2013-05-24
         Fixed spelling
         Updated documentation
