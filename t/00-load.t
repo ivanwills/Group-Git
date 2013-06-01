@@ -11,6 +11,7 @@ use_ok('Group::Git::Gitosis');
 use_ok('Group::Git::Repo');
 use_ok('Group::Git::Cmd::Branch');
 use_ok('Group::Git::Cmd::Pull');
+use_ok('Group::Git::Cmd::Status');
 
 
 diag( "Testing Group::Git $Group::Git::VERSION, Perl $], $^X" );
