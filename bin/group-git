@@ -158,7 +158,7 @@ clone any repository that are not currently checked out in the current directory
  #gitosis: gituser@gitosis.server.com:gitosis-admin.git
 
  # Exclude a git project
- #exluce:
+ #exclude:
  #  - project_not_to_be_managed
  #  - ...
 
