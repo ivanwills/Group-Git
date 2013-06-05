@@ -11,6 +11,7 @@ lib/Group/Git.pm
 lib/Group/Git/Bitbucket.pm
 lib/Group/Git/Cmd/Branch.pm
 lib/Group/Git/Cmd/Pull.pm
+lib/Group/Git/Cmd/Status.pm
 lib/Group/Git/Github.pm
 lib/Group/Git/Gitosis.pm
 lib/Group/Git/Repo.pm
