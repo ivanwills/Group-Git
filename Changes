@@ -1,5 +1,11 @@
 Revision history for Group-Git
 
+0.1.1   2013-05-05
+        Added missing file in manifest
+        Added coloring project name to make them more distinct
+        Fixed typo
+        Added missing module in load test
+
 0.1.0   2013-06-01
         Fixed switching directories
         Fixed some author tests
