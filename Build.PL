@@ -18,6 +18,7 @@ my $builder = Module::Build->new(
         'Moose::Role'      => 0,
         'Net::GitHub'      => 0,
         'Path::Class'      => 0,
+        'Term::ANSIColor'  => 0,
         'WWW::Mechanize'   => 0,
         'version'          => 0,
     },
