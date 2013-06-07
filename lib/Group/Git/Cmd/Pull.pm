@@ -28,10 +28,10 @@ sub pull {
 
     if ( -d $name ) {
         $dir = $name;
-        $cmd = join ' ', 'git', $type, @ARGV;
+        $cmd = join ' ', 'git', map { $self->shell_quote } $type, @ARGV;
     }
     else {
-        $cmd = join ' ', 'git', 'clone', $repo->git;
+        $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git;
     }
 
     local $CWD = $dir if $dir;

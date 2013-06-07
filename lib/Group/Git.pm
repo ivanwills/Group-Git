@@ -83,9 +83,14 @@ sub cmd {
     return unless -d $project;
 
     local $CWD = $project;
-    my $cmd = join ' ', 'git', $command, @ARGV;
+    my $cmd = join ' ', 'git', map { $self->shell_quote } $command, @ARGV;
 
     return `$cmd`;
+}
+
+sub shell_quote {
+    s{ ( [^\w\-./?*] ) }{\\$1}gxms;
+    return $_;
 }
 
 sub AUTOLOAD {
