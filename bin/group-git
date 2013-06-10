@@ -119,6 +119,8 @@ This documentation refers to group-git version 0.1.1.
   -l --local    Ignore any management type and just look at what is checked out
                 Only useful if you have a group-git.yml file defining Github,
                 Bitbucked or Gitosis types.
+  -r --recurse  Recurses into subdirectories to check if they contain git
+                repositories rather than only stopping at the current level.
 
   -q --quiet    Don't show project names before running git on the directory
   -v --verbose  Show more details
