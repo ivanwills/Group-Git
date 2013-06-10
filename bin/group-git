@@ -34,6 +34,7 @@ sub main {
             'skip|s=s',
             'match|m=s',
             'local|l!',
+            'recurse|r!',
             'test|t!',
             'verbose|v+',
             'quiet|q',

@@ -18,7 +18,7 @@ extends 'Group::Git';
 
 has name => (
     is  => 'rw',
-    isa => 'Str',
+    isa => 'Path::Class::Dir',
 );
 has url => (
     is  => 'rw',

@@ -28,13 +28,17 @@ has repos => (
     builder     => '_repos',
     lazy_build => 1,
 );
+has recurse => (
+    is  => 'rw',
+    isa => 'Bool',
+);
 has verbose => (
     is  => 'rw',
     isa => 'Int',
 );
 has test => (
     is  => 'rw',
-    isa => 'Boolean',
+    isa => 'Bool',
 );
 
 # load all roles in the namespace Group::Git::Cmd::*
@@ -58,8 +62,17 @@ for my $dir (@INC) {
 sub _repos {
     my ($self) = @_;
     my %repos;
+    my @files = dir('.')->children;
 
-    for my $config (map {file $_} glob('*/.git/config')) {
+    while ( my $file = shift @files ) {
+        next unless -d $file;
+        my $config = $file->file('.git', 'config');
+
+        if ( !-f $config ) {
+            push @files, $file->children if $self->recurse && $file->basename ne '.git';
+            next;
+        }
+
         my ($url) = grep {/^\s*url\s*=\s*/} $config->slurp;
         if ($url) {
             chomp $url;
@@ -69,8 +82,8 @@ sub _repos {
             $url = '';
         }
 
-        $repos{ $config->parent->parent->basename } = Group::Git::Repo->new(
-            name => $config->parent->parent->basename,
+        $repos{$file} = Group::Git::Repo->new(
+            name => $file,
             git  => $url,
         );
     }
