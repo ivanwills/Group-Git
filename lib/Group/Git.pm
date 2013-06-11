@@ -163,6 +163,10 @@ L<Group::Git::Gitosis>)
 
 Run the git command C<$name> for each repository.
 
+=item C<shell_quote ()>
+
+Returns the shell quoted string for $_
+
 =back
 
 =head1 DIAGNOSTICS
