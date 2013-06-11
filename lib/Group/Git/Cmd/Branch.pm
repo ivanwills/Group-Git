@@ -27,7 +27,7 @@ sub branch {
 
     local $CWD = $name;
     my $cmd = "git branch -a";
-    $cmd .= " | grep " . join ' ', @ARGV if @ARGV;
+    $cmd .= " | grep " . join ' ', map { $self->shell_quote } @ARGV if @ARGV;
     print  "$cmd\n" if $self->verbose || $self->test;
     if ( !$self->test ) {
         if ( @ARGV ) {
