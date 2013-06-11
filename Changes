@@ -1,5 +1,11 @@
 Revision history for Group-Git
 
+0.1.2   2013-05-11
+        Added quoting shell arguments
+        Added documentation about recursing
+        Added the ability to recurse into sub directories to check if they contain git repositories
+        Added quoting of git args
+
 0.1.1   2013-05-05
         Added missing file in manifest
         Added coloring project name to make them more distinct
