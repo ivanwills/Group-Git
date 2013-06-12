@@ -45,11 +45,11 @@ has test => (
 my %modules;
 for my $dir (@INC) {
     next if !-d "$dir/Group/Git/Cmd";
-    my @commands = glob "$dir/Group/Git/Cmd/*.pm";
+    local $CWD = $dir;
+    my @commands = glob "Group/Git/Cmd/*.pm";
 
     for my $command (@commands) {
         my $module = $command;
-        $module =~ s{$dir/}{};
         $module =~ s{/}{::}g;
         $module =~ s{[.]pm$}{};
         if ( !$modules{$module}++ ) {
