@@ -17,8 +17,9 @@ use FindBin qw/$Bin/;
 use Path::Class;
 use Group::Git;
 use Config::Any;
+use Term::ANSIColor qw/colored/;
 
-our $VERSION = version->new('0.1.0');
+our $VERSION = version->new('0.1.2');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 
@@ -33,6 +34,7 @@ sub main {
             'skip|s=s',
             'match|m=s',
             'local|l!',
+            'recurse|r!',
             'test|t!',
             'verbose|v+',
             'quiet|q',
@@ -85,6 +87,7 @@ sub main {
         my $out = $group->$action($project);
 
         if ($out) {
+            $project = colored($project, 'blue');
             print "\n$project\n" unless $opt->opt->quiet;
             print $out;
             print "-- $project --\n" if $opt->opt->verbose;
@@ -102,7 +105,7 @@ group-git - Perform operations over many git repositories at once
 
 =head1 VERSION
 
-This documentation refers to group-git version 0.1.0.
+This documentation refers to group-git version 0.1.2.
 
 =head1 SYNOPSIS
 
@@ -116,6 +119,8 @@ This documentation refers to group-git version 0.1.0.
   -l --local    Ignore any management type and just look at what is checked out
                 Only useful if you have a group-git.yml file defining Github,
                 Bitbucked or Gitosis types.
+  -r --recurse  Recurses into subdirectories to check if they contain git
+                repositories rather than only stopping at the current level.
 
   -q --quiet    Don't show project names before running git on the directory
   -v --verbose  Show more details

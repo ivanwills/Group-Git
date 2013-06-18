@@ -15,7 +15,7 @@ use Path::Class;
 use File::chdir;
 use Group::Git::Repo;
 
-our $VERSION     = version->new('0.1.0');
+our $VERSION     = version->new('0.1.3');
 our $AUTOLOAD;
 
 has conf => (
@@ -28,24 +28,28 @@ has repos => (
     builder     => '_repos',
     lazy_build => 1,
 );
+has recurse => (
+    is  => 'rw',
+    isa => 'Bool',
+);
 has verbose => (
     is  => 'rw',
     isa => 'Int',
 );
 has test => (
     is  => 'rw',
-    isa => 'Boolean',
+    isa => 'Bool',
 );
 
 # load all roles in the namespace Group::Git::Cmd::*
 my %modules;
 for my $dir (@INC) {
     next if !-d "$dir/Group/Git/Cmd";
-    my @commands = glob "$dir/Group/Git/Cmd/*.pm";
+    local $CWD = $dir;
+    my @commands = glob "Group/Git/Cmd/*.pm";
 
     for my $command (@commands) {
         my $module = $command;
-        $module =~ s{$dir/}{};
         $module =~ s{/}{::}g;
         $module =~ s{[.]pm$}{};
         if ( !$modules{$module}++ ) {
@@ -58,8 +62,17 @@ for my $dir (@INC) {
 sub _repos {
     my ($self) = @_;
     my %repos;
+    my @files = dir('.')->children;
 
-    for my $config (map {file $_} glob('*/.git/config')) {
+    while ( my $file = shift @files ) {
+        next unless -d $file;
+        my $config = $file->file('.git', 'config');
+
+        if ( !-f $config ) {
+            push @files, $file->children if $self->recurse && $file->basename ne '.git';
+            next;
+        }
+
         my ($url) = grep {/^\s*url\s*=\s*/} $config->slurp;
         if ($url) {
             chomp $url;
@@ -69,8 +82,8 @@ sub _repos {
             $url = '';
         }
 
-        $repos{ $config->parent->parent->basename } = Group::Git::Repo->new(
-            name => $config->parent->parent->basename,
+        $repos{$file} = Group::Git::Repo->new(
+            name => $file,
             git  => $url,
         );
     }
@@ -83,9 +96,14 @@ sub cmd {
     return unless -d $project;
 
     local $CWD = $project;
-    my $cmd = join ' ', 'git', $command, @ARGV;
+    my $cmd = join ' ', 'git', map { $self->shell_quote } $command, @ARGV;
 
     return `$cmd`;
+}
+
+sub shell_quote {
+    s{ ( [^\w\-./?*] ) }{\\$1}gxms;
+    return $_;
 }
 
 sub AUTOLOAD {
@@ -115,7 +133,7 @@ Group::Git - Base module for group of git repository operations.
 
 =head1 VERSION
 
-This documentation refers to Group::Git version 0.1.0.
+This documentation refers to Group::Git version 0.1.3.
 
 =head1 SYNOPSIS
 
@@ -144,6 +162,10 @@ L<Group::Git::Gitosis>)
 =item C<cmd ($name)>
 
 Run the git command C<$name> for each repository.
+
+=item C<shell_quote ()>
+
+Returns the shell quoted string for $_
 
 =back
 

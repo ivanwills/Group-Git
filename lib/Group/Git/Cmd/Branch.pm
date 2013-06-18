@@ -13,7 +13,7 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
 
-our $VERSION     = version->new('0.1.0');
+our $VERSION     = version->new('0.1.3');
 
 requires 'repos';
 requires 'verbose';
@@ -27,7 +27,7 @@ sub branch {
 
     local $CWD = $name;
     my $cmd = "git branch -a";
-    $cmd .= " | grep " . join ' ', @ARGV if @ARGV;
+    $cmd .= " | grep " . join ' ', map { $self->shell_quote } @ARGV if @ARGV;
     print  "$cmd\n" if $self->verbose || $self->test;
     if ( !$self->test ) {
         if ( @ARGV ) {
@@ -54,7 +54,7 @@ Group::Git::Cmd::Branch - <One-line description of module's purpose>
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Branch version 0.1.0.
+This documentation refers to Group::Git::Cmd::Branch version 0.1.3.
 
 
 =head1 SYNOPSIS

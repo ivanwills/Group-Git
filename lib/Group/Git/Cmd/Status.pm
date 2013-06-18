@@ -13,7 +13,7 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
 
-our $VERSION     = version->new('0.1.0');
+our $VERSION     = version->new('0.1.3');
 
 requires 'repos';
 requires 'verbose';
@@ -25,7 +25,7 @@ sub status {
     my $cmd;
 
     local $CWD = $name;
-    $cmd = join ' ', 'git', 'status', @ARGV;
+    $cmd = join ' ', 'git', 'status', map { $self->shell_quote } @ARGV;
     my $out = `$cmd`;
 
     return $out if $self->verbose;
@@ -45,7 +45,7 @@ Group::Git::Cmd::Status - Runs git status on a git project
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Status version 0.1.0.
+This documentation refers to Group::Git::Cmd::Status version 0.1.3.
 
 
 =head1 SYNOPSIS
