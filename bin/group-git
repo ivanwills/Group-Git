@@ -35,6 +35,7 @@ sub main {
             'match|m=s',
             'local|l!',
             'recurse|r!',
+            'page|p!',
             'test|t!',
             'verbose|v+',
             'quiet|q',
@@ -77,6 +78,12 @@ sub main {
     my $match  = $opt->opt->match;
     my %exclude = map { $_ => 1 } @{ $conf->{exclude} || [] };
     my %include = map { $_ => 1 } @{ $conf->{include} || [] };
+    my $outfh = \*STDOUT;
+
+    if ($opt->opt->page) {
+        my $tmp;
+        $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
+    }
 
     for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
@@ -88,9 +95,9 @@ sub main {
 
         if ($out) {
             $project = colored($project, 'blue');
-            print "\n$project\n" unless $opt->opt->quiet;
-            print $out;
-            print "-- $project --\n" if $opt->opt->verbose;
+            print {$outfh} "\n$project\n" unless $opt->opt->quiet;
+            print {$outfh} $out;
+            print {$outfh} "-- $project --\n" if $opt->opt->verbose;
         }
     }
 
