@@ -33,8 +33,9 @@ has recurse => (
     isa => 'Bool',
 );
 has verbose => (
-    is  => 'rw',
-    isa => 'Int',
+    is      => 'rw',
+    isa     => 'Int',
+    default => 0,
 );
 has test => (
     is  => 'rw',
