@@ -16,6 +16,7 @@ use File::chdir;
 our $VERSION     = version->new('0.1.3');
 
 requires 'repos';
+requires 'verbose';
 
 sub update { shift->pull($_[0], 'update') }
 sub pull {
@@ -26,7 +27,10 @@ sub pull {
     my $cmd;
     my $dir;
 
-    if ( -d $name ) {
+    if ( !$repo->git ) {
+        return;
+    }
+    elsif ( -d $name ) {
         $dir = $name;
         $cmd = join ' ', 'git', map { $self->shell_quote } $type, @ARGV;
     }
