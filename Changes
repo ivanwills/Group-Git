@@ -1,5 +1,12 @@
 Revision history for Group-Git
 
+0.1.4   2013-07-07
+        Added documentation about pagination and turned it on by default
+        Added ability to paginate output
+        Fixed trying to pull repositories with no remotes
+        Added default verbosity
+        Added needing Net::GitHub 0.52 as 0.30 doesn't work with the current code
+
 0.1.3   2013-05-13
         Changed so that the code will work better on Windows
 
