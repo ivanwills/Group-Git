@@ -29,7 +29,12 @@ exit 0;
 sub main {
 
     my $opt = get_options(
-        { sub_command => 1, },
+        {
+            sub_command => 1,
+            default     => {
+                page => 1,
+            }
+        },
         [
             'skip|s=s',
             'match|m=s',
@@ -128,6 +133,9 @@ This documentation refers to group-git version 0.1.2.
                 Bitbucked or Gitosis types.
   -r --recurse  Recurses into subdirectories to check if they contain git
                 repositories rather than only stopping at the current level.
+  -p --page     Turns on paginating out put uses $PAGER environment variable if
+                set or 'less -Rx4SFX' if not.
+     --no-page  Turn off pagination.
 
   -q --quiet    Don't show project names before running git on the directory
   -v --verbose  Show more details
@@ -189,6 +197,10 @@ prompted to enter the details.
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT
+
+If paginating the C<$PAGER> environment variable is used if it is not set the
+command C<'less -Rx4SFX'> is used for paginating, if C<$PAGER> not set and
+less not installed no pagination will be done.
 
 =head1 DEPENDENCIES
 
