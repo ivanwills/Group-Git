@@ -20,6 +20,7 @@ requires 'verbose';
 
 sub status {
     my ($self, $name) = @_;
+    return unless -d $name;
 
     my $repo = $self->repos->{$name};
     my $cmd;
