@@ -90,7 +90,7 @@ sub main {
         $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
     }
 
-    for my $project ( sort {lc $a cmp lc $b} keys %{ $group->repos } ) {
+    for my $project ( sort \&sorter, keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
         next if $match && $project !~ /$match/;
         next if $exclude{$project};
@@ -107,6 +107,14 @@ sub main {
     }
 
     return;
+}
+
+sub sorter {
+    my $A = $a;
+    $A =~ s/(\d+)/sprintf "%06d", $1/egxms;
+    my $B = $b;
+    $B =~ s/(\d+)/sprintf "%06d", $1/egxms;
+    return lc $A cmp lc $B;
 }
 
 __DATA__
