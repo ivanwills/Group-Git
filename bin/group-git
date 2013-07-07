@@ -90,6 +90,10 @@ sub main {
         $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
     }
 
+    my $action_start = $action . '_start';
+    my $action_end   = $action . '_end';
+    print {$outfh} $group->$action_start() if $group->can($action_start);
+
     for my $project ( sort \&sorter, keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
         next if $match && $project !~ /$match/;
@@ -106,10 +110,13 @@ sub main {
         }
     }
 
+    print {$outfh} $group->$action_end() if $group->can($action_end);
+
     return;
 }
 
 sub sorter {
+    no warnings qw/once/;
     my $A = $a;
     $A =~ s/(\d+)/sprintf "%06d", $1/egxms;
     my $B = $b;
