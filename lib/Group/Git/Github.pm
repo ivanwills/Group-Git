@@ -12,6 +12,7 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use Net::GitHub;
+use Path::Class;
 
 our $VERSION     = version->new('0.1.4');
 our @EXPORT_OK   = qw//;
@@ -39,7 +40,7 @@ sub _repos {
     while (@list) {
         for my $repo (@list) {
             $repos{ $repo->{name} } = Group::Git::Repo->new(
-                name => $repo->{name},
+                name => dir($repo->{name}),
                 git  => $repo->{git_url},
             );
         }
