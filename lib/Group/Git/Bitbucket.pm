@@ -14,6 +14,7 @@ use English qw/ -no_match_vars /;
 use IO::Prompt qw/prompt/;
 use JSON qw/decode_json/;
 use WWW::Mechanize;
+use Path::Class;
 
 our $VERSION     = version->new('0.1.4');
 
@@ -44,7 +45,7 @@ sub _repos {
     my $repos = decode_json $mech->content;
     for my $repo ( @$repos ) {
         $repos{$repo->{name}} = Group::Git::Repo->new(
-            name => $repo->{name},
+            name => dir($repo->{name}),
             url  => "https://bitbucket.org/$repo->{owner}/$repo->{name}",
             git  => "git\@bitbucket.org:$repo->{owner}/$repo->{name}.git",
         );
