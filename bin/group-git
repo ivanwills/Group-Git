@@ -94,7 +94,7 @@ sub main {
     my $action_end   = $action . '_end';
     print {$outfh} $group->$action_start() if $group->can($action_start);
 
-    for my $project ( sort \&sorter, keys %{ $group->repos } ) {
+    for my $project ( sort sorter keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
         next if $match && $project !~ /$match/;
         next if $exclude{$project};
