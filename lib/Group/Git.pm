@@ -97,6 +97,7 @@ sub cmd {
     return unless -d $project;
 
     local $CWD = $project;
+    local @ARGV = @ARGV;
     my $cmd = join ' ', 'git', map { $self->shell_quote } $command, @ARGV;
 
     return `$cmd`;
