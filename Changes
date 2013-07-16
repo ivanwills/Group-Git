@@ -1,5 +1,16 @@
 Revision history for Group-Git
 
+0.1.5   2013-07-17
+        Fixed accidentally modifying @ARGV
+        Changed to match changes in Getopt::Alt
+        Merge branch 'master' of github.com:ivanwills/Group-Git
+        Fixed not making name a dir object
+        Fixed not making name a Path::Class::Dir object
+        Fixed sorting function call
+        Added ability to call initialisers and finialisers (action + _start/_end respectively)
+        Added skipping non-existant repos
+        Added numeric sorter
+
 0.1.4   2013-07-07
         Added documentation about pagination and turned it on by default
         Added ability to paginate output
