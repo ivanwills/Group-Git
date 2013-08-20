@@ -39,12 +39,11 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Sh - Runs git status on a git project
+Group::Git::Cmd::Sh - Runs shell script in each git project
 
 =head1 VERSION
 
 This documentation refers to Group::Git::Cmd::Sh version 0.1.5.
-
 
 =head1 SYNOPSIS
 
@@ -54,21 +53,15 @@ This documentation refers to Group::Git::Cmd::Sh version 0.1.5.
    # This section will be as far as many users bother reading, so make it as
    # educational and exemplary as possible.
 
-
 =head1 DESCRIPTION
 
 =head1 SUBROUTINES/METHODS
 
 =over 4
 
-=item C<status ()>
+=item C<sh ()>
 
-Runs git status on each directory if the status message includes:
-
- "nothing to commit"
-
-The status is suppressed to keep the output clean. This can be overridden
-if verbose is set.
+Runs all the reset of the command line in each directory as a shell script.
 
 =back
 
