@@ -22,7 +22,6 @@ use Term::ANSIColor qw/colored/;
 our $VERSION = version->new('0.1.2');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
-
 main();
 exit 0;
 
@@ -46,17 +45,6 @@ sub main {
             'quiet|q',
         ]
     );
-
-    if ( $opt->VERSION ) {
-        print "$name Version = $VERSION\n";
-        exit 1;
-    }
-    elsif ( $opt->man ) {
-        pod2usage( -verbose => 2 );
-    }
-    elsif ( $opt->help ) {
-        pod2usage( -verbose => 1 );
-    }
 
     # do stuff here
     my $conf = Config::Any->load_stems({
