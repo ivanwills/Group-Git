@@ -45,7 +45,7 @@ sub _repos {
             # to
             #   git@github.com:ivanwills/meteor.git
             # as git doesn't like the form that github uses
-            $url =~ s{git://github.com/([^/]+)}{git@github.com:$1};
+            $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
 
             $repos{ $repo->{name} } = Group::Git::Repo->new(
                 name => dir($repo->{name}),
