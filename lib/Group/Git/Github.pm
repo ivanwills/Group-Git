@@ -39,9 +39,17 @@ sub _repos {
 
     while (@list) {
         for my $repo (@list) {
+            my $url = $repo->{git_url};
+            # convert urls of the form:
+            #   git://github.com/ivanwills/meteor.git
+            # to
+            #   git@github.com:ivanwills/meteor.git
+            # as git doesn't like the form that github uses
+            $url =~ s{git://github.com/([^/]+)}{git@github.com:$1};
+
             $repos{ $repo->{name} } = Group::Git::Repo->new(
                 name => dir($repo->{name}),
-                git  => $repo->{git_url},
+                git  => $url,
             );
         }
 
