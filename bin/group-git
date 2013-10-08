@@ -78,9 +78,13 @@ sub main {
         $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
     }
 
-    my $action_start = $action . '_start';
-    my $action_end   = $action . '_end';
-    print {$outfh} $group->$action_start() if $group->can($action_start);
+    my $cmd_start = do_cmd( $group, $action . '_start' );
+    my $cmd_end   = do_cmd( $group, $action . '_end' );
+    my $cmd_body  = do_cmd( $group, $action );
+
+    die "Can't find group-git sub-command '$action'!\n" if !$cmd_body;
+
+    print {$outfh} $cmd_start->() if $cmd_start;
 
     for my $project ( sort sorter keys %{ $group->repos } ) {
         next if $skip  && $project =~ /$skip/;
@@ -88,7 +92,7 @@ sub main {
         next if $exclude{$project};
         next if %include && !$include{$project};
 
-        my $out = $group->$action($project);
+        my $out = $cmd_body->($project);
 
         if ($out) {
             $project = colored($project, 'blue');
@@ -98,7 +102,25 @@ sub main {
         }
     }
 
-    print {$outfh} $group->$action_end() if $group->can($action_end);
+    print {$outfh} $cmd_end->() if $cmd_end;
+
+    return;
+}
+
+sub do_cmd {
+    my ($group, $cmd) = @_;
+    if ( $group->can($cmd) ) {
+        return sub { $group->$cmd( @_ ) };
+    }
+    else {
+        for my $path ( split /[:;]/, $ENV{PATH} ) {
+            next if !-d $path;
+            my $script = "$path/group-git-$cmd";
+            next if !-x $script;
+
+            return sub { system $script, @_; }
+        }
+    }
 
     return;
 }
