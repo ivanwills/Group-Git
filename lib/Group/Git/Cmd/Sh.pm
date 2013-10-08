@@ -12,25 +12,37 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
+use Getopt::Alt;
 
 our $VERSION     = version->new('0.1.5');
 
 requires 'repos';
 requires 'verbose';
 
+my $opt = Getopt::Alt->new(
+    { help => __PACKAGE__, },
+    [ 'quote|q!', ]
+);
+
 sub sh {
     my ($self, $name) = @_;
     return unless -d $name;
 
-
     my $repo = $self->repos->{$name};
-    my $cmd;
+    $opt->process if !%{ $opt->opt || {} };
 
     local $CWD = $name;
+    my $cmd
+        = $opt->opt->quote
+        ? join ' ', map { $self->shell_quote } @ARGV
+        : join ' ', @ARGV;
+    my $out = `$cmd`;
 
-    system @ARGV;
+    return $out if $self->verbose;
 
-    return '';
+    return if !$out || $out =~ /\A\s*\Z/xms;
+
+    return $out;
 }
 
 1;
@@ -47,19 +59,23 @@ This documentation refers to Group::Git::Cmd::Sh version 0.1.5.
 
 =head1 SYNOPSIS
 
-   use Group::Git::Cmd::Sh;
+   group-get sh program ...
+   group-git sh [--quote|-q] program ...
 
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
+  OPTIONS:
+   -q --quote   Quote the program arguments before running saves you from
+                having to work out the next level quoting but stops you from
+                using other shell options eg piping (|).
 
 =head1 DESCRIPTION
+
+Run the program in each checked out git repository.
 
 =head1 SUBROUTINES/METHODS
 
 =over 4
 
-=item C<sh ()>
+=item C<sh ($name)>
 
 Runs all the reset of the command line in each directory as a shell script.
 
