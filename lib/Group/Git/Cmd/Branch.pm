@@ -12,12 +12,18 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
+use Getopt::Alt;
 
 our $VERSION     = version->new('0.1.5');
 
 requires 'repos';
 requires 'verbose';
 requires 'test';
+
+my $opt = Getopt::Alt->new(
+    { help => __PACKAGE__, },
+    [ 'quote|q!', ]
+);
 
 sub branch {
     my ($self, $name) = @_;
@@ -50,7 +56,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Branch - <One-line description of module's purpose>
+Group::Git::Cmd::Branch - Show all branches with optional grepping
 
 =head1 VERSION
 
@@ -72,7 +78,7 @@ This documentation refers to Group::Git::Cmd::Branch version 0.1.5.
 
 =over 4
 
-=item C<branch ()>
+=item C<branch ($name)>
 
 Runs a git branch -a over each repository and if other arguments are supplied
 the branch is pipped through grep with the other arguments

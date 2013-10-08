@@ -12,11 +12,17 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
+use Getopt::Alt;
 
 our $VERSION     = version->new('0.1.5');
 
 requires 'repos';
 requires 'verbose';
+
+my $opt = Getopt::Alt->new(
+    { help => __PACKAGE__, },
+    [ 'quote|q!', ]
+);
 
 sub update { shift->pull($_[0], 'update') }
 sub pull {
@@ -71,12 +77,12 @@ This documentation refers to Group::Git::Cmd::Pull version 0.1.5.
 
 =over 4
 
-=item C<pull ()>
+=item C<pull ($name[, 'update'])>
 
 Runs git pull on all repositories, if a repository doesn't exist on disk this
 will clone that repository.
 
-=item C<update ()>
+=item C<update ($name)>
 
 Runs git update on all repositories, if a repository doesn't exist on disk this
 will clone that repository.

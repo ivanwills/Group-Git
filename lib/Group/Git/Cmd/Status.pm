@@ -12,11 +12,17 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
+use Getopt::Alt;
 
 our $VERSION     = version->new('0.1.5');
 
 requires 'repos';
 requires 'verbose';
+
+my $opt = Getopt::Alt->new(
+    { help => __PACKAGE__, },
+    [ 'quote|q!', ]
+);
 
 sub status {
     my ($self, $name) = @_;
@@ -64,7 +70,7 @@ This documentation refers to Group::Git::Cmd::Status version 0.1.5.
 
 =over 4
 
-=item C<status ()>
+=item C<status ($name)>
 
 Runs git status on each directory if the status message includes:
 
