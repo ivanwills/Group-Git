@@ -80,7 +80,7 @@ sub main {
 
     my $cmd_start = do_cmd( $group, $action . '_start' );
     my $cmd_end   = do_cmd( $group, $action . '_end' );
-    my $cmd_body  = do_cmd( $group, $action );
+    my $cmd_body  = do_cmd( $group, $action, 1 );
 
     die "Can't find group-git sub-command '$action'!\n" if !$cmd_body;
 
@@ -108,7 +108,7 @@ sub main {
 }
 
 sub do_cmd {
-    my ($group, $cmd) = @_;
+    my ($group, $cmd, $fallback) = @_;
     if ( $group->can($cmd) ) {
         return sub { $group->$cmd( @_ ) };
     }
@@ -121,6 +121,8 @@ sub do_cmd {
             return sub { system $script, @_; }
         }
     }
+
+    return if !$fallback;
 
     return sub { $group->cmd( $cmd, @_ ) };
 }
