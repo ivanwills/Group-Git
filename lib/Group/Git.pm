@@ -94,7 +94,7 @@ sub _repos {
 
 sub cmd {
     my ($self, $command, $project) = @_;
-    return unless -d $project;
+    return if !$project || !-d $project;
 
     local $CWD = $project;
     local @ARGV = @ARGV;
