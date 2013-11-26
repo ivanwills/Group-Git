@@ -67,8 +67,12 @@ sub _github {
     my $conf = $self->conf;
 
     return Net::GitHub->new(
-        login => $conf->{username} ? $conf->{username} : prompt( -prompt => 'github.com username : ' ),
-        pass  => $conf->{password} ? $conf->{password} : prompt( -prompt => 'github.com password : ', -echo => '*' ),
+        $conf->{access_token}
+        ? ( access_token => $conf->{access_token} )
+        : (
+            login => $conf->{username} ? $conf->{username} : prompt( -prompt => 'github.com username : ' ),
+            pass  => $conf->{password} ? $conf->{password} : prompt( -prompt => 'github.com password : ', -echo => '*' ),
+        )
     );
 }
 
@@ -97,10 +101,41 @@ This documentation refers to Group::Git::Github version 0.1.5.
        },
    )->pull;
 
+   # Alternitavely using personal access tokens
+   # You can setup at https://github.com/settings/applications
+   Group::Git::Github->new(
+       conf => {
+           access_token => '...',
+       },
+   )->pull;
+
 =head1 DESCRIPTION
 
 Reads all repositories for the configured user (if none set user will be
 prompted to enter one as well as a password)
+
+=head2 Configuration
+
+There are three configuration parameters that are currently used
+
+=over 4
+
+=item access_token
+
+A github OAuth personal access token. If supplied then username and password
+are ignored.
+
+=item username
+
+Specify the user to login as, if not specified the user will be prompted to
+enter a username.
+
+=item password
+
+Specify the password to login with, if not specified the user will be prompted
+to enter a password.
+
+=back
 
 =head1 SUBROUTINES/METHODS
 
