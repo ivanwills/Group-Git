@@ -66,14 +66,7 @@ This documentation refers to Group::Git::Cmd::Help version 0.1.5.
 
 =over 4
 
-=item C<status ($name)>
-
-Runs git status on each directory if the status message includes:
-
- "nothing to commit"
-
-The status is suppressed to keep the output clean. This can be overridden
-if verbose is set.
+=item C<help_start ($name)>
 
 =back
 
