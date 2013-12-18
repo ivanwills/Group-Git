@@ -40,7 +40,8 @@ sub main {
             'local|l!',
             'recurse|r!',
             'page|p!',
-            'test|t!',
+            'tag|t=s',
+            'test|T!',
             'verbose|v+',
             'quiet|q',
         ]
@@ -134,6 +135,21 @@ sub sorter {
     my $B = $b;
     $B =~ s/(\d+)/sprintf "%06d", $1/egxms;
     return lc $A cmp lc $B;
+}
+
+sub tagged {
+    my ($conf, $tag, $project) = @_;
+    state $tagged;
+
+    # everything is "tagged" if none is specified
+    return 1 if !$tag;
+
+    if ( !defined $tagged ) {
+        $tagged = { map { $_ => 1 } @{ $conf->{tags}{$tag} || [] } };
+    }
+
+    # return true if the project is tagged in the config file or has a tag file
+    return $tagged->{$project} || -e "$project/.$tag.tag";
 }
 
 __DATA__
