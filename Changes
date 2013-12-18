@@ -1,5 +1,8 @@
 Revision history for Group-Git
 
+0.2.1   2013-12-18
+        Actually use the tag filtering code (Ivan Wills)
+
 0.2.0   2013-12-18
         Added new modules (Ivan Wills)
         Changed to non-state variable (Ivan Wills)
