@@ -92,6 +92,7 @@ sub main {
         next if $match && $project !~ /$match/;
         next if $exclude{$project};
         next if %include && !$include{$project};
+        next if !tagged($conf, $opt->tag, $project);
 
         my $out = $cmd_body->($project);
 
