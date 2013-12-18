@@ -166,18 +166,18 @@ submodule command so here are some reasons for using C<Group-Git>:
 
 =item *
 
-No git repsitory needed to manage all the repositories in fact no configuration
+No git repository needed to manage all the repositories in fact no configuration
 is required at all.
 
 =item *
 
-Group-Git just cares about respositories not their commits as submodule does.
+Group-Git just cares about repositories not their commits as submodule does.
 
 =item *
 
 When using one of github.com / bitbucket.com or gitosis configurations when
 new repositories are added the next C<group-git pull> will get those new
-repositores.
+repositories.
 
 =item *
 

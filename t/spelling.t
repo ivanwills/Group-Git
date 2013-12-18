@@ -38,5 +38,7 @@ add_stopwords(qw/
     yml
     username
     admin
+    OAuth
+    com
 /);
 all_pod_files_spelling_ok();
