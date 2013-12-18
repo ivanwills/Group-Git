@@ -14,7 +14,7 @@ use English qw/ -no_match_vars /;
 use Net::GitHub;
 use Path::Class;
 
-our $VERSION     = version->new('0.1.5');
+our $VERSION     = version->new('0.2.0');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 #our @EXPORT      = qw//;
@@ -86,7 +86,7 @@ Group::Git::Github - Adds reading all repositories you have access to on github
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Github version 0.1.5.
+This documentation refers to Group::Git::Github version 0.2.0.
 
 
 =head1 SYNOPSIS

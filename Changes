@@ -1,5 +1,29 @@
 Revision history for Group-Git
 
+0.2.0   2013-12-18
+        Added new modules (Ivan Wills)
+        Changed to non-state variable (Ivan Wills)
+        Fixed POD (Ivan Wills)
+        Fixed spelling (Ivan Wills)
+        Help cmd (Ivan Wills)
+        Added missing files (and sorted) (Ivan Wills)
+        Added documentation about using --tag (Ivan Wills)
+        Added the ability to filter by tag (Ivan Wills)
+        Added support of personal access tokens and documented (Ivan Wills)
+        Stopped falling back to git for start/end methods (Ivan Wills)
+        Fixed undefined warning (Ivan Wills)
+        Fixed running aribitary git sub commands (Ivan Wills)
+        Fixed not being able to run arbitary git commands (Ivan Wills)
+        Added the ability to run a "command" via a script of the form group-git-"command" so that new commands can be created via scripts rather than perl modules (Ivan Wills)
+        Added description of why this is different to using git submodule (Ivan Wills)
+        Added boiler plate code for later option handling (Ivan Wills)
+        Fixed the way running shell scripts works (Ivan Wills)
+        Fixed missing backslash (Ivan Wills)
+        Removed un-nessesary code (Ivan Wills)
+        Fixed Github's bad URL's (Ivan Wills)
+        Tidied up documentation (Ivan Wills)
+        New command to execute arbitary shell commands (Ivan Wills)
+
 0.1.5   2013-07-17
         Fixed accidentally modifying @ARGV
         Changed to match changes in Getopt::Alt
