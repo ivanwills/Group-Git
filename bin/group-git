@@ -137,9 +137,9 @@ sub sorter {
     return lc $A cmp lc $B;
 }
 
+my $tagged;
 sub tagged {
     my ($conf, $tag, $project) = @_;
-    state $tagged;
 
     # everything is "tagged" if none is specified
     return 1 if !$tag;
