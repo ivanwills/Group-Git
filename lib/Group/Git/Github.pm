@@ -35,28 +35,20 @@ sub _repos {
     my $repo = $self->github->repos;
     my @list = $repo->list;
     my $page = 1;
-    my $last_url = '';
 
-    while (@list) {
-        for my $repo (@list) {
-            my $url = $repo->{git_url};
-            # convert urls of the form:
-            #   git://github.com/ivanwills/meteor.git
-            # to
-            #   git@github.com:ivanwills/meteor.git
-            # as git doesn't like the form that github uses
-            $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
+    for my $repo (@list) {
+        my $url = $repo->{git_url};
+        # convert urls of the form:
+        #   git://github.com/ivanwills/meteor.git
+        # to
+        #   git@github.com:ivanwills/meteor.git
+        # as git doesn't like the form that github uses
+        $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
 
-            $repos{ $repo->{name} } = Group::Git::Repo->new(
-                name => dir($repo->{name}),
-                git  => $url,
-            );
-        }
-
-        last if !defined $last_url;
-
-        @list = $repo->next_page if $repo->has_next_page && $repo->next_url ne $last_url;
-        $last_url = $repo->next_url;
+        $repos{ $repo->{name} } = Group::Git::Repo->new(
+            name => dir($repo->{name}),
+            git  => $url,
+        );
     }
 
     return \%repos;
