@@ -12,7 +12,7 @@ use Carp;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 
-our $VERSION     = version->new('0.2.1');
+our $VERSION = version->new('0.2.1');
 
 extends 'Group::Git';
 

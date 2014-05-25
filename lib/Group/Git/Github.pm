@@ -14,10 +14,7 @@ use English qw/ -no_match_vars /;
 use Net::GitHub;
 use Path::Class;
 
-our $VERSION     = version->new('0.2.1');
-our @EXPORT_OK   = qw//;
-our %EXPORT_TAGS = ();
-#our @EXPORT      = qw//;
+our $VERSION = version->new('0.2.1');
 
 extends 'Group::Git';
 
@@ -86,20 +83,29 @@ This documentation refers to Group::Git::Github version 0.2.1.
    use Group::Git::Github;
 
    # pull (or clone missing) all repositories that joeblogs has created/forked
-   Group::Git::Github->new(
+   my $ggg = Group::Git::Github->new(
        conf => {
            username => 'joeblogs@gmail.com',
            password => 'myverysecurepassword',
        },
-   )->pull;
+   );
 
    # Alternitavely using personal access tokens
    # You can setup at https://github.com/settings/applications
-   Group::Git::Github->new(
+   my $ggg = Group::Git::Github->new(
        conf => {
            access_token => '...',
        },
-   )->pull;
+   );
+
+   # list all repositories
+   my $repositories = $ggg->repo();
+
+   # do something to each repository
+   for my $repo (keys %{$repositories}) {
+       # eg do a pull
+       $ggg->pull($repo);
+   }
 
 =head1 DESCRIPTION
 

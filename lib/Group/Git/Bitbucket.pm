@@ -16,7 +16,7 @@ use JSON qw/decode_json/;
 use WWW::Mechanize;
 use Path::Class;
 
-our $VERSION     = version->new('0.2.1');
+our $VERSION = version->new('0.2.1');
 
 extends 'Group::Git';
 
@@ -71,12 +71,21 @@ This documentation refers to Group::Git::Bitbucket version 0.2.1.
    use Group::Git::Bitbucket;
 
    # pull (or clone missing) all repositories that joeblogs has created/forked
-   Group::Git::Bitbucket->new(
+   my $ggb = Group::Git::Bitbucket->new(
        conf => {
            username => 'joeblogs@gmail.com',
            password => 'myverysecurepassword',
        },
-   )->pull;
+   );
+
+   # list all repositories
+   my $repositories = $ggb->repo();
+
+   # do something to each repository
+   for my $repo (keys %{$repositories}) {
+       # eg do a pull
+       $ggb->pull($repo);
+   }
 
 =head1 DESCRIPTION
 

@@ -15,7 +15,7 @@ use Path::Class;
 use File::chdir;
 use Path::Class;
 
-our $VERSION     = version->new('0.2.1');
+our $VERSION = version->new('0.2.1');
 
 extends 'Group::Git';
 
@@ -88,6 +88,21 @@ This documentation refers to Group::Git::Gitosis version 0.2.1.
    # This section will be as far as many users bother reading, so make it as
    # educational and exemplary as possible.
 
+   # pull (or clone missing) all repositories that joeblogs has created/forked
+   my $ggg = Group::Git::Github->new(
+       conf => {
+           gitosis => 'git://gitosis/url',
+       },
+   );
+
+   # list all repositories
+   my $repositories = $ggg->repo();
+
+   # do something to each repository
+   for my $repo (keys %{$repositories}) {
+       # eg do a pull
+       $ggg->pull($repo);
+   }
 
 =head1 DESCRIPTION
 
