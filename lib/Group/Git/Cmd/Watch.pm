@@ -44,6 +44,13 @@ has watch_run => (
     isa => 'Bool',
 );
 
+sub watch_start {
+    $opt->process;
+    $config = $opt->opt->save && -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
+
+    return;
+}
+
 sub watch {
     my ($self, $name) = @_;
     return unless -d $name;
@@ -60,10 +67,6 @@ sub watch {
     }
 
     my $repo = $self->repos->{$name};
-    if ( !%{ $opt->opt || {} } ) {
-        $opt->process;
-        $config = $opt->opt->save && -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
-    }
 
     my $dump;
     {

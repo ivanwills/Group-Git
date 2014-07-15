@@ -24,12 +24,17 @@ my $opt = Getopt::Alt->new(
     [ 'quote|q!', ]
 );
 
+sub sh_start {
+    $opt->process;
+
+    return;
+}
+
 sub sh {
     my ($self, $name) = @_;
     return unless -d $name;
 
     my $repo = $self->repos->{$name};
-    $opt->process if !%{ $opt->opt || {} };
 
     local $CWD = $name;
     my $cmd
