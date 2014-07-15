@@ -121,10 +121,12 @@ This documentation refers to Group::Git::Cmd::Watch version 0.2.1.
 
 =head1 SYNOPSIS
 
-    group-git watch [options] ([--show|-w]|cmd)
+    group-git watch [options] ([--show|-w]|command)
 
  Options:
     -w --show   Show when a repository has changed
+    -o --once   Run the command only once for each itteration through all
+                repositories when one or more repositories change.
     -s --sleep[=]seconds
                 Sleep for this number of seconds between each checking if
                 the repositories have changed (Default 60)
