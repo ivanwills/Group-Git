@@ -58,9 +58,9 @@ sub watch {
     if ( !$self->runs ) {
         $self->runs(2);
 
-        if ($self->warch_run) {
+        if ($self->watch_run) {
             system @ARGV;
-            $self->warch_run(undef);
+            $self->watch_run(undef);
         }
 
         sleep $opt->opt->sleep if $self->runs == 1;
@@ -90,7 +90,7 @@ sub watch {
             return "changed" if $opt->opt->show;
 
             if ($opt->opt->once) {
-                $self->warch_run(1);
+                $self->watch_run(1);
             }
             else {
                 system @ARGV;
