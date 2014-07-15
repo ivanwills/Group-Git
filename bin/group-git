@@ -88,7 +88,7 @@ sub main {
     print {$outfh} $cmd_start->() if $cmd_start;
 
     while ($group->runs) {
-        $group->runs($group->runs - 1);
+        $group->runs(0);
 
         for my $project ( sort sorter keys %{ $group->repos } ) {
             next if $skip  && $project =~ /$skip/;
