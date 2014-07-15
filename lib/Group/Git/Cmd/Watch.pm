@@ -25,7 +25,7 @@ my $opt = Getopt::Alt->new(
     {
         help   => __PACKAGE__,
         default => {
-            config => 'group-git.yml',
+            config => 'group-git-watch.yml',
         }
     },
     [
@@ -44,28 +44,36 @@ sub watch {
     my $repo = $self->repos->{$name};
     if ( !%{ $opt->opt || {} } ) {
         $opt->process;
-        $config = LoadFile($opt->opt->config);
+        $config = -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
     }
 
-    local $CWD = $name;
-    my ($id, $out);
+    my $dump;
+    {
+        local $CWD = $name;
+        my ($id, $out);
 
-    if ($opt->opt->all) {
-        ($out) = `git reflot --all`;
-        ($id) = $out =~ /^([0-9a-f]+)\s/;
-    }
-    else {
-        ($out) = `git show`;
-        ($id) = $out =~ /commit\s+([0-9a-f]+)/
+        if ($opt->opt->all) {
+            ($out) = `git reflot --all`;
+            ($id) = $out =~ /^([0-9a-f]+)\s/;
+        }
+        else {
+            ($out) = `git show`;
+            ($id) = $out =~ /commit\s+([0-9a-f]+)/
+        }
+
+        if (!$config->{$name} || $config->{$name} ne $id) {
+            $config->{$name} = $id;
+            $dump = 1;
+
+            warn Dumper $opt->opt, \@ARGV, $config;
+            return $name if $opt->opt->show;
+
+            system @ARGV;
+        }
     }
 
-    if ($config->{$name} ne $id) {
-        $config->{$name} = $id;
+    if ($dump) {
         DumpFile($opt->opt->config, $config);
-
-        return $name if $opt->opt->show;
-
-        system @ARGV;
     }
 
     return;
