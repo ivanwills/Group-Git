@@ -104,12 +104,19 @@ This documentation refers to Group::Git::Cmd::Watch version 0.2.1.
 
 =head1 SYNOPSIS
 
-   use Group::Git::Cmd::Watch;
+    group-git watch [options] ([--show|-w]|cmd)
 
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
-
+ Options:
+    -w --show   Show when a repository has changed
+    -s --sleep[=]seconds
+                Sleep for this number of seconds between each checking if
+                the repositories have changed (Default 60)
+    -v --save   Store the state of each repository so if re-run the program
+                changes since the last run are shown.
+    -a --all    Check all branches (not just the current branch) for changes
+    -c --config[=]file
+                Use inconjunction with --save to name the file to save to
+                (Default group-git-watch.yml)
 
 =head1 DESCRIPTION
 
