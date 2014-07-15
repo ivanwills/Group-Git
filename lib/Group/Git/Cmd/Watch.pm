@@ -60,7 +60,7 @@ sub watch {
         `git fetch`;
 
         if ($opt->opt->all) {
-            ($out) = `git reflot --all`;
+            ($out) = `git reflog --all`;
             ($id) = $out =~ /^([0-9a-f]+)\s/;
         }
         else {
