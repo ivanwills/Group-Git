@@ -71,7 +71,7 @@ sub watch {
             $config->{$name} = $id;
             $dump = 1;
 
-            return $name if $opt->opt->show;
+            return "changed" if $opt->opt->show;
 
             system @ARGV;
         }
