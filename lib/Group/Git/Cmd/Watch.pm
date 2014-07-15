@@ -26,10 +26,13 @@ my $opt = Getopt::Alt->new(
         help   => __PACKAGE__,
         default => {
             config => 'group-git-watch.yml',
+            sleep  => 60,
         }
     },
     [
-        'show|s',
+        'show|w',
+        'sleep|s=i',
+        'save|v',
         'all|a',
         'config|c=s',
     ]
@@ -39,12 +42,15 @@ sub watch {
     my ($self, $name) = @_;
     return unless -d $name;
 
-    $self->runs(1);
+    if ( !$self->runs ) {
+        $self->runs(2);
+        sleep $opt->opt->sleep if $self->runs == 1;
+    }
 
     my $repo = $self->repos->{$name};
     if ( !%{ $opt->opt || {} } ) {
         $opt->process;
-        $config = -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
+        $config = $opt->opt->save && -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
     }
 
     my $dump;
@@ -65,14 +71,13 @@ sub watch {
             $config->{$name} = $id;
             $dump = 1;
 
-            warn Dumper $opt->opt, \@ARGV, $config;
             return $name if $opt->opt->show;
 
             system @ARGV;
         }
     }
 
-    if ($dump) {
+    if ($dump && $opt->opt->save) {
         DumpFile($opt->opt->config, $config);
     }
 
