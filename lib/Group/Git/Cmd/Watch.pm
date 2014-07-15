@@ -57,6 +57,7 @@ sub watch {
     {
         local $CWD = $name;
         my ($id, $out);
+        `git fetch`;
 
         if ($opt->opt->all) {
             ($out) = `git reflot --all`;
