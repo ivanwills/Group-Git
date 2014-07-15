@@ -20,6 +20,7 @@ my $builder = Module::Build->new(
         'Path::Class'      => 0,
         'Term::ANSIColor'  => 0,
         'WWW::Mechanize'   => 0,
+        'YAML::Syck'       => 0,
         'version'          => 0,
     },
     configure_requires => {
