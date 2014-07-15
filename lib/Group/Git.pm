@@ -15,7 +15,7 @@ use Path::Class;
 use File::chdir;
 use Group::Git::Repo;
 
-our $VERSION     = version->new('0.2.1');
+our $VERSION = version->new('0.2.1');
 our $AUTOLOAD;
 
 has conf => (
@@ -40,6 +40,11 @@ has verbose => (
 has test => (
     is  => 'rw',
     isa => 'Bool',
+);
+has runs => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 1,
 );
 
 # load all roles in the namespace Group::Git::Cmd::*
