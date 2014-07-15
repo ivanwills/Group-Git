@@ -31,11 +31,17 @@ my $opt = Getopt::Alt->new(
     },
     [
         'show|w',
+        'once|o',
         'sleep|s=i',
         'save|v',
         'all|a',
         'config|c=s',
     ]
+);
+
+has watch_run => (
+    is  => 'rw',
+    isa => 'Bool',
 );
 
 sub watch {
@@ -51,6 +57,11 @@ sub watch {
     if ( !%{ $opt->opt || {} } ) {
         $opt->process;
         $config = $opt->opt->save && -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
+
+        if ($self->warch_run) {
+            system @ARGV;
+            $self->warch_run(undef);
+        }
     }
 
     my $dump;
@@ -74,7 +85,12 @@ sub watch {
 
             return "changed" if $opt->opt->show;
 
-            system @ARGV;
+            if ($opt->opt->once) {
+                $self->warch_run(1);
+            }
+            else {
+                system @ARGV;
+            }
         }
     }
 
