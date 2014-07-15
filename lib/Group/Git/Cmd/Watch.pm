@@ -50,6 +50,12 @@ sub watch {
 
     if ( !$self->runs ) {
         $self->runs(2);
+
+        if ($self->warch_run) {
+            system @ARGV;
+            $self->warch_run(undef);
+        }
+
         sleep $opt->opt->sleep if $self->runs == 1;
     }
 
@@ -57,11 +63,6 @@ sub watch {
     if ( !%{ $opt->opt || {} } ) {
         $opt->process;
         $config = $opt->opt->save && -f $opt->opt->config ? LoadFile($opt->opt->config) : {};
-
-        if ($self->warch_run) {
-            system @ARGV;
-            $self->warch_run(undef);
-        }
     }
 
     my $dump;
