@@ -41,7 +41,7 @@ sub pull {
         $cmd = join ' ', 'git', map { $self->shell_quote } $type, @ARGV;
     }
     else {
-        $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git;
+        $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git, $name;
     }
 
     local $CWD = $dir if $dir;
