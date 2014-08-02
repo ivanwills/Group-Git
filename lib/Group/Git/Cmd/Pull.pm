@@ -14,7 +14,7 @@ use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
 
-our $VERSION     = version->new('0.2.1');
+our $VERSION = version->new('0.3.0');
 
 requires 'repos';
 requires 'verbose';
@@ -41,12 +41,12 @@ sub pull {
         $cmd = join ' ', 'git', map { $self->shell_quote } $type, @ARGV;
     }
     else {
-        $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git;
+        $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git, $name;
     }
 
     local $CWD = $dir if $dir;
     warn "$cmd\n" if $self->verbose > 1;
-    return `$cmd`;
+    return `$cmd 2>&1`;
 }
 
 1;
@@ -55,11 +55,11 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Pull - <One-line description of module's purpose>
+Group::Git::Cmd::Pull - Pull latest version of all repositories or clone any that are missing
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Pull version 0.2.1.
+This documentation refers to Group::Git::Cmd::Pull version 0.3.0.
 
 
 =head1 SYNOPSIS

@@ -65,3 +65,6 @@ Debian_CPANTS.txt
 .prove
 errors.err
 tags
+.cpan.tag
+.perl.tag
+fatpacker*

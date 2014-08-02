@@ -40,5 +40,6 @@ add_stopwords(qw/
     admin
     OAuth
     com
+    org
 /);
 all_pod_files_spelling_ok();

@@ -15,7 +15,7 @@ use Path::Class;
 use File::chdir;
 use Group::Git::Repo;
 
-our $VERSION     = version->new('0.2.1');
+our $VERSION = version->new('0.3.0');
 our $AUTOLOAD;
 
 has conf => (
@@ -40,6 +40,11 @@ has verbose => (
 has test => (
     is  => 'rw',
     isa => 'Bool',
+);
+has runs => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 1,
 );
 
 # load all roles in the namespace Group::Git::Cmd::*
@@ -135,7 +140,7 @@ Group::Git - Base module for group of git repository operations.
 
 =head1 VERSION
 
-This documentation refers to Group::Git version 0.2.1.
+This documentation refers to Group::Git version 0.3.0.
 
 =head1 SYNOPSIS
 
@@ -154,8 +159,8 @@ This documentation refers to Group::Git version 0.2.1.
 This is the base module it will try to use all roles in the C<Group::Git::Cmd::*>
 namespace. This allows the creation of new command by just putting a role in that
 namespace. Classes may extend this class to implement their own methods for
-finding repositories (eg L<Group::Git::Github>, L<Group::Git::Bitbucket> and
-L<Group::Git::Gitosis>)
+finding repositories (eg L<Group::Git::Github>, L<Group::Git::Bitbucket>,
+L<Group::Git::Gitosis> and L<Group::Git::Stash>)
 
 =head2 Group-Git vs Git Submodule
 

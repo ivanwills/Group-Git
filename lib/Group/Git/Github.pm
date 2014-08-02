@@ -14,10 +14,7 @@ use English qw/ -no_match_vars /;
 use Net::GitHub;
 use Path::Class;
 
-our $VERSION     = version->new('0.2.1');
-our @EXPORT_OK   = qw//;
-our %EXPORT_TAGS = ();
-#our @EXPORT      = qw//;
+our $VERSION = version->new('0.3.0');
 
 extends 'Group::Git';
 
@@ -35,28 +32,20 @@ sub _repos {
     my $repo = $self->github->repos;
     my @list = $repo->list;
     my $page = 1;
-    my $last_url = '';
 
-    while (@list) {
-        for my $repo (@list) {
-            my $url = $repo->{git_url};
-            # convert urls of the form:
-            #   git://github.com/ivanwills/meteor.git
-            # to
-            #   git@github.com:ivanwills/meteor.git
-            # as git doesn't like the form that github uses
-            $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
+    for my $repo (@list) {
+        my $url = $repo->{git_url};
+        # convert urls of the form:
+        #   git://github.com/ivanwills/meteor.git
+        # to
+        #   git@github.com:ivanwills/meteor.git
+        # as git doesn't like the form that github uses
+        $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
 
-            $repos{ $repo->{name} } = Group::Git::Repo->new(
-                name => dir($repo->{name}),
-                git  => $url,
-            );
-        }
-
-        last if !defined $last_url;
-
-        @list = $repo->next_page if $repo->has_next_page && $repo->next_url ne $last_url;
-        $last_url = $repo->next_url;
+        $repos{ $repo->{name} } = Group::Git::Repo->new(
+            name => dir($repo->{name}),
+            git  => $url,
+        );
     }
 
     return \%repos;
@@ -82,11 +71,11 @@ __END__
 
 =head1 NAME
 
-Group::Git::Github - Adds reading all repositories you have access to on github
+Group::Git::Github - Adds reading all repositories you have access to on github.com
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Github version 0.2.1.
+This documentation refers to Group::Git::Github version 0.3.0.
 
 
 =head1 SYNOPSIS
@@ -94,20 +83,29 @@ This documentation refers to Group::Git::Github version 0.2.1.
    use Group::Git::Github;
 
    # pull (or clone missing) all repositories that joeblogs has created/forked
-   Group::Git::Github->new(
+   my $ggg = Group::Git::Github->new(
        conf => {
            username => 'joeblogs@gmail.com',
            password => 'myverysecurepassword',
        },
-   )->pull;
+   );
 
    # Alternitavely using personal access tokens
    # You can setup at https://github.com/settings/applications
-   Group::Git::Github->new(
+   my $ggg = Group::Git::Github->new(
        conf => {
            access_token => '...',
        },
-   )->pull;
+   );
+
+   # list all repositories
+   my $repositories = $ggg->repo();
+
+   # do something to each repository
+   for my $repo (keys %{$repositories}) {
+       # eg do a pull
+       $ggg->pull($repo);
+   }
 
 =head1 DESCRIPTION
 

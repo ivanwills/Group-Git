@@ -1,4 +1,4 @@
-package Group::Git::Bitbucket;
+package Group::Git::Stash;
 
 # Created on: 2013-05-04 20:18:24
 # Create by:  Ivan Wills
@@ -20,6 +20,10 @@ our $VERSION = version->new('0.3.0');
 
 extends 'Group::Git';
 
+has '+recurse' => (
+    default => 1,
+);
+
 sub _httpenc {
     my ($str) = @_;
     $str =~ s/(\W)/sprintf "%%%x", ord $1/egxms;
@@ -31,24 +35,36 @@ sub _repos {
     my %repos = %{ $self->SUPER::_repos() };
 
     my ($conf) = $self->conf;
-    #EG curl --user buserbb:2934dfad https://api.bitbucket.org/1.0/user/repositories
+    #EG curl --user buserbb:2934dfad https://stash.example.com/rest/api/1.0/repos
 
     my @argv = @ARGV;
     @ARGV = ();
-    my $mech = WWW::Mechanize->new;
-    my $user = _httpenc( $conf->{username} ? $conf->{username} : prompt( -prompt => 'bitbucket username : ' ) );
-    my $pass = _httpenc( $conf->{password} ? $conf->{password} : prompt( -prompt => 'bitbucket password : ', -echo => '*' ) );
-    my $url  = "https://$user:$pass\@api.bitbucket.org/1.0/user/repositories";
+    my $mech  = WWW::Mechanize->new;
+    my $user  = _httpenc( $conf->{username} ? $conf->{username} : prompt( -prompt => 'stash username : ' ) );
+    my $pass  = _httpenc( $conf->{password} ? $conf->{password} : prompt( -prompt => 'stash password : ', -echo => '*' ) );
+    my $url   = "https://$user:$pass\@$conf->{stash_host}/rest/api/1.0/repos?limit=100&start=";
+    my $start = 0;
+    my $more  = 1;
     @ARGV = @argv;
 
-    $mech->get($url);
-    my $repos = decode_json $mech->content;
-    for my $repo ( @$repos ) {
-        $repos{$repo->{name}} = Group::Git::Repo->new(
-            name => dir($repo->{name}),
-            url  => "https://bitbucket.org/$repo->{owner}/$repo->{name}",
-            git  => "git\@bitbucket.org:$repo->{owner}/$repo->{name}.git",
-        );
+    while ($more) {
+        $mech->get( $url . $start++ );
+        my $response = decode_json $mech->content;
+
+        for my $repo (@{ $response->{values} }) {
+            my $project = $repo->{project}{name};
+            my $url     = $repo->{links}{self}[0]{href};
+            my %clone   = map {($_->{name} => $_->{href})} @{ $repo->{links}{clone} };
+            my $dir     = $self->recurse ? dir("$project/$repo->{name}") : dir($repo->{name});
+
+            $repos{$dir} = Group::Git::Repo->new(
+                name => $dir,
+                url  => $url,
+                git  => $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh},
+            );
+            push @{ $conf->{tags}{$project} }, "$dir";
+        }
+        $more = !$response->{isLastPage};
     }
 
     return \%repos;
@@ -60,31 +76,31 @@ __END__
 
 =head1 NAME
 
-Group::Git::Bitbucket - Adds reading all repositories you have access to on bitbucket.org
+Group::Git::Stash - Adds reading all repositories you have access to on your local Stash server
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Bitbucket version 0.3.0.
+This documentation refers to Group::Git::Stash version 0.3.0.
 
 =head1 SYNOPSIS
 
-   use Group::Git::Bitbucket;
+   use Group::Git::Stash;
 
    # pull (or clone missing) all repositories that joeblogs has created/forked
-   my $ggb = Group::Git::Bitbucket->new(
+   my $ggs = Group::Git::Stash->new(
        conf => {
-           username => 'joeblogs@gmail.com',
+           username => 'joeblogs@example.com',
            password => 'myverysecurepassword',
        },
    );
 
    # list all repositories
-   my $repositories = $ggb->repo();
+   my $repositories = $ggs->repo();
 
    # do something to each repository
    for my $repo (keys %{$repositories}) {
        # eg do a pull
-       $ggb->pull($repo);
+       $ggs->pull($repo);
    }
 
 =head1 DESCRIPTION
@@ -97,6 +113,17 @@ prompted to enter one as well as a password)
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT
+
+When using with the C<group-git> command the group-git.yml can be used
+to configure this plugin:
+
+C<group-git.yml>
+
+ ---
+ type: Stash
+ username: stash.user
+ password: supperSecret
+ stash_host: stash.example.com
 
 =head1 DEPENDENCIES
 
