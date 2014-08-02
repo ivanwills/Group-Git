@@ -9,7 +9,7 @@
 use strict;
 use warnings;
 use version;
-use Getopt::Long;
+use Getopt::Alt qw/get_options/;
 use Pod::Usage;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
@@ -27,27 +27,25 @@ exit 0;
 
 sub main {
 
-    my $opt = {
-        page => 1,
-    };
-
-    Getopt::Long::Configure('bundling');
-    GetOptions(
-        $opt,
-        'skip|s=s',
-        'match|m=s',
-        'local|l!',
-        'recurse|r!',
-        'page|p!',
-        'tag|t=s',
-        'test|T!',
-        'verbose|v+',
-        'quiet|q',
-        'man',
-        'help',
-        'VERSION!',
+    my ($opt, $cmd) = get_options(
+        {
+            sub_command => 1,
+            default     => {
+                page => 1,
+            }
+        },
+        [
+            'skip|s=s',
+            'match|m=s',
+            'local|l!',
+            'recurse|r!',
+            'page|p!',
+            'tag|t=s',
+            'test|T!',
+            'verbose|v+',
+            'quiet|q',
+        ]
     );
-    my $cmd = shift @ARGV;
 
     # do stuff here
     my $conf = Config::Any->load_stems({
@@ -60,7 +58,7 @@ sub main {
         @{$conf}
     };
 
-    my $module = $conf->{type} && !$opt->{local} ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
+    my $module = $conf->{type} && !$opt->local ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
     my $file   = "$module.pm";
     $file =~ s{::}{/}g;
     require $file;
@@ -70,13 +68,13 @@ sub main {
     );
 
     my $action = $cmd || ( warn "No command specified!\n" && pod2usage( -verbose => 1 ) );
-    my $skip   = $opt->{skip};
-    my $match  = $opt->{match};
+    my $skip   = $opt->skip;
+    my $match  = $opt->match;
     my %exclude = map { $_ => 1 } @{ $conf->{exclude} || [] };
     my %include = map { $_ => 1 } @{ $conf->{include} || [] };
     my $outfh = \*STDOUT;
 
-    if ($opt->{page}) {
+    if ($opt->page) {
         my $tmp;
         $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
     }
@@ -97,15 +95,15 @@ sub main {
             next if $match && $project !~ /$match/;
             next if $exclude{$project};
             next if %include && !$include{$project};
-            next if !tagged($conf, $opt->{tag}, $project);
+            next if !tagged($conf, $opt->tag, $project);
 
             my $out = $cmd_body->($project);
 
             if ($out) {
                 $project = colored($project, 'blue');
-                print {$outfh} "\n$project\n" unless $opt->{quiet};
+                print {$outfh} "\n$project\n" unless $opt->quiet;
                 print {$outfh} $out;
-                print {$outfh} "-- $project --\n" if $opt->{verbose};
+                print {$outfh} "-- $project --\n" if $opt->verbose;
             }
         }
     }
