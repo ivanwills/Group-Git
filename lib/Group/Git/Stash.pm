@@ -55,7 +55,7 @@ sub _repos {
             my $project = $repo->{project}{name};
             my $url     = $repo->{links}{self}[0]{href};
             my %clone   = map {($_->{name} => $_->{href})} @{ $repo->{links}{clone} };
-            my $dir     = dir("$project/$repo->{name}");
+            my $dir     = $self->recurse ? dir("$project/$repo->{name}") : dir($repo->{name});
 
             $repos{$dir} = Group::Git::Repo->new(
                 name => $dir,
