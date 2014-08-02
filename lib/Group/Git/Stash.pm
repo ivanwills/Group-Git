@@ -50,7 +50,7 @@ sub _repos {
     while ($more) {
         $mech->get( $url . $start++ );
         my $response = decode_json $mech->content;
-        warn "page = $start\n";
+
         for my $repo (@{ $response->{values} }) {
             my $project = $repo->{project}{name};
             my $url     = $repo->{links}{self}[0]{href};
@@ -62,6 +62,7 @@ sub _repos {
                 url  => $url,
                 git  => $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh},
             );
+            push @{ $conf->{tags}{$project} }, "$dir";
         }
         $more = !$response->{isLastPage};
     }
