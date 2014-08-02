@@ -76,7 +76,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Stash - Adds reading all repositories you have access to on stash
+Group::Git::Stash - Adds reading all repositories you have access to on your local Stash server
 
 =head1 VERSION
 
@@ -87,20 +87,20 @@ This documentation refers to Group::Git::Stash version 0.3.0.
    use Group::Git::Stash;
 
    # pull (or clone missing) all repositories that joeblogs has created/forked
-   my $ggb = Group::Git::Stash->new(
+   my $ggs = Group::Git::Stash->new(
        conf => {
-           username => 'joeblogs@gmail.com',
+           username => 'joeblogs@example.com',
            password => 'myverysecurepassword',
        },
    );
 
    # list all repositories
-   my $repositories = $ggb->repo();
+   my $repositories = $ggs->repo();
 
    # do something to each repository
    for my $repo (keys %{$repositories}) {
        # eg do a pull
-       $ggb->pull($repo);
+       $ggs->pull($repo);
    }
 
 =head1 DESCRIPTION
@@ -113,6 +113,17 @@ prompted to enter one as well as a password)
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT
+
+When using with the C<group-git> command the group-git.yml can be used
+to configure this plugin:
+
+C<group-git.yml>
+
+ ---
+ type: Stash
+ username: stash.user
+ password: supperSecret
+ stash_host: stash.example.com
 
 =head1 DEPENDENCIES
 
