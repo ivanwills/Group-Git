@@ -46,7 +46,7 @@ sub pull {
 
     local $CWD = $dir if $dir;
     warn "$cmd\n" if $self->verbose > 1;
-    return `$cmd`;
+    return `$cmd 2>&1`;
 }
 
 1;
