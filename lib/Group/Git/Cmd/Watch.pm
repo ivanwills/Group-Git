@@ -115,7 +115,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Watch - watch for changes in repositories and run a command
+Group::Git::Cmd::Watch - Watch for changes in repositories and run a command
 
 =head1 VERSION
 

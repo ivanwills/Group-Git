@@ -159,8 +159,8 @@ This documentation refers to Group::Git version 0.3.0.
 This is the base module it will try to use all roles in the C<Group::Git::Cmd::*>
 namespace. This allows the creation of new command by just putting a role in that
 namespace. Classes may extend this class to implement their own methods for
-finding repositories (eg L<Group::Git::Github>, L<Group::Git::Bitbucket> and
-L<Group::Git::Gitosis>)
+finding repositories (eg L<Group::Git::Github>, L<Group::Git::Bitbucket>,
+L<Group::Git::Gitosis> and L<Group::Git::Stash>)
 
 =head2 Group-Git vs Git Submodule
 

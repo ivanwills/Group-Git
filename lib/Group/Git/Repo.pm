@@ -8,9 +8,6 @@ package Group::Git::Repo;
 
 use Moose;
 use version;
-use Carp;
-use Data::Dumper qw/Dumper/;
-use English qw/ -no_match_vars /;
 
 our $VERSION = version->new('0.3.0');
 
@@ -35,7 +32,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Repo - <One-line description of module's purpose>
+Group::Git::Repo - Git repository details object.
 
 =head1 VERSION
 
@@ -46,12 +43,17 @@ This documentation refers to Group::Git::Repo version 0.3.0.
 
    use Group::Git::Repo;
 
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
-
+   # create a new repository object
+   my $ggr = Group::Git::Repo->new(
+       name => 'some-repo',
+       url  => 'http://example.com/some-repo/',
+       git  => 'git@example.com/some-repo.git',
+   );
 
 =head1 DESCRIPTION
+
+C<Group::Git::Repo> stores the basic information about a git repository for
+other L<Group::Git> modules to use. It does nothing by it's self.
 
 =head1 SUBROUTINES/METHODS
 

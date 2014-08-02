@@ -60,7 +60,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Bitbucket - Adds reading all repositories you have access to on bitbucket
+Group::Git::Bitbucket - Adds reading all repositories you have access to on bitbucket.org
 
 =head1 VERSION
 

@@ -55,7 +55,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Pull - <One-line description of module's purpose>
+Group::Git::Cmd::Pull - Pull latest version of all repositories or clone any that are missing
 
 =head1 VERSION
 

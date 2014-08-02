@@ -73,7 +73,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Gitosis - <One-line description of module's purpose>
+Group::Git::Gitosis - Adds reading all repositories you have access to on a gitosis host
 
 =head1 VERSION
 
@@ -83,10 +83,6 @@ This documentation refers to Group::Git::Gitosis version 0.3.0.
 =head1 SYNOPSIS
 
    use Group::Git::Gitosis;
-
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
 
    # pull (or clone missing) all repositories that joeblogs has created/forked
    my $ggg = Group::Git::Github->new(

@@ -71,7 +71,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Github - Adds reading all repositories you have access to on github
+Group::Git::Github - Adds reading all repositories you have access to on github.com
 
 =head1 VERSION
 
