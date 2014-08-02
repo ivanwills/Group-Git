@@ -12,6 +12,7 @@ lib/Group/Git/Github.pm
 lib/Group/Git/Gitosis.pm
 lib/Group/Git.pm
 lib/Group/Git/Repo.pm
+lib/Group/Git/Stash.pm
 LICENSE
 Makefile.PL
 MANIFEST
