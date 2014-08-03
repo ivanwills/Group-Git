@@ -33,7 +33,8 @@ sub status {
 
     local $CWD = $name;
     $cmd = join ' ', 'git', 'status', map { $self->shell_quote } @ARGV;
-    my $out = `$cmd`;
+
+    my $out = `$cmd 2>&1`;
 
     return $out if $self->verbose;
 
