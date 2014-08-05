@@ -15,7 +15,7 @@ use Path::Class;
 use File::chdir;
 use Group::Git::Repo;
 
-our $VERSION = version->new('0.3.0');
+our $VERSION = version->new('0.3.1');
 our $AUTOLOAD;
 
 has conf => (
@@ -140,7 +140,7 @@ Group::Git - Base module for group of git repository operations.
 
 =head1 VERSION
 
-This documentation refers to Group::Git version 0.3.0.
+This documentation refers to Group::Git version 0.3.1.
 
 =head1 SYNOPSIS
 

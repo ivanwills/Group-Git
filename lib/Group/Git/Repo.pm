@@ -9,7 +9,7 @@ package Group::Git::Repo;
 use Moose;
 use version;
 
-our $VERSION = version->new('0.3.0');
+our $VERSION = version->new('0.3.1');
 
 extends 'Group::Git';
 
@@ -36,7 +36,7 @@ Group::Git::Repo - Git repository details object.
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Repo version 0.3.0.
+This documentation refers to Group::Git::Repo version 0.3.1.
 
 
 =head1 SYNOPSIS

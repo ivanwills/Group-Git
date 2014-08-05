@@ -15,7 +15,7 @@ use Path::Class;
 use File::chdir;
 use Path::Class;
 
-our $VERSION = version->new('0.3.0');
+our $VERSION = version->new('0.3.1');
 
 extends 'Group::Git';
 
@@ -77,7 +77,7 @@ Group::Git::Gitosis - Adds reading all repositories you have access to on a gito
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Gitosis version 0.3.0.
+This documentation refers to Group::Git::Gitosis version 0.3.1.
 
 
 =head1 SYNOPSIS
