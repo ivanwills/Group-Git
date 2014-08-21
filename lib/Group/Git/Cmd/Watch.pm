@@ -105,10 +105,6 @@ sub watch {
     return;
 }
 
-sub watch_end {
-    return "Do you have any repositories?\n";
-}
-
 1;
 
 __END__
@@ -154,6 +150,10 @@ Runs git watch on each directory if the watch message includes:
 
 The watch is suppressed to keep the output clean. This can be overridden
 if verbose is set.
+
+=item C<watch_start ()>
+
+Process the command line arguments for watch
 
 =back
 
