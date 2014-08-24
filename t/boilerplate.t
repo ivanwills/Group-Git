@@ -37,7 +37,7 @@ sub module_boilerplate_ok {
     );
 }
 
-not_in_file_ok(README =>
+not_in_file_ok((-f '../README' ? 'README' : 'README.pod') =>
     "The README is used..."       => qr/The README is used/,
     "'version information here'"  => qr/to provide version information/,
 );
@@ -47,4 +47,14 @@ not_in_file_ok(Changes =>
 );
 
 module_boilerplate_ok('lib/Group/Git.pm');
-
+module_boilerplate_ok('lib/Group/Git/Bitbucket.pm');
+module_boilerplate_ok('lib/Group/Git/Gitosis.pm');
+module_boilerplate_ok('lib/Group/Git/Stash.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Watch.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Pull.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Branch.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Status.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Help.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Sh.pm');
+module_boilerplate_ok('lib/Group/Git/Github.pm');
+module_boilerplate_ok('lib/Group/Git/Repo.pm');
