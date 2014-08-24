@@ -1,6 +1,6 @@
 =pod
 
-=for html
+=begin html
 
 <a href="https://travis-ci.org/ivanwills/Group-Git"><img src="https://travis-ci.org/ivanwills/Group-Git.png" alt="Group-Git"></a>
 
