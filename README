@@ -1,10 +1,16 @@
-Group-Git
+=pod
+
+=for html
+
+<a href="https://travis-ci.org/ivanwills/Group-Git"><img src="https://travis-ci.org/ivanwills/Group-Git.png" alt="Group-Git"></a>
+
+=head 1 Group-Git
 
 Tool for operating on many git repositories at once. The repositories can be
 managed by Github, Bitbucket, Gitosis or not at all. If managed uncloned
 repositories will be automatically cloned.
 
-INSTALLATION
+=head 1 INSTALLATION
 
 To install this module, run the following commands:
 
@@ -13,7 +19,7 @@ To install this module, run the following commands:
     ./Build test
     ./Build install
 
-SUPPORT AND DOCUMENTATION
+=head 1 SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
 perldoc command.
@@ -37,7 +43,7 @@ You can also look for information at:
     Source Code
         git://github.com/ivanwills/Group-Git.git
 
-COPYRIGHT AND LICENCE
+=head 1 COPYRIGHT AND LICENCE
 
 Copyright (C) 2013 Ivan Wills
 
@@ -47,3 +53,4 @@ by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
+=cut
