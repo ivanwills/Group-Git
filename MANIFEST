@@ -19,7 +19,7 @@ MANIFEST
 MANIFEST.SKIP
 META.json
 META.yml
-README
+README.pod
 t/00-load.t
 t/boilerplate.t
 t/critic.t

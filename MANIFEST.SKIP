@@ -47,8 +47,10 @@
 #   Mac OSX SMB mount metadata files
 \B\._
 
-# Avoid vim temporary file
-.*\.sw[po]$
+# Avoid vim temporary file and other vim generated files
+.*\.sw[ponxmn]$
+.vimtagsdisplay
+tags
 
 # This generated file
 \bMYMETA.yml$
@@ -63,6 +65,7 @@ Debian_CPANTS.txt
 \bGroup-Git-[\d\.\_]+
 
 .prove
+\.travis.yml
 errors.err
 tags
 .cpan.tag
