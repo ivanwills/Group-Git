@@ -9,7 +9,6 @@ package Group::Git;
 use Moose;
 use version;
 use Carp;
-use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use Path::Class;
 use File::chdir;
