@@ -20,8 +20,16 @@ requires 'verbose';
 
 my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
-    [ 'quote|q!', ]
+    [
+        'quiet|q',
+    ]
 );
+
+sub status_start {
+    $opt->process;
+
+    return;
+}
 
 sub status {
     my ($self, $name) = @_;
