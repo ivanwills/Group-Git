@@ -9,7 +9,6 @@ package Group::Git::Cmd::Status;
 use Moose::Role;
 use version;
 use Carp;
-use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
@@ -21,8 +20,16 @@ requires 'verbose';
 
 my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
-    [ 'quote|q!', ]
+    [
+        'quiet|q',
+    ]
 );
+
+sub status_start {
+    $opt->process;
+
+    return;
+}
 
 sub status {
     my ($self, $name) = @_;

@@ -9,7 +9,6 @@ package Group::Git::Bitbucket;
 use Moose;
 use version;
 use Carp;
-use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use IO::Prompt qw/prompt/;
 use JSON qw/decode_json/;

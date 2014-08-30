@@ -9,7 +9,6 @@ package Group::Git::Cmd::Watch;
 use Moose::Role;
 use version;
 use Carp;
-use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
