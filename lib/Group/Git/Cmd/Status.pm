@@ -87,6 +87,10 @@ Runs git status on each directory if the status message includes:
 The status is suppressed to keep the output clean. This can be overridden
 if verbose is set.
 
+=item C<status_start ()>
+
+Process the command line arguments for status
+
 =back
 
 =head1 DIAGNOSTICS

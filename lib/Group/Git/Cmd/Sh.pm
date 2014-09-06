@@ -96,7 +96,7 @@ Runs all the reset of the command line in each directory as a shell script.
 
 =item C<sh_start ()>
 
-Process the command line arguments for watch
+Process the command line arguments for sh
 
 =back
 

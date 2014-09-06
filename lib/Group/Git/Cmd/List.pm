@@ -61,14 +61,9 @@ This documentation refers to Group::Git::Cmd::List version 0.3.2.
 
 =over 4
 
-=item C<status ($name)>
+=item C<list ($name)>
 
-Runs git status on each directory if the status message includes:
-
- "nothing to commit"
-
-The status is suppressed to keep the output clean. This can be overridden
-if verbose is set.
+Just prints C<$name> to STDERR if such a directory exists.
 
 =back
 
