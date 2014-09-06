@@ -80,6 +80,7 @@ sub main {
     if ($opt->page) {
         my $tmp;
         $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
+        $group->paging(1);
     }
 
     my $cmd_start = do_cmd( $group, $action . '_start' );

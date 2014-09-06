@@ -45,6 +45,10 @@ has runs => (
     isa     => 'Int',
     default => 1,
 );
+has paging => (
+    is      => 'rw',
+    isa     => 'Bool',
+);
 
 # load all roles in the namespace Group::Git::Cmd::*
 my %modules;
