@@ -77,6 +77,10 @@ This documentation refers to Group::Git::Cmd::Sh version 0.3.2.
    -q --quote   Quote the program arguments before running saves you from
                 having to work out the next level quoting but stops you from
                 using other shell options eg piping (|).
+   -i --interactive
+                Stops capturing STDOUT so that interactive programs will
+                work as expected eg if program is bash this will let you
+                see the results of commands run
 
 =head1 DESCRIPTION
 
