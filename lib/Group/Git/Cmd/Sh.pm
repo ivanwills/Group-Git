@@ -20,7 +20,10 @@ requires 'verbose';
 
 my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
-    [ 'quote|q!', ]
+    [
+        'quote|q!',
+        'interactive|i',
+    ]
 );
 
 sub sh_start {
@@ -40,6 +43,10 @@ sub sh {
         = $opt->opt->quote
         ? join ' ', map { $self->shell_quote } @ARGV
         : join ' ', @ARGV;
+    if ($opt->opt->interactive) {
+        system $cmd;
+        return;
+    }
     my $out = `$cmd`;
 
     return $out if $self->verbose;
