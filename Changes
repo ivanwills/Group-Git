@@ -1,5 +1,18 @@
 Revision history for Group-Git
 
+0.3.3   2014-09-06
+        Updated test (Ivan Wills)
+        Add in missing documentation (Ivan Wills)
+        Added passing the paging info to sub commands (Ivan Wills)
+        Added ability to do interactive things (ie no cleaning of out put) eg running bash (Ivan Wills)
+        new sub command for listing found repositories (Ivan Wills)
+        Merge branch 'master' of github.com:ivanwills/Group-Git (Ivan Wills)
+        Fixed loading sub-options (Ivan Wills)
+        Removed unused modules (Ivan Wills)
+        Trying to improve performance by removing unused dependencies (Ivan Wills)
+        Merge branch 'master' of github.com:ivanwills/Group-Git (Ivan Wills)
+        Updating for release of version 0.3.2 (Ivan Wills)
+
 0.3.2   2014-08-26
         Cleaned up manifest (Ivan Wills)
         Fixed boilerplate test (Ivan Wills)

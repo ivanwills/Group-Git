@@ -13,7 +13,7 @@ use English qw/ -no_match_vars /;
 use Path::Class;
 use File::chdir;
 
-our $VERSION = version->new('0.3.2');
+our $VERSION = version->new('0.3.3');
 
 extends 'Group::Git';
 
@@ -75,7 +75,7 @@ Group::Git::Gitosis - Adds reading all repositories you have access to on a gito
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Gitosis version 0.3.2.
+This documentation refers to Group::Git::Gitosis version 0.3.3.
 
 
 =head1 SYNOPSIS
