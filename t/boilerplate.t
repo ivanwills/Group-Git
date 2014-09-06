@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 15 + 1;
+use Test::More tests => 16 + 1;
 use Test::NoWarnings;
 
 sub not_in_file_ok {
@@ -68,6 +68,7 @@ module_boilerplate_ok('lib/Group/Git/Cmd/Pull.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/Branch.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/Status.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/Help.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/List.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/Sh.pm');
 module_boilerplate_ok('lib/Group/Git/Github.pm');
 module_boilerplate_ok('lib/Group/Git/Repo.pm');
