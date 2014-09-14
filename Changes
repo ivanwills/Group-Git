@@ -1,5 +1,9 @@
 Revision history for Group-Git
 
+0.3.4   2014-09-14
+        Fixed manifest (Ivan Wills)
+        Added in new module (Ivan Wills)
+
 0.3.3   2014-09-06
         Updated test (Ivan Wills)
         Add in missing documentation (Ivan Wills)
