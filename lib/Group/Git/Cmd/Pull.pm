@@ -20,8 +20,14 @@ requires 'verbose';
 
 my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
-    [ 'quote|q!', ]
+    [ 'quiet|q!', ]
 );
+
+sub update_start { shift->pull_start($_[0], 'update') }
+sub pull_start {
+    $opt->process;
+    return;
+}
 
 sub update { shift->pull($_[0], 'update') }
 sub pull {
@@ -45,7 +51,13 @@ sub pull {
 
     local $CWD = $dir if $dir;
     warn "$cmd\n" if $self->verbose > 1;
-    return `$cmd 2>&1`;
+    return `$cmd 2>&1` if !$opt->opt->quiet;
+
+    my @ans = `$cmd 2>&1`;
+
+    return if @ans == 1 && $ans[0] =~ /^Already \s up-to-date[.]$/xms;
+
+    return wantarray ? @ans : join '', @ans;
 }
 
 1;
