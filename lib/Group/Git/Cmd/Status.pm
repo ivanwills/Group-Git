@@ -45,7 +45,7 @@ sub status {
 
     return $out if $self->verbose;
 
-    return if $out =~ /nothing \s+ to \s+ commit/xms;
+    return if $out =~ /nothing \s+ to \s+ commit/xms && $opt->opt->quiet;
 
     return $out;
 }
