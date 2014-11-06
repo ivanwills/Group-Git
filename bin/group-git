@@ -9,6 +9,7 @@
 use strict;
 use warnings;
 use version;
+use List::MoreUtils qw/uniq/;
 use Getopt::Alt qw/get_options/;
 use English qw/ -no_match_vars /;
 use Path::Class;
@@ -26,8 +27,9 @@ sub main {
 
     my ($opt, $cmd) = get_options(
         {
-            sub_command => 1,
-            default     => {
+            sub_command   => 1,
+            auto_complete => \&auto,
+            default       => {
                 page => 1,
             }
         },
@@ -159,6 +161,56 @@ sub tagged {
 
     # return true if the project is tagged in the config file or has a tag file
     return $tagged->{$project} || -e "$project/.$tag.tag";
+}
+
+sub auto {
+    my ($opt, $auto, $errors) = @_;
+
+    my @commands = _commands();
+
+    use Data::Dumper qw/Dumper/;
+    print join "\n", @commands, '';
+    return;
+}
+
+sub _commands {
+    $ENV{TMP} ||= $ENV{HOME};
+    my $cache = file "$ENV{TMP}/.group-git-commands";
+    if ( -f $cache ) {
+        return split /\n/, $cache->slurp;
+    }
+
+    # get all the commands
+    my @commands;
+    # first up the module commands
+    for my $dir (@INC) {
+        next if !-d $dir;
+        my $module_dir = dir($dir, qw/Group Git Cmd/);
+        next if !-d $module_dir;
+
+        for my $module ( $module_dir->children ) {
+            next if $module !~ /[.]pm$/;
+            my $cmd = lc join '-', split /(?<=[a-z])(?=[A-Z])/, $module->basename;
+            $cmd =~ s/[.]pm//;
+            push @commands, $cmd;
+        }
+    }
+
+    # then get any found in the path
+    for my $dir (split /:/, $ENV{PATH}) {
+        next if !-d $dir;
+
+        for my $file ( dir($dir)->children ) {
+            next if $file !~ /group-git-[\w-]+$/;
+            my ($cmd) = $file =~ /group-git-([\w-]+)$/;
+            push @commands, $cmd;
+        }
+    }
+
+    # save the found commands for next time
+    $cache->spew(join "\n", @commands);
+
+    return ( sort uniq @commands );
 }
 
 __DATA__
