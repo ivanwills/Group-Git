@@ -207,6 +207,12 @@ sub _commands {
         }
     }
 
+    for my $env ($ENV{__git_all_commands}, $ENV{__git_porcelain_commands}) {
+        next if !$env;
+        $env =~ s/^.*[(][)]\s*//;
+        push @commands, split /\s+/, $env;
+    }
+
     # save the found commands for next time
     $cache->spew(join "\n", @commands);
 
