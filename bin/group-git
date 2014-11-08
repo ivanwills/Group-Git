@@ -201,8 +201,8 @@ sub _commands {
         next if !-d $dir;
 
         for my $file ( dir($dir)->children ) {
-            next if $file !~ /group-git-[\w-]+$/;
-            my ($cmd) = $file =~ /group-git-([\w-]+)$/;
+            next if $file !~ /(?:group-)?git-[\w-]+$/;
+            my ($cmd) = $file =~ /(?:group-)?git-([\w-]+)$/;
             push @commands, $cmd;
         }
     }
