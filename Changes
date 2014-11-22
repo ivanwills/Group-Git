@@ -1,6 +1,17 @@
 Revision history for Group-Git
 
+0.4.0   2014-11-22
+        Updating for release of version 0.4.0 (Ivan Wills)
+        Added new dependency (Ivan Wills)
+        Added missing documentation (Ivan Wills)
+        Added using git bash completion variables to complete more git commands (Ivan Wills)
+        Added picking up custom git commands (Ivan Wills)
+        Implementing auto complete helpers (Ivan Wills)
+        Added processing options and a quiet mode (Ivan Wills)
+        Added using quiet to status (Ivan Wills)
+
 0.3.4   2014-09-14
+        Updating for release of version 0.3.4 (Ivan Wills)
         Fixed manifest (Ivan Wills)
         Added in new module (Ivan Wills)
 

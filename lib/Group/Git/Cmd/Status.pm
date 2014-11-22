@@ -13,7 +13,7 @@ use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
 
-our $VERSION = version->new('0.3.4');
+our $VERSION = version->new('0.4.0');
 
 requires 'repos';
 requires 'verbose';
@@ -60,7 +60,7 @@ Group::Git::Cmd::Status - Runs git status on a git project
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Status version 0.3.4.
+This documentation refers to Group::Git::Cmd::Status version 0.4.0.
 
 
 =head1 SYNOPSIS
