@@ -98,6 +98,14 @@ will clone that repository.
 Runs git update on all repositories, if a repository doesn't exist on disk this
 will clone that repository.
 
+=item C<pull_start ()>
+
+Pre-process pull options
+
+=item C<update_start ()>
+
+Pre-process update options
+
 =back
 
 =head1 DIAGNOSTICS
