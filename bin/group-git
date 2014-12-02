@@ -264,14 +264,19 @@ This documentation refers to group-git version 0.4.0.
      --man      Prints the full documentation for group-git
 
   eg
+   # run "git log -n 1" in each repository
    group-git log -- -n 1
-   group-git --local status
-   group-git --verbose grep 'where is it'
+   # run "git pull" for only repositories tagged with "perl"
    group-git --tag perl pull
+   # run "git grep 'where is it'" for each repository showing the repository even if nothing found
+   group-git --verbose grep 'where is it'
+   # run "git status" with out trying to get new repositories (configured in .group-git.yml)
+   group-git --local status
 
 =head1 DESCRIPTION
 
-Run any git command over all repositories in the current directory.
+Run any git command over all repositories in the current directory or sub
+directories if C<--recurse> is used.
 
 =head2 Configuration
 
