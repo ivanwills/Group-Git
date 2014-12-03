@@ -25,12 +25,25 @@ exit 0;
 
 sub main {
 
+
+    # do stuff here
+    my $conf = Config::Any->load_stems({
+        stems   => [ qw/group group-git/ ],
+        use_ext => 1,
+    });
+    $conf = {
+        map { %$_        }
+        map { values %$_ }
+        @{$conf}
+    };
+
     my ($opt, $cmd) = get_options(
         {
             sub_command   => 1,
             auto_complete => \&auto,
             default       => {
                 page => 1,
+                %{ $conf },
             }
         },
         [
@@ -45,17 +58,6 @@ sub main {
             'quiet|q',
         ]
     );
-
-    # do stuff here
-    my $conf = Config::Any->load_stems({
-        stems   => [ qw/group group-git/ ],
-        use_ext => 1,
-    });
-    $conf = {
-        map { %$_        }
-        map { values %$_ }
-        @{$conf}
-    };
 
     my $module = $conf->{type} && !$opt->local ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
     my $file   = "$module.pm";
