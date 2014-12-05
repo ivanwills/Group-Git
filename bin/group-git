@@ -333,6 +333,11 @@ clone any repository that are not currently checked out in the current directory
  #    - project2
  #    - project3
 
+ # Aliases of commands can be made using the aliases element in a similar
+ # fashon to git's own aliases functionality
+ #aliases:
+ #  log: log --oneline
+
 For Github and Bitbucket if username or password are missing you will be
 prompted to enter the details.
 
