@@ -41,6 +41,7 @@ sub main {
         {
             sub_command   => 1,
             auto_complete => \&auto,
+            conf_prefix   => '',
             default       => {
                 page => 1,
                 %{ $conf },
