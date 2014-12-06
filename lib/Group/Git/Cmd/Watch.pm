@@ -14,7 +14,7 @@ use File::chdir;
 use Getopt::Alt;
 use YAML::Syck qw/LoadFile DumpFile/;
 
-our $VERSION = version->new('0.4.0');
+our $VERSION = version->new('0.4.1');
 
 requires 'repos';
 requires 'verbose';
@@ -114,7 +114,7 @@ Group::Git::Cmd::Watch - Watch for changes in repositories and run a command
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Watch version 0.4.0.
+This documentation refers to Group::Git::Cmd::Watch version 0.4.1.
 
 
 =head1 SYNOPSIS

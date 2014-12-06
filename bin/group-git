@@ -17,7 +17,7 @@ use Group::Git;
 use Config::Any;
 use Term::ANSIColor qw/colored/;
 
-our $VERSION = version->new('0.4.0');
+our $VERSION = version->new('0.4.1');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 main();
@@ -230,7 +230,7 @@ group-git - Perform operations over many git repositories at once
 
 =head1 VERSION
 
-This documentation refers to group-git version 0.4.0.
+This documentation refers to group-git version 0.4.1.
 
 =head1 SYNOPSIS
 

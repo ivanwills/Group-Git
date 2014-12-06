@@ -1,5 +1,13 @@
 Revision history for Group-Git
 
+0.4.1   2014-12-06
+        Updating for release of version 0.4.1 (Ivan Wills)
+        Licence updated (Ivan Wills)
+        Changed version of Getop::Alt dependency (Ivan Wills)
+        Added documentation about aliases (Ivan Wills)
+        Added setting Getopt::Alt's prefix so that the same config files are shared (Ivan Wills)
+        Moved the config loading earlier so it's values can be used as defaults for command line options (Ivan Wills)
+
 0.4.0   2014-11-22
         Updating for release of version 0.4.0 (Ivan Wills)
         Added new dependency (Ivan Wills)
