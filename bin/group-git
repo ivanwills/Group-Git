@@ -55,6 +55,7 @@ sub main {
             'page|p!',
             'tag|t=s',
             'test|T!',
+            'bw',
             'verbose|v+',
             'quiet|q',
         ]
@@ -109,7 +110,7 @@ sub main {
             my $out = $cmd_body->($project);
 
             if ($out) {
-                $project = colored($project, 'blue');
+                $project = colored($project, 'blue') if !$opt->bw;
                 print {$outfh} "\n$project\n" unless $opt->quiet;
                 print {$outfh} $out;
                 print {$outfh} "-- $project --\n" if $opt->verbose;
@@ -249,6 +250,7 @@ This documentation refers to group-git version 0.4.1.
                 Only opperate on repositories tagged with str (tags can be
                 specified in the config file see --man or with a file .[tag].tag
                 in the project directory)
+     --bw       Don't colour the repository names in the output.
 
   Finding projects:
   -r --recurse  Recurses into subdirectories to check if they contain git
