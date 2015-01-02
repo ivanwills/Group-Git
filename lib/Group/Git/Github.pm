@@ -26,26 +26,41 @@ has github => (
 
 sub _repos {
     my ($self) = @_;
+    my ($conf) = $self->conf;
     my %repos = %{ $self->SUPER::_repos() };
+
 
     my $repo = $self->github->repos;
     my @list = $repo->list;
-    my $page = 1;
+    my $page = 0;
+    do {
+        $page++;
+        @list = $repo->query( $repo->next_url ) if !@list;
 
-    for my $repo (@list) {
-        my $url = $repo->{git_url};
-        # convert urls of the form:
-        #   git://github.com/ivanwills/meteor.git
-        # to
-        #   git@github.com:ivanwills/meteor.git
-        # as git doesn't like the form that github uses
-        $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
+        for my $repo (@list) {
+            my $url = $repo->{git_url};
+            # convert urls of the form:
+            #   git://github.com/ivanwills/meteor.git
+            # to
+            #   git@github.com:ivanwills/meteor.git
+            # as git doesn't like the form that github uses
+            $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
 
-        $repos{ $repo->{name} } = Group::Git::Repo->new(
-            name => dir($repo->{name}),
-            git  => $url,
-        );
-    }
+            $repos{ $repo->{name} } = Group::Git::Repo->new(
+                name => dir($repo->{name}),
+                git  => $url,
+            );
+
+            # tag fork repos and original repos
+            if ( $repo->{fork} ) {
+                push @{ $conf->{tags}{forks} }, $repo->{name};
+            }
+            else {
+                push @{ $conf->{tags}{originals} }, $repo->{name};
+            }
+        }
+        @list = ();
+    } while ( $repo->has_next_page );
 
     return \%repos;
 }
