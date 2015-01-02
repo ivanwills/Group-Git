@@ -125,8 +125,13 @@ sub main {
 
 sub do_cmd {
     my ($group, $cmd, $fallback) = @_;
+    my $cmd_under = $cmd;
+    $cmd_under =~ s/-/_/g;
     if ( $group->can($cmd) ) {
         return sub { $group->$cmd( @_ ) };
+    }
+    elsif ( $group->can($cmd_under) ) {
+        return sub { $group->$cmd_under( @_ ) };
     }
     else {
         for my $path ( split /[:;]/, $ENV{PATH} ) {
@@ -172,7 +177,6 @@ sub auto {
 
     my @commands = _commands();
 
-    use Data::Dumper qw/Dumper/;
     print join "\n", @commands, '';
     return;
 }
