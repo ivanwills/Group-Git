@@ -1,5 +1,12 @@
 Revision history for Group-Git
 
+0.4.2   2015-01-03
+        Updating for release of version 0.4.2
+        Updated LICENSE (Ivan Wills)
+        Fixed not paginating repo results (and added tagging original and forked repos) (Ivan Wills)
+        Made it possible to have modules that methods with _ treated as - (Ivan Wills)
+        Added "black and white" option for no colouring (Ivan Wills)
+
 0.4.1   2014-12-06
         Updating for release of version 0.4.1 (Ivan Wills)
         Licence updated (Ivan Wills)
