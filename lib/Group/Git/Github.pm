@@ -29,7 +29,6 @@ sub _repos {
     my ($conf) = $self->conf;
     my %repos = %{ $self->SUPER::_repos() };
 
-
     my $repo = $self->github->repos;
     my @list = $repo->list;
     my $page = 0;
