@@ -22,6 +22,7 @@ my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
     [
         'verbose|v+',
+        'count|c',
     ]
 );
 
@@ -37,7 +38,8 @@ sub tag_list_start {
     $self->repos;
 
     for my $tag (sort keys %{ $conf->{tags} }) {
-        $out .= "$tag\n";
+        my $count = $opt->opt->count ? ' (' . @{ $conf->{tags}{$tag} } . ')' : '';
+        $out .= "$tag$count\n";
         if ($opt->opt->verbose) {
             for my $repo (sort @{ $conf->{tags}{$tag} }) {
                 $out .= "  $repo\n";
