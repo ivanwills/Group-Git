@@ -68,12 +68,17 @@ This documentation refers to Group::Git::Cmd::TagList version 0.4.2.
 
 =head1 SYNOPSIS
 
-   use Group::Git::Cmd::TagList;
+   grou-git tag-list [-v|--verbose] [-c|--count]
+   grou-git tag-list --help
+   grou-git tag-list --man
+   grou-git tag-list --version
 
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
-
+  Options:
+   -c --count       Show a count of repositories in each tag
+   -v --verbose     Show the repositories in each tag
+      --help        Show the help information
+      --man         Show full documentation
+      --version     Show the version information
 
 =head1 DESCRIPTION
 
