@@ -16,6 +16,7 @@ use_ok('Group::Git::Cmd::Status');
 use_ok('Group::Git::Cmd::Help');
 use_ok('Group::Git::Cmd::List');
 use_ok('Group::Git::Cmd::Sh');
+use_ok('Group::Git::Cmd::TagList');
 use_ok('Group::Git::Cmd::Watch');
 
 diag( "Testing Group::Git $Group::Git::VERSION, Perl $], $^X" );

@@ -2,8 +2,8 @@
 
 use strict;
 use warnings;
-use Test::More tests => 16 + 1;
-use Test::NoWarnings;
+use Test::More;
+use Test::Warnings;
 
 sub not_in_file_ok {
     my ($filename, %regex) = @_;
@@ -70,5 +70,7 @@ module_boilerplate_ok('lib/Group/Git/Cmd/Status.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/Help.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/List.pm');
 module_boilerplate_ok('lib/Group/Git/Cmd/Sh.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/TagList.pm');
 module_boilerplate_ok('lib/Group/Git/Github.pm');
 module_boilerplate_ok('lib/Group/Git/Repo.pm');
+done_testing();
