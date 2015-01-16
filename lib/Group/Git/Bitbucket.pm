@@ -15,7 +15,7 @@ use JSON qw/decode_json/;
 use WWW::Mechanize;
 use Path::Class;
 
-our $VERSION = version->new('0.4.2');
+our $VERSION = version->new('0.4.3');
 
 extends 'Group::Git';
 
@@ -63,7 +63,7 @@ Group::Git::Bitbucket - Adds reading all repositories you have access to on bitb
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Bitbucket version 0.4.2.
+This documentation refers to Group::Git::Bitbucket version 0.4.3.
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,13 @@
 Revision history for Group-Git
 
+0.4.3   2015-01-16
+        Updating for release of version 0.4.3
+        Updated tests with new command (Ivan Wills)
+        Added documentation (Ivan Wills)
+        Added --count option to show the number of repos in each tag (Ivan Wills)
+        Added new files (Ivan Wills)
+        Added task list (Ivan Wills)
+
 0.4.2   2015-01-03
         Updating for release of version 0.4.2
         Updated LICENSE (Ivan Wills)
