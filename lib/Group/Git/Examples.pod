@@ -1,0 +1,93 @@
+=head1 NAME
+
+Group::Git::Examples - Some example usage of group-git
+
+=head1 VERSION
+
+This documentation refers to Group::Git::Examples version 0.4.3
+
+=head1 EXAMPLES
+
+=head2 Tags
+
+Repository tags can be specified in 3 different:
+
+=over 4
+
+=item *
+
+Automatically : The L<Group::Git::Github> and L<Group::Git::Stash> plugins both
+generate tags
+
+=over 4
+
+=item *
+
+L<Group::Git::Github> adds a tag for all repositories that are forks of other repositories
+
+=item *
+
+L<Group::Git::Stash> adds tags for repositories based on their project
+
+=back
+
+=item *
+
+In the C<group-git.yml> you can also specify tags
+
+    ---
+    # other options
+    tags:
+        mytag:
+            - repo1
+            - repo2
+        other:
+            - repo1
+            - repo3
+
+=item *
+
+The final way is in the repositories them selves add a file in the root in the
+format .{tag}.tag
+
+=back
+
+Tags can be used to include only repositories that match:
+
+    $ group-git --tag mytag pull
+    # or short hand
+    $ group-git -t mytag pull
+
+Note: that the tag must be specified before the command to execute
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+A full explanation of any configuration system(s) used by the module, including
+the names and locations of any configuration files, and the meaning of any
+environment variables or properties that can be set. These descriptions must
+also include details of any configuration language used.
+
+=head1 BUGS AND LIMITATIONS
+
+There are no known bugs in this module.
+
+Please report problems to Ivan Wills (ivan.wills@gmail.com).
+
+Patches are welcome.
+
+=head1 AUTHOR
+
+Ivan Wills - (ivan.wills@gmail.com)
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (c) 2015 Ivan Wills (14 Mullion Close, Hornsby Heights, NSW Australia 2077).
+All rights reserved.
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself. See L<perlartistic>.  This program is
+distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+=cut
