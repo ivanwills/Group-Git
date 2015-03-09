@@ -71,7 +71,7 @@ sub watch {
     {
         local $CWD = $name;
         my ($id, $out);
-        `git fetch`;
+        `git fetch --quiet`;
 
         if ($opt->opt->all) {
             ($out) = `git reflog --all`;
