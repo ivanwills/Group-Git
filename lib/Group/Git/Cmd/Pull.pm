@@ -20,7 +20,34 @@ requires 'verbose';
 
 my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
-    [ 'quiet|q!', ]
+    [
+        'quiet|q!',
+        'verbose|v',
+        #'recurse-submodules=s![=yes|on-demand|no',
+        'commit!',
+        'edit|e!',
+        'ff!',
+        'ff-only',
+        #'log=d!',
+        'stat|n!',
+        'squash!',
+        'strategy|s=s',
+        'strategy-option|X=s',
+        #'verify-signatures!',
+        'summary!',
+        #'rebase|r=s![=false|true|preserve]',
+        'all',
+        'append|a',
+        'depth=i',
+        'unshallow',
+        'update-shallow',
+        'force|f',
+        'keep|k',
+        'no-tags',
+        'update-head-ok|u',
+        'upload-pack=s',
+        'progress',
+    ]
 );
 
 sub update_start { shift->pull_start($_[0], 'update') }
@@ -43,7 +70,13 @@ sub pull {
     }
     elsif ( -d $name ) {
         $dir = $name;
-        $cmd = join ' ', 'git', map { $self->shell_quote } $type, @ARGV;
+        my @args = map {
+                $opt->opt->{$_} eq '0'   ? "--no-$_"
+                : $opt->opt->{$_} eq '1' ? "--$_"
+                :                          "--$_=" . $opt->opt->{$_};
+            }
+            keys %{ $opt->opt };
+        $cmd = join ' ', 'git', map { $self->shell_quote } $type, @args, @ARGV;
     }
     else {
         $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git, $name;
