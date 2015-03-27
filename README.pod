@@ -1,8 +1,7 @@
-=pod
-
 =begin html
 
 <a href="https://travis-ci.org/ivanwills/Group-Git"><img src="https://travis-ci.org/ivanwills/Group-Git.png" alt="Group-Git"></a>
+<a href="https://coveralls.io/r/ivanwills/Group-Git?branch=master"><img src="https://coveralls.io/repos/ivanwills/Group-Git/badge.svg?branch=master" alt="Coverage Status" /></a>
 
 =head1 Group-Git
 
