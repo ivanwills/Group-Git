@@ -169,7 +169,40 @@ sub tagged {
     }
 
     # return true if the project is tagged in the config file or has a tag file
-    return $tagged->{$project} || -e "$project/.$tag.tag";
+    return $tagged->{$project} || -e "$project/.$tag.tag" || dyna_tags($tag, $project);
+}
+
+my $loaded;
+sub dyna_tags {
+    my ($tag, $project) = @_;
+
+    if (!$loaded) {
+        $loaded = {};
+
+        for my $path (@INC) {
+            next if ! -d $path;
+            my @taggers = glob("$path/Group/Git/Taggers/*.pm");
+            for my $tagger (@taggers) {
+                my $tag = $tagger;
+                $tag =~ s{^.*/}{}xms;
+                $tag =~ s{[.]pm$}{}xms;
+                $tag =~ s{([a-z])([A-Z])}{$1-$2}gxms;
+                $tag = lc $tag;
+                next if $loaded->{$tag};
+
+                my $module = $tagger;
+                $module =~ s{^$path/}{}xms;
+                $module =~ s{[.]pm$}{}xms;
+                $module =~ s{/}{::}gxms;
+
+                eval { require $module; };
+                next if $@;
+                $loaded->{$tag} = $module->new;
+            }
+        }
+    }
+
+    return $loaded->{$tag}->matches($project);
 }
 
 sub auto {
