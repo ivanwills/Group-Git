@@ -181,8 +181,12 @@ sub dyna_tags {
 
         for my $path (@INC) {
             next if ! -d $path;
+
             my @taggers = glob("$path/Group/Git/Taggers/*.pm");
+
             for my $tagger (@taggers) {
+                $tagger =~ s{^$path/}{}xms;
+
                 my $tag = $tagger;
                 $tag =~ s{^.*/}{}xms;
                 $tag =~ s{[.]pm$}{}xms;
@@ -191,11 +195,10 @@ sub dyna_tags {
                 next if $loaded->{$tag};
 
                 my $module = $tagger;
-                $module =~ s{^$path/}{}xms;
                 $module =~ s{[.]pm$}{}xms;
                 $module =~ s{/}{::}gxms;
 
-                eval { require $module; };
+                eval { require $tagger; };
                 next if $@;
                 $loaded->{$tag} = $module->new;
             }
