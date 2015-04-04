@@ -11,10 +11,21 @@ use namespace::autoclean;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;
+use File::chdir;
 
 our $VERSION = version->new('0.4.3');
 
 sub matches {
+    my ($self, $project) = @_;
+
+    return if !-d $project;
+
+    local $CWD = $project;
+
+    return $self->match($project);
+}
+
+sub match {
     die "Matches not yet implemented for " . (ref $_[0]) . "!\n";
 }
 
@@ -48,6 +59,10 @@ Other tagger may base them selves on this class
 =head1 SUBROUTINES/METHODS
 
 =head2 C<matches ($project)>
+
+Checks that the project exists and changes to it before calling match
+
+=head2 C<match ($project)>
 
 Just dies telling the child class to implement
 
