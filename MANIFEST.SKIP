@@ -91,5 +91,10 @@ tags
 \..*\.tag$
 errors.err
 .travis.yml
-tags
+vim.sh
+vrc.yml
+tmp*
+temp*
+cmds
+^MYMETA\.json$
 fatpacker*
