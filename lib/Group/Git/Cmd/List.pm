@@ -28,7 +28,6 @@ my $opt = Getopt::Alt->new(
 sub list {
     my ($self, $name) = @_;
     return unless -d $name;
-    warn "$name\n";
 
     return ' ';
 }
