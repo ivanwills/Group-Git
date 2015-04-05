@@ -205,7 +205,7 @@ sub dyna_tags {
         }
     }
 
-    return $loaded->{$tag}->matches($project);
+    return $loaded->{$tag} && $loaded->{$tag}->matches($project);
 }
 
 sub auto {
