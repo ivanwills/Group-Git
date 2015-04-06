@@ -315,7 +315,7 @@ This documentation refers to group-git version 0.4.3.
    group-git --tag perl pull
    # run "git grep 'where is it'" for each repository showing the repository even if nothing found
    group-git --verbose grep 'where is it'
-   # run "git status" with out trying to get new repositories (configured in .group-git.yml)
+   # run "git status" with out trying to get new repositories (configured in group-git.yml)
    group-git --local status
 
 =head1 DESCRIPTION
@@ -389,9 +389,9 @@ There are several ways of defining tags that can be used:
 
 =over 4
 
-=item .group-git.yml
+=item group-git.yml
 
-You can define tags in the C<.group-git.yml> file.
+You can define tags in the C<group-git.yml> file.
 
 =item I<project>/.I<tag>.tag
 
