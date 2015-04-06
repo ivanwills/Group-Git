@@ -6,7 +6,9 @@ package Group::Git::Cmd::Status;
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
-use Moose::Role;
+use Moo::Role;
+use strict;
+use warnings;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;

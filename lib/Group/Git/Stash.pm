@@ -6,7 +6,9 @@ package Group::Git::Stash;
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
-use Moose;
+use Moo;
+use strict;
+use warnings;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;

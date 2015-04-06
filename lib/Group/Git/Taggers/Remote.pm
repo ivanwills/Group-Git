@@ -6,7 +6,9 @@ package Group::Git::Taggers::Remote;
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
-use Moose;
+use Moo;
+use strict;
+use warnings;
 use namespace::autoclean;
 use version;
 use Carp;

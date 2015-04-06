@@ -6,13 +6,16 @@ package Group::Git::Cmd::Watch;
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
-use Moose::Role;
+use Moo::Role;
+use strict;
+use warnings;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
 use YAML::Syck qw/LoadFile DumpFile/;
+use Types::Standard qw/Bool/;
 
 our $VERSION = version->new('0.4.3');
 
@@ -40,7 +43,7 @@ my $opt = Getopt::Alt->new(
 
 has watch_run => (
     is  => 'rw',
-    isa => 'Bool',
+    isa => Bool,
 );
 
 sub watch_start {

@@ -6,8 +6,12 @@ package Group::Git::Repo;
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
-use Moose;
+use Moo;
+use strict;
+use warnings;
 use version;
+use Types::Standard qw/Str/;
+use Type::Utils;
 
 our $VERSION = version->new('0.4.3');
 
@@ -15,15 +19,15 @@ extends 'Group::Git';
 
 has name => (
     is  => 'rw',
-    isa => 'Path::Class::Dir',
+    isa => class_type { class => 'Path::Class::Dir' },
 );
 has url => (
     is  => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 has git => (
     is  => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 1;

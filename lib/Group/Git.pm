@@ -6,48 +6,52 @@ package Group::Git;
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
-use Moose;
+use Moo;
+use strict;
+use warnings;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;
 use Path::Class;
 use File::chdir;
 use Group::Git::Repo;
+use Types::Standard qw/Str Int Bool HashRef/;
+use Type::Utils;
 
 our $VERSION = version->new('0.4.3');
 our $AUTOLOAD;
 
 has conf => (
     is  => 'rw',
-    isa => 'HashRef',
+    isa => HashRef,
 );
 has repos => (
     is          => 'rw',
-    isa         => 'HashRef[Group::Git::Repo]',
+    isa         => HashRef[class_type({ class => 'Group::Git::Repo' })],
     builder     => '_repos',
     lazy_build => 1,
 );
 has recurse => (
     is  => 'rw',
-    isa => 'Bool',
+    isa => Bool,
 );
 has verbose => (
     is      => 'rw',
-    isa     => 'Int',
+    isa     => Int,
     default => 0,
 );
 has test => (
     is  => 'rw',
-    isa => 'Bool',
+    isa => Bool,
 );
 has runs => (
     is      => 'rw',
-    isa     => 'Int',
+    isa     => Int,
     default => 1,
 );
 has paging => (
     is      => 'rw',
-    isa     => 'Bool',
+    isa     => Bool,
 );
 
 # load all roles in the namespace Group::Git::Cmd::*
