@@ -41,5 +41,7 @@ add_stopwords(qw/
     OAuth
     com
     org
+    Taggers
+    tagger
 /);
 all_pod_files_spelling_ok();

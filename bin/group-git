@@ -400,7 +400,7 @@ directory and it will be picked up as a tag
 
 =item dynamic
 
-There are serveral ways this is done:
+There are several ways this is done:
 
 =over 4
 
@@ -425,7 +425,7 @@ Repositories that are only local to your computer
 
 =item remote
 
-Clones of remote repostories.
+Clones of remote repositories.
 
 =back
 
