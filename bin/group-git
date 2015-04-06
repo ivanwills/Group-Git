@@ -383,6 +383,56 @@ clone any repository that are not currently checked out in the current directory
 For Github and Bitbucket if username or password are missing you will be
 prompted to enter the details.
 
+=head3 Tags
+
+There are several ways of defining tags that can be used:
+
+=over 4
+
+=item .group-git.yml
+
+You can define tags in the C<.group-git.yml> file.
+
+=item I<project>/.I<tag>.tag
+
+In the individual repositories you can add a file .I<tag-name>.tag to the root
+directory and it will be picked up as a tag
+
+=item dynamic
+
+There are serveral ways this is done:
+
+=over 4
+
+=item Github
+
+Forks are tagged as C<fork> and non-forks are tagged as C<original>.
+
+=item Stash
+
+If you have stash repositories are tagged as the project they are in.
+
+=item Taggers
+
+Automatic tagging can be done by modules in the L<Group::Git::Taggers::*>, two
+are provided by default:
+
+=over 4
+
+=item local
+
+Repositories that are only local to your computer
+
+=item remote
+
+Clones of remote repostories.
+
+=back
+
+=back
+
+=back
+
 =head1 SUBROUTINES/METHODS
 
 =head1 DIAGNOSTICS
