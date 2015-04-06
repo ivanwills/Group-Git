@@ -107,20 +107,9 @@ Run tests in each repository?
     # Have a mixed environment?
     $ group-git sh 'if [ -e 'Build' ]; then ./Build test; else gulp test; fi'
 
-=head1 CONFIGURATION AND ENVIRONMENT
+=head1 CONFIGURATION
 
-A full explanation of any configuration system(s) used by the module, including
-the names and locations of any configuration files, and the meaning of any
-environment variables or properties that can be set. These descriptions must
-also include details of any configuration language used.
 
-=head1 BUGS AND LIMITATIONS
-
-There are no known bugs in this module.
-
-Please report problems to Ivan Wills (ivan.wills@gmail.com).
-
-Patches are welcome.
 
 =head1 AUTHOR
 
