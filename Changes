@@ -1,5 +1,32 @@
 Revision history for Group-Git
 
+0.5.0   2015-04-06
+        Updating for release of version 0.5.0
+        Added missing modules to tests (Ivan Wills)
+        Fixed spelling (Ivan Wills)
+        Fixed up dependencies (Ivan Wills)
+        Moved from Moose to Moo (Ivan Wills)
+        Cleaned up documentation a little (Ivan Wills)
+        Fixed config file reference (Ivan Wills)
+        More docs (Ivan Wills)
+        Added more documentation about tags (Ivan Wills)
+        Added documentation (Ivan Wills)
+        Fixed issue when there is no tagging module available (Ivan Wills)
+        Fixed manifest files (Ivan Wills)
+        Removed warn statement (Ivan Wills)
+        Added auto tagging Classes (Ivan Wills)
+        Fixed require used file name (Ivan Wills)
+        Implementing tagging base class (Ivan Wills)
+        Added specific Test::More version for the features being used (Ivan Wills)
+        Changed log to better fit Getopt::Alt's capabilities (Ivan Wills)
+        Added using newer version of Getopt::Alt for more flexible arguments (to better match git) (Ivan Wills)
+        Added coveralls coverage badge (Ivan Wills)
+        Added more complete list of pull options (Ivan Wills)
+        Added config for coveralls.io (Ivan Wills)
+        Made fetch quiet (Ivan Wills)
+        Added documentation about pull and sh (Ivan Wills)
+        Giving easy to use examples and explanations (Ivan Wills)
+
 0.4.3   2015-01-16
         Updating for release of version 0.4.3
         Updated tests with new command (Ivan Wills)

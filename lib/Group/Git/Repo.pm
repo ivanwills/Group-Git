@@ -13,7 +13,7 @@ use version;
 use Types::Standard qw/Str/;
 use Type::Utils;
 
-our $VERSION = version->new('0.4.3');
+our $VERSION = version->new('0.5.0');
 
 extends 'Group::Git';
 
@@ -40,7 +40,7 @@ Group::Git::Repo - Git repository details object.
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Repo version 0.4.3.
+This documentation refers to Group::Git::Repo version 0.5.0.
 
 
 =head1 SYNOPSIS

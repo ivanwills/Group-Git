@@ -18,7 +18,7 @@ use Group::Git::Repo;
 use Types::Standard qw/Str Int Bool HashRef/;
 use Type::Utils;
 
-our $VERSION = version->new('0.4.3');
+our $VERSION = version->new('0.5.0');
 our $AUTOLOAD;
 
 has conf => (
@@ -147,7 +147,7 @@ Group::Git - Base module for group of git repository operations.
 
 =head1 VERSION
 
-This documentation refers to Group::Git version 0.4.3.
+This documentation refers to Group::Git version 0.5.0.
 
 =head1 SYNOPSIS
 
