@@ -34,7 +34,7 @@ Repository tags can be specified in 3 different:
 =item *
 
 Automatically : The L<Group::Git::Github> and L<Group::Git::Stash> plugins both
-generate tags
+generate tags and by modules under Group::Git::Taggers::*.
 
 =over 4
 
@@ -45,6 +45,15 @@ L<Group::Git::Github> adds a tag for all repositories that are forks of other re
 =item *
 
 L<Group::Git::Stash> adds tags for repositories based on their project
+
+=item *
+
+L<Group::Git::Taggers::Local> tags repositories that are only local to the computer
+
+=item *
+
+L<Group::Git::Taggers::Remote> tags repositories that are clones of remote git
+repositories.
 
 =back
 
