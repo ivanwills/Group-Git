@@ -17,6 +17,7 @@ use File::chdir;
 use Group::Git::Repo;
 use Types::Standard qw/Str Int Bool HashRef/;
 use Type::Utils;
+use Module::Pluggable require => 1, search_path => ['Group::Git::Cmd'];
 
 our $VERSION = version->new('0.5.0');
 our $AUTOLOAD;
@@ -55,21 +56,9 @@ has paging => (
 );
 
 # load all roles in the namespace Group::Git::Cmd::*
-my %modules;
-for my $dir (@INC) {
-    next if !-d "$dir/Group/Git/Cmd";
-    local $CWD = $dir;
-    my @commands = glob "Group/Git/Cmd/*.pm";
-
-    for my $command (@commands) {
-        my $module = $command;
-        $module =~ s{/}{::}g;
-        $module =~ s{[.]pm$}{};
-        if ( !$modules{$module}++ ) {
-            require $command;
-            with $module;
-        }
-    }
+my @plugins = __PACKAGE__->plugins;
+for my $plugin (@plugins) {
+    with $plugin;
 }
 
 sub _repos {
