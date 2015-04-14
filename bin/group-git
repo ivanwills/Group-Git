@@ -25,7 +25,6 @@ exit 0;
 
 sub main {
 
-
     # do stuff here
     my $conf = Config::Any->load_stems({
         stems   => [ qw/group group-git/ ],
@@ -172,40 +171,14 @@ sub tagged {
     return $tagged->{$project} || -e "$project/.$tag.tag" || dyna_tags($tag, $project);
 }
 
-my $loaded;
 sub dyna_tags {
     my ($tag, $project) = @_;
 
-    if (!$loaded) {
-        $loaded = {};
-
-        for my $path (@INC) {
-            next if ! -d $path;
-
-            my @taggers = glob("$path/Group/Git/Taggers/*.pm");
-
-            for my $tagger (@taggers) {
-                $tagger =~ s{^$path/}{}xms;
-
-                my $tag = $tagger;
-                $tag =~ s{^.*/}{}xms;
-                $tag =~ s{[.]pm$}{}xms;
-                $tag =~ s{([a-z])([A-Z])}{$1-$2}gxms;
-                $tag = lc $tag;
-                next if $loaded->{$tag};
-
-                my $module = $tagger;
-                $module =~ s{[.]pm$}{}xms;
-                $module =~ s{/}{::}gxms;
-
-                eval { require $tagger; };
-                next if $@;
-                $loaded->{$tag} = $module->new;
-            }
-        }
+    if ( $Group::Git::taggers->{$tag} && ! ref $Group::Git::taggers->{$tag} ) {
+        $Group::Git::taggers->{$tag} = $Group::Git::taggers->{$tag}->new;
     }
 
-    return $loaded->{$tag} && $loaded->{$tag}->matches($project);
+    return $Group::Git::taggers->{$tag} && $Group::Git::taggers->{$tag}->matches($project);
 }
 
 sub auto {
