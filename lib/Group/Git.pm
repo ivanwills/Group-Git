@@ -63,9 +63,9 @@ for my $plugin (@plugins) {
         with $plugin;
     }
     else {
-        my $tag = ref $plugin;
+        my $tag = $plugin;
         $tag =~ s/^.*:://;
-        $taggers->{$tag} = $plugin;
+        $taggers->{lc $tag} = $plugin;
     }
 }
 
