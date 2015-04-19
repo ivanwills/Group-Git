@@ -20,18 +20,42 @@ our $VERSION = version->new('0.5.0');
 requires 'repos';
 requires 'verbose';
 
+has repo_count => (
+    is      => 'rw',
+    default => 0,
+);
+
 my $opt = Getopt::Alt->new(
     { help => __PACKAGE__, },
     [
         'quiet|q',
+        'verbose|v',
     ]
 );
+
+sub list_start {
+    $opt->process;
+
+    return;
+}
 
 sub list {
     my ($self, $name) = @_;
     return unless -d $name;
 
+    $self->repo_count($self->repo_count + 1);
+
     return ' ';
+}
+
+sub list_end {
+    my ($self) = @_;
+
+    if ($opt->opt->verbose) {
+        return "\nSummary:\nFound " . $self->repo_count . " repositories\n";
+    }
+
+    return;
 }
 
 1;
