@@ -49,7 +49,7 @@ sub _repos {
     @ARGV = @argv;
 
     while ($more) {
-        $mech->get( $url . $start++ );
+        $mech->get( $url . $start );
         my $response = decode_json $mech->content;
 
         for my $repo (@{ $response->{values} }) {
@@ -65,7 +65,8 @@ sub _repos {
             );
             push @{ $conf->{tags}{$project} }, "$dir";
         }
-        $more = !$response->{isLastPage};
+        $more  = !$response->{isLastPage};
+        $start = $response->{nextPageStart};
     }
 
     return \%repos;
