@@ -15,6 +15,7 @@ my $builder = Module::Build->new(
         'IO::Prompt'           => 0,
         'JSON'                 => 0,
         'List::MoreUtils'      => 0,
+        'Module::Pluggable'    => 0,
         'Moo'                  => 1,
         'Moo::Role'            => 1,
         'Net::GitHub'          => '0.57',
