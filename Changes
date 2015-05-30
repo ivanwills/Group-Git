@@ -1,5 +1,18 @@
 Revision history for Group-Git
 
+0.5.1   2015-05-30
+        Updating for release of version 0.5.1
+        Added missing dependencies (Ivan Wills)
+        Added missing documentation (Ivan Wills)
+        Fixed the itterating over Stashes pages of results (Ivan Wills)
+        No longer need the tag (Ivan Wills)
+        Added verbose mode to show the count of found repositories (Ivan Wills)
+        Fixed loading Taggers (Ivan Wills)
+        Moved loading of "tagger" modules to Module::Plugin (Ivan Wills)
+        Removed previously added suggestion (Ivan Wills)
+        Converted to use Module::Pluggable for loading commands (Ivan Wills)
+        Added reminder to try to use Module::Plugable (Ivan Wills)
+
 0.5.0   2015-04-06
         Updating for release of version 0.5.0
         Added missing modules to tests (Ivan Wills)
