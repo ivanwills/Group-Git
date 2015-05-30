@@ -90,6 +90,18 @@ This documentation refers to Group::Git::Cmd::List version 0.5.0.
 
 Just prints C<$name> to STDERR if such a directory exists.
 
+=item C<list_start ()>
+
+Processes command line options
+
+=item C<list_end ()>
+
+If summary is asked for this returns the count of repositories found
+
+=item C<repo_count ([$count])>
+
+Gets/sets the count of repositories found.
+
 =back
 
 =head1 DIAGNOSTICS
