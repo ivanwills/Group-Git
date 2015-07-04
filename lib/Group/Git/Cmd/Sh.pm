@@ -45,6 +45,9 @@ sub sh {
         = $opt->opt->quote
         ? join ' ', map { $self->shell_quote } @ARGV
         : join ' ', @ARGV;
+
+    local $ENV{GROUP_GIT_NAME} = $name;
+
     if ($opt->opt->interactive) {
         system $cmd;
         return;
