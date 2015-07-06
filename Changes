@@ -1,5 +1,10 @@
 Revision history for Group-Git
 
+0.5.3   2015-07-06
+        Updating for release of version 0.5.3
+        Added setting an environment variable GROUP_GIT_NAME with the current repos name (Ivan Wills)
+        Added Perl 5.22 to list of perl versions to build with (Ivan Wills)
+
 0.5.2   2015-05-30
         Updating for release of version 0.5.2
 
