@@ -36,7 +36,7 @@ sub _repos {
 
     my @argv = @ARGV;
     @ARGV = ();
-    my $mech = WWW::Mechanize->new;
+    my $mech = $self->mech;
     my $user = _httpenc( $conf->{username} ? $conf->{username} : prompt( -prompt => 'bitbucket username : ' ) );
     my $pass = _httpenc( $conf->{password} ? $conf->{password} : prompt( -prompt => 'bitbucket password : ', -echo => '*' ) );
     my $url  = "https://$user:$pass\@api.bitbucket.org/1.0/user/repositories";

@@ -40,7 +40,7 @@ sub _repos {
 
     my @argv = @ARGV;
     @ARGV = ();
-    my $mech  = WWW::Mechanize->new;
+    my $mech  = $self->mech;
     my $user  = _httpenc( $conf->{username} ? $conf->{username} : prompt( -prompt => 'stash username : ' ) );
     my $pass  = _httpenc( $conf->{password} ? $conf->{password} : prompt( -prompt => 'stash password : ', -echo => '*' ) );
     my $url   = "https://$user:$pass\@$conf->{stash_host}/rest/api/1.0/repos?limit=100&start=";
@@ -70,25 +70,6 @@ sub _repos {
     }
 
     return \%repos;
-}
-
-sub mech {
-    my ($self) = @_;
-    my $mech;
-
-    if ($self->conf->{cache_dir} && eval { require WWW::Mechanize::Cached }) {
-        $mech = WWW::Mechanize::Cached->new(
-            cache => CHI->new(
-                driver => 'File',
-                root_dir => $self->conf->{cache_dir},
-            ),
-        );
-    }
-    else {
-        $mech  = WWW::Mechanize->new;
-    }
-
-    return;
 }
 
 1;
