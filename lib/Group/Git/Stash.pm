@@ -72,6 +72,25 @@ sub _repos {
     return \%repos;
 }
 
+sub mech {
+    my ($self) = @_;
+    my $mech;
+
+    if ($self->conf->{cache_dir} && eval { require WWW::Mechanize::Cached }) {
+        $mech = WWW::Mechanize::Cached->new(
+            cache => CHI->new(
+                driver => 'File',
+                root_dir => $self->conf->{cache_dir},
+            ),
+        );
+    }
+    else {
+        $mech  = WWW::Mechanize->new;
+    }
+
+    return;
+}
+
 1;
 
 __END__
