@@ -13,7 +13,7 @@ use version;
 use Carp;
 use English qw/ -no_match_vars /;
 use Net::GitHub;
-use Path::Class;
+use Path::Tiny;
 
 our $VERSION = version->new('0.5.3');
 
@@ -48,7 +48,7 @@ sub _repos {
             $url =~ s{git://github.com/([^/]+)}{git\@github.com:$1};
 
             $repos{ $repo->{name} } = Group::Git::Repo->new(
-                name => dir($repo->{name}),
+                name => path($repo->{name}),
                 git  => $url,
             );
 

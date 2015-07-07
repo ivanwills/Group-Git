@@ -12,7 +12,7 @@ use warnings;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;
-use Path::Class;
+use Path::Tiny;
 use File::chdir;
 use Group::Git::Repo;
 use Types::Standard qw/Str Int Bool HashRef/;
@@ -72,7 +72,7 @@ for my $plugin (@plugins) {
 sub _repos {
     my ($self) = @_;
     my %repos;
-    my @files = dir('.')->children;
+    my @files = path('.')->children;
 
     while ( my $file = shift @files ) {
         next unless -d $file;

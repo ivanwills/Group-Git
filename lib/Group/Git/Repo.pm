@@ -19,7 +19,7 @@ extends 'Group::Git';
 
 has name => (
     is  => 'rw',
-    isa => class_type { class => 'Path::Class::Dir' },
+    isa => class_type { class => 'Path::Tiny' },
 );
 has url => (
     is  => 'rw',

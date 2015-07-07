@@ -12,7 +12,7 @@ use version;
 use List::MoreUtils qw/uniq/;
 use Getopt::Alt qw/get_options/;
 use English qw/ -no_match_vars /;
-use Path::Class;
+use Path::Tiny;
 use Group::Git;
 use Config::Any;
 use Term::ANSIColor qw/colored/;
@@ -192,7 +192,7 @@ sub auto {
 
 sub _commands {
     $ENV{TMP} ||= $ENV{HOME};
-    my $cache = file "$ENV{TMP}/.group-git-commands";
+    my $cache = path("$ENV{TMP}/.group-git-commands");
     if ( -f $cache ) {
         return split /\n/, $cache->slurp;
     }
@@ -202,7 +202,7 @@ sub _commands {
     # first up the module commands
     for my $dir (@INC) {
         next if !-d $dir;
-        my $module_dir = dir($dir, qw/Group Git Cmd/);
+        my $module_dir = path($dir, qw/Group Git Cmd/);
         next if !-d $module_dir;
 
         for my $module ( $module_dir->children ) {
@@ -217,7 +217,7 @@ sub _commands {
     for my $dir (split /:/, $ENV{PATH}) {
         next if !-d $dir;
 
-        for my $file ( dir($dir)->children ) {
+        for my $file ( path($dir)->children ) {
             next if $file !~ /(?:group-)?git-[\w-]+$/;
             my ($cmd) = $file =~ /(?:group-)?git-([\w-]+)$/;
             push @commands, $cmd;

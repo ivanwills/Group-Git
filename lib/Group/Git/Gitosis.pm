@@ -12,7 +12,7 @@ use warnings;
 use version;
 use Carp;
 use English qw/ -no_match_vars /;
-use Path::Class;
+use Path::Tiny;
 use File::chdir;
 
 our $VERSION = version->new('0.5.3');
@@ -56,7 +56,7 @@ sub _repos {
 
                 for my $name ( split /\s+/, $data->{$group}{$sub_group}{$type} ) {
                     $repos{$name} = Group::Git::Repo->new(
-                        name => dir($name),
+                        name => path($name),
                         git  => "$base$name.git",
                     );
                 }

@@ -15,7 +15,7 @@ use English qw/ -no_match_vars /;
 use IO::Prompt qw/prompt/;
 use JSON qw/decode_json/;
 use WWW::Mechanize;
-use Path::Class;
+use Path::Tiny;
 
 our $VERSION = version->new('0.5.3');
 
@@ -56,7 +56,7 @@ sub _repos {
             my $project = $repo->{project}{name};
             my $url     = $repo->{links}{self}[0]{href};
             my %clone   = map {($_->{name} => $_->{href})} @{ $repo->{links}{clone} };
-            my $dir     = $self->recurse ? dir("$project/$repo->{name}") : dir($repo->{name});
+            my $dir     = $self->recurse ? path("$project/$repo->{name}") : path($repo->{name});
 
             $repos{$dir} = Group::Git::Repo->new(
                 name => $dir,
