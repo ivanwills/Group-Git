@@ -20,7 +20,6 @@ lib/Group/Git/Taggers.pm
 lib/Group/Git/Taggers/Local.pm
 lib/Group/Git/Taggers/Remote.pm
 LICENSE
-Makefile.PL
 MANIFEST
 META.json
 META.yml
