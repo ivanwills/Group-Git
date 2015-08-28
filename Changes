@@ -1,5 +1,9 @@
 Revision history for Group-Git
 
+0.5.5   2015-08-28
+        Updating for release of version 0.5.5
+        Removed creation of makefile (Ivan Wills)
+
 0.5.4   2015-07-19
         Updating for release of version 0.5.4
         Converted to Path::Tiny (Ivan Wills)
