@@ -70,10 +70,7 @@ sub pull {
     my $cmd;
     my $dir;
 
-    if ( !$repo->git ) {
-        return;
-    }
-    elsif ( -d $name ) {
+    if ( -d $name ) {
         $dir = $name;
         my @args = map {
                 $opt->opt->{$_} eq '0'   ? "--no-$_"
@@ -83,8 +80,11 @@ sub pull {
             keys %{ $opt->opt };
         $cmd = join ' ', 'git', map { $self->shell_quote } $type, @args, @ARGV;
     }
-    else {
+    elsif ( $repo->git ) {
         $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git, $name;
+    }
+    else {
+        return;
     }
 
     local $CWD = $dir if $dir;
