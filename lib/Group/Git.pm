@@ -76,7 +76,7 @@ sub _repos {
 
     while ( my $file = shift @files ) {
         next unless -d $file;
-        my $config = $file->file('.git', 'config');
+        my $config = $file->path('.git', 'config');
 
         if ( !-f $config ) {
             push @files, $file->children if $self->recurse && $file->basename ne '.git';
