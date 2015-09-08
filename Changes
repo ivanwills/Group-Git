@@ -1,5 +1,10 @@
 Revision history for Group-Git
 
+0.5.6   2015-09-08
+        Updating for release of version 0.5.6
+        Fixed the pull/clone logic (Ivan Wills)
+        Fixed using file rather than path (Ivan Wills)
+
 0.5.5   2015-08-28
         Updating for release of version 0.5.5
         Removed creation of makefile (Ivan Wills)
