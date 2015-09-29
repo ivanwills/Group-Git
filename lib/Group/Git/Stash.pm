@@ -24,6 +24,10 @@ extends 'Group::Git';
 has '+recurse' => (
     default => 1,
 );
+has 'mech' => (
+    is      => 'rw',
+    default => sub { WWW::Mechanize->new; },
+);
 
 sub _httpenc {
     my ($str) = @_;
