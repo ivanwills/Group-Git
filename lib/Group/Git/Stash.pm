@@ -98,6 +98,8 @@ This documentation refers to Group::Git::Stash version 0.5.6.
            username => 'joeblogs@example.com',
            password => 'myverysecurepassword',
        },
+       # resursive is turned on by default for stash to allow for stash projects
+       recurse => 1,
    );
 
    # list all repositories
@@ -111,8 +113,9 @@ This documentation refers to Group::Git::Stash version 0.5.6.
 
 =head1 DESCRIPTION
 
-Reads all repositories for the configured user (if none set user will be
-prompted to enter one as well as a password)
+Reads all repositories that the configured user has access to. Note: if no
+user is set up (or no password is supplied) then you will bie prompted to
+enter the username and/or password.
 
 =head1 SUBROUTINES/METHODS
 
