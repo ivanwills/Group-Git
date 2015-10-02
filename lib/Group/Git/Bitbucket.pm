@@ -92,6 +92,8 @@ This documentation refers to Group::Git::Bitbucket version 0.5.6.
 
 Reads all repositories for the configured user (if none set user will be
 prompted to enter one as well as a password)
+Reads all repositories for the configured user. Note: if no username or password
+is set you will be prompted to enter a username and password.
 
 =head1 SUBROUTINES/METHODS
 

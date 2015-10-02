@@ -79,7 +79,6 @@ Group::Git::Gitosis - Adds reading all repositories you have access to on a gito
 
 This documentation refers to Group::Git::Gitosis version 0.5.6.
 
-
 =head1 SYNOPSIS
 
    use Group::Git::Gitosis;
@@ -101,6 +100,9 @@ This documentation refers to Group::Git::Gitosis version 0.5.6.
    }
 
 =head1 DESCRIPTION
+
+Reads all repositories you have access to (via standard git username). You
+must have read access to the .gitosis repository.
 
 =head1 SUBROUTINES/METHODS
 

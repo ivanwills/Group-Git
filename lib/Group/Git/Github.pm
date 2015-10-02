@@ -124,8 +124,8 @@ This documentation refers to Group::Git::Github version 0.5.6.
 
 =head1 DESCRIPTION
 
-Reads all repositories for the configured user (if none set user will be
-prompted to enter one as well as a password)
+Reads all repositories for the configured user. Note: if no username, password
+or access_token is set you will be prompted to enter a username and password.
 
 =head2 Configuration
 
