@@ -119,6 +119,14 @@ enter the username and/or password.
 
 =head1 SUBROUTINES/METHODS
 
+=over 4
+
+=item mech
+
+Property for storing the L<WWW::Mechanize> object for talking to stash
+
+=back
+
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT
