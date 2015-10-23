@@ -1,5 +1,12 @@
 Revision history for Group-Git
 
+0.5.7   2015-10-23
+        Updating for release of version 0.5.7
+        Added comment about mech property (Ivan Wills)
+        Updated other repo type documentation (Ivan Wills)
+        Improving on the comments for Stash (Ivan Wills)
+        Added missing mech object (Ivan Wills)
+
 0.5.6   2015-09-08
         Updating for release of version 0.5.6
         Fixed the pull/clone logic (Ivan Wills)
