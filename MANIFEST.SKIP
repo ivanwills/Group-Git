@@ -98,3 +98,6 @@ temp*
 cmds
 ^MYMETA\.json$
 fatpacker*
+.travis.yml
+.editorconfig
+.vtide.yml
