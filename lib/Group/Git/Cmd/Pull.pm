@@ -104,21 +104,51 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Pull - Pull latest version of all repositories or clone any that are missing
+Group::Git::Cmd::Pull - Pull latest versions of all repositories or clone any that are missing
 
 =head1 VERSION
 
 This documentation refers to Group::Git::Cmd::Pull version 0.5.7.
 
-
 =head1 SYNOPSIS
 
-   use Group::Git::Cmd::Pull;
+    group-git pull (options)
 
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
-
+  OPTIONS:
+    -q --quiet
+       --no-quiet
+    -v --verbose
+       --recurse-submodules=[yes|on-demand|no]
+       --commit
+       --no-commit
+    -e --edit
+       --no-edit
+       --ff
+       --no-ff
+       --ff-only
+       --log=d
+    -n --stat
+       --no-stat
+       --squash
+       --no-squash
+    -s --strategy[=]str
+    -X --strategy-option[=]str
+       --verify-signatures
+       --no-verify-signatures
+       --summary
+       --no-summary
+    -r --rebase[=][false|true|preserve]
+       --all
+    -a --append
+       --depth=i
+       --unshallow
+       --update-shallow
+    -f --force
+    -k --keep
+       --no-tags
+    -u --update-head-ok
+       --upload-pack=s
+       --progress
 
 =head1 DESCRIPTION
 
