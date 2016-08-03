@@ -79,7 +79,9 @@ sub _repos {
         my $config = $file->path('.git', 'config');
 
         if ( !-f $config ) {
-            push @files, $file->children if $self->recurse && $file->basename ne '.git';
+            if ( $self->recurse && $file->basename ne '.git' ) {
+                push @files, $file->children;
+            }
             next;
         }
 
