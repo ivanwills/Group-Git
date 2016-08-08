@@ -1,17 +1,50 @@
---- 
-count: 4
-default: 
+---
+count: 8
+default:
   restart: 0
-  wait: 0
-editor: 
-  files: 
-    eg: 
-      - some-file.eg
+  wait: 1
+editor:
+  files:
+    base:
+      - lib/Group/Git.pm
+      - lib/Group/Git/Repo.pm
+      - lib/Group/Git/Examples.pod
+    cmd-base:
+      - lib/Group/Git/Cmd/Help.pm
+      - lib/Group/Git/Cmd/List.pm
+      - lib/Group/Git/Cmd/Watch.pm
+      - lib/Group/Git/Cmd/Sh.pm
+    cmd-rest:
+      - lib/Group/Git/Cmd/Pull.pm
+      - lib/Group/Git/Cmd/Status.pm
+      - lib/Group/Git/Cmd/Branch.pm
+      - lib/Group/Git/Cmd/TagList.pm
+    taggers:
+      - lib/Group/Git/Taggers.pm
+      - lib/Group/Git/Taggers/Local.pm
+      - lib/Group/Git/Taggers/Remote.pm
+    repos:
+      - lib/Group/Git/Bitbucket.pm
+      - lib/Group/Git/Github.pm
+      - lib/Group/Git/Gitosis.pm
+      - lib/Group/Git/Stash.pm
 name: group-git
-terminals: 
-  2: []
-
-  3: []
-
-  4: []
-
+terminals:
+  1a:
+    command: ./Build && ./Build testcover
+    restart: 1
+    wait: 0
+    watch:
+      - lib
+      - bin
+      - tests
+  2:
+    edit: base
+  3:
+    edit: cmd-rest
+  4:
+    edit: cmd-base
+  5:
+    edit: taggers
+  6:
+    edit: repos
