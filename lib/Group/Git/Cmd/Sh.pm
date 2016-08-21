@@ -15,7 +15,7 @@ use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
 
-our $VERSION = version->new('0.5.7');
+our $VERSION = version->new('0.5.8');
 
 requires 'repos';
 requires 'verbose';
@@ -71,7 +71,7 @@ Group::Git::Cmd::Sh - Runs shell script in each git project
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Sh version 0.5.7.
+This documentation refers to Group::Git::Cmd::Sh version 0.5.8.
 
 =head1 SYNOPSIS
 

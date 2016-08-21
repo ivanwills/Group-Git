@@ -1,5 +1,16 @@
 Revision history for Group-Git
 
+0.5.8   2016-08-21
+        Updating for release of version 0.5.8
+        Updated date (Ivan Wills)
+        Updated config (Ivan Wills)
+        Synced manifest (Ivan Wills)
+        Added reminder (Ivan Wills)
+        Cleaned up if statement (Ivan Wills)
+        Worked on pull's documentation (Ivan Wills)
+        Dropped travis builds as it is using an old version of Perl 5.8 (Ivan Wills)
+        VTide and editor configs (Ivan Wills)
+
 0.5.7   2015-10-23
         Updating for release of version 0.5.7
         Added comment about mech property (Ivan Wills)
