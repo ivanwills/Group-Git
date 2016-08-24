@@ -9,6 +9,7 @@ editor:
       - lib/Group/Git.pm
       - lib/Group/Git/Repo.pm
       - lib/Group/Git/Examples.pod
+      - README.pod
     cmd-base:
       - lib/Group/Git/Cmd/Help.pm
       - lib/Group/Git/Cmd/List.pm
