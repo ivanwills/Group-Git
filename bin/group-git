@@ -42,7 +42,8 @@ sub main {
             auto_complete => \&auto,
             conf_prefix   => '',
             default       => {
-                page => 1,
+                page     => 1,
+                separate => 1,
                 %{ $conf },
             }
         },
@@ -55,6 +56,7 @@ sub main {
             'tag|t=s',
             'test|T!',
             'bw',
+            'separate!',
             'verbose|v+',
             'quiet|q',
         ]
@@ -110,9 +112,10 @@ sub main {
 
             if ($out) {
                 $project = colored($project, 'blue') if !$opt->bw;
-                print {$outfh} "\n$project\n" unless $opt->quiet;
+                print {$outfh} "\n"                  if $opt->separate;
+                print {$outfh} "$project\n"          if ! $opt->quiet;
                 print {$outfh} $out;
-                print {$outfh} "-- $project --\n" if $opt->verbose;
+                print {$outfh} "-- $project --\n"    if $opt->verbose;
             }
         }
     }
@@ -273,6 +276,9 @@ This documentation refers to group-git version 0.5.8.
   -p --page     Turns on paginating out put uses $PAGER environment variable if
                 set or 'less -Rx4SFX' if not.
      --no-page  Turn off pagination.
+     --separate Add a new line separator before each repository output
+     --no-separate
+                Don't show the new repository separator
   -q --quiet    Don't show project names before running git on the directory
   -v --verbose  Show more details
 
