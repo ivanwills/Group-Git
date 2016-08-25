@@ -23,7 +23,7 @@ LICENSE
 MANIFEST
 META.json
 META.yml
-README.pod
+README.md
 t/00-load.t
 t/boilerplate.t
 t/critic.t
