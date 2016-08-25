@@ -1,11 +1,9 @@
-=begin html
+[![Build Status](https://travis-ci.org/ivanwills/Group-Git.png)](https://travis-ci.org/ivanwills/Group-Git)
+[![Coverage Status](https://coveralls.io/repos/ivanwills/Group-Git/badge.svg?branch=master)](https://coveralls.io/r/ivanwills/Group-Git?branch=master)
 
-<a href="https://travis-ci.org/ivanwills/Group-Git"><img src="https://travis-ci.org/ivanwills/Group-Git.png" alt="Group-Git"></a>
-<a href="https://coveralls.io/r/ivanwills/Group-Git?branch=master"><img src="https://coveralls.io/repos/ivanwills/Group-Git/badge.svg?branch=master" alt="Coverage Status" /></a>
+# Group-Git
 
-=head1 Group-Git
-
-The C<group-git> tool allows you perform operations on many git
+The `group-git` tool allows you perform operations on many git
 repositories at once. For example updating many repositores with the latest
 upstream code:
 
@@ -13,66 +11,42 @@ upstream code:
 
 Would update all git repositories in the current directory.
 
-Several C<git> comands have some extras such as C<status>
-(L<Group::Git::Cmd::Status>) which adds the C<--quiet> parameter which
-will suppress output for repositories with not changes.
+Several `git` comands have some extras such as `status` which adds the
+`--quiet` parameter which will suppress output for repositories with not
+changes.
 
 There are also tool to help with various git repository servers such as
 
-=over 4
+* Github
+* Bitbucket Server (nee Stash)
+* Gitosis
 
-=item *
+## Repository Helpers
 
-Github
-
-=item *
-
-Bitbucket Server (nee Stash)
-
-=item *
-
-Gitosis
-
-=back
-
-=head2 Repository Helpers
-
-These helpers allow you to store your credentials in a C<group-git.yml>
+These helpers allow you to store your credentials in a `group-git.yml`
 configuration file and will find all repositories you have access to. If you
-use the C<group-git pull> command it will automatically clone any repository
+use the `group-git pull` command it will automatically clone any repository
 not currently downloaded for you.
 
-=head2 Tagging repositories
+## Tagging repositories
 
 You can also tag repositories to limit opperations to a subset of available
 repositories. There are 3 ways to tag repositories:
 
-=over 4
-
-=item *
-
-Add a tag file(s) to the root of the repository (eg C<.my-tag.tag>)
-
-=item *
-
-Use a tagger library, C<Group::Git> comes with two, remore and local which
+* Add a tag file(s) to the root of the repository (eg `.my-tag.tag>)
+* Use a tagger library, `Group::Git` comes with two, remore and local which
 determine if the repository has a remote or not.
+* The Bitbucket server helper will tag repositories with their project.
 
-=item *
+## Extending with your own commands
 
-The Bitbucket server helper will tag repositories with their project.
-
-=back
-
-=head2 Extending with your own commands
-
-C<Group::Git> looks for commands in the perl modules path C<Group::Git::Cmd>
+`Group::Git` looks for commands in the perl modules path `Group::Git::Cmd`
 and it look in the path for any command in the form of `group-git-cmd` or
 `git-cmd` as well as supoorting all the built in git commands. If you want
 perform an operation you can write your own script put it your path and
-C<Group::Git> will find it execute it the same was git would.
+`Group::Git` will find it execute it the same was git would.
 
-=head1 INSTALLATION
+# INSTALLATION
 
 To install this module, run the following commands:
 
@@ -81,7 +55,7 @@ To install this module, run the following commands:
     ./Build test
     ./Build install
 
-=head1 SUPPORT AND DOCUMENTATION
+# SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
 perldoc command.
@@ -105,7 +79,7 @@ You can also look for information at:
     Source Code
         git://github.com/ivanwills/Group-Git.git
 
-=head1 COPYRIGHT AND LICENCE
+# COPYRIGHT AND LICENCE
 
 Copyright (C) 2013-2016 Ivan Wills
 
@@ -114,5 +88,3 @@ under the terms of either: the GNU General Public License as published
 by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
-
-=cut
