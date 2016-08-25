@@ -9,6 +9,7 @@
 use strict;
 use warnings;
 use version;
+use threads;
 use List::MoreUtils qw/uniq/;
 use Getopt::Alt qw/get_options/;
 use English qw/ -no_match_vars /;
@@ -98,6 +99,8 @@ sub main {
 
     print {$outfh} $cmd_start->() if $cmd_start;
 
+    my @threads;
+
     while ($group->runs) {
         $group->runs(0);
 
@@ -108,15 +111,24 @@ sub main {
             next if %include && !$include{$project};
             next if !tagged($conf, $opt->tag, $project);
 
-            my $out = $cmd_body->($project);
+            push @threads, {
+                project => $project,
+                thread  => threads->new(sub { $cmd_body->($project) }),
+            };
+        }
+    }
 
-            if ($out) {
-                $project = colored($project, 'blue') if !$opt->bw;
-                print {$outfh} "\n"                  if $opt->separate;
-                print {$outfh} "$project\n"          if ! $opt->quiet;
-                print {$outfh} $out;
-                print {$outfh} "-- $project --\n"    if $opt->verbose;
-            }
+    while ( my $thread = shift @threads ) {
+        my $project = $thread->{project};
+        $thread = $thread->{thread};
+        my $out = $thread->join();
+
+        if ($out) {
+            $project = colored($project, 'blue') if !$opt->bw;
+            print {$outfh} "\n"                  if $opt->separate;
+            print {$outfh} "$project\n"          if ! $opt->quiet;
+            print {$outfh} $out;
+            print {$outfh} "-- $project --\n"    if $opt->verbose;
         }
     }
 
