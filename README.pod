@@ -5,9 +5,64 @@
 
 =head1 Group-Git
 
-Tool for operating on many git repositories at once. The repositories can be
-managed by Github, Bitbucket, Gitosis or not at all. If managed uncloned
-repositories will be automatically cloned.
+The C<group-git> tool allows you perform operations on many git
+repositories at once. For example updating many repositores with the latest
+upstream code:
+
+ group-git pull
+
+Would update all git repositories in the current directory.
+
+Several C<git> comands have some extras such as C<status>
+(L<Group::Git::Cmd::Status>) which adds the C<--quiet> parameter which
+will suppress output for repositories with not changes.
+
+There are also tool to help with various git repository servers such as
+
+=over 4
+
+=item *
+
+Github
+
+=item *
+
+Bitbucket Server (nee Stash)
+
+=item *
+
+Gitosis
+
+=back
+
+=head2 Repository Helpers
+
+These helpers allow you to store your credentials in a C<group-git.yml>
+configuration file and will find all repositories you have access to. If you
+use the C<group-git pull> command it will automatically clone any repository
+not currently downloaded for you.
+
+=head2 Tagging repositories
+
+You can also tag repositories to limit opperations to a subset of available
+repositories. There are 3 ways to tag repositories:
+
+=over 4
+
+=item *
+
+Add a tag file(s) to the root of the repository (eg C<.my-tag.tag>)
+
+=item *
+
+Use a tagger library, C<Group::Git> comes with two, remore and local which
+determine if the repository has a remote or not.
+
+=item *
+
+The Bitbucket server helper will tag repositories with their project.
+
+=back
 
 =head1 INSTALLATION
 
