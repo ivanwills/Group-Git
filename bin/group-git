@@ -44,6 +44,7 @@ sub main {
             auto_complete => \&auto,
             conf_prefix   => '',
             default       => {
+                max      => 10,
                 page     => 1,
                 separate => 1,
                 %{ $conf },
@@ -52,6 +53,7 @@ sub main {
         [
             'skip|s=s',
             'match|m=s',
+            'max|M=i',
             'local|l!',
             'recurse|r!',
             'page|p!',
@@ -122,24 +124,40 @@ sub main {
                     }
                 ),
             };
+
+            while ( threads->list(threads::running) > $opt->max ) {
+                if ( ! $threads[0]{thread}->is_running ) {
+                    process_thread((shift @threads), $opt, $outfh);
+                }
+                else {
+                    sleep 1;
+                }
+            }
         }
     }
 
     while ( my $thread = shift @threads ) {
-        my $project = $thread->{project};
-        $thread = $thread->{thread};
-        my $out = $thread->join();
-
-        if ($out) {
-            $project = colored($project, 'blue') if !$opt->bw;
-            print {$outfh} "\n"                  if $opt->separate;
-            print {$outfh} "$project\n"          if ! $opt->quiet;
-            print {$outfh} $out;
-            print {$outfh} "-- $project --\n"    if $opt->verbose;
-        }
+        process_thread($thread, $opt, $outfh);
     }
 
     print {$outfh} $cmd_end->() if $cmd_end;
+
+    return;
+}
+
+sub process_thread {
+    my ($thread_object, $opt, $outfh) = @_;
+    my $project = $thread_object->{project};
+    my $thread = $thread_object->{thread};
+    my $out = $thread->join();
+
+    if ($out) {
+        $project = colored($project, 'blue') if !$opt->bw;
+        print {$outfh} "\n"                  if $opt->separate;
+        print {$outfh} "$project\n"          if ! $opt->quiet;
+        print {$outfh} $out;
+        print {$outfh} "-- $project --\n"    if $opt->verbose;
+    }
 
     return;
 }
