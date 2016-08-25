@@ -7,7 +7,9 @@ The `group-git` tool allows you perform operations on many git
 repositories at once. For example updating many repositores with the latest
 upstream code:
 
- group-git pull
+```bash
+$ group-git pull
+```
 
 Would update all git repositories in the current directory.
 
@@ -48,12 +50,25 @@ perform an operation you can write your own script put it your path and
 
 # INSTALLATION
 
-To install this module, run the following commands:
+To install this module from CPAN:
 
-    perl Build.PL
-    ./Build
-    ./Build test
-    ./Build install
+```bash
+$ capnm Group::Git
+# or if you don't have the cpanm command
+$ cpan Group::Git
+```
+
+Or from source run the following commands:
+
+```
+# with cpanm
+$ cpanm .
+# without
+$ perl Build.PL
+$ ./Build
+$ ./Build test
+$ ./Build install
+```
 
 # SUPPORT AND DOCUMENTATION
 
