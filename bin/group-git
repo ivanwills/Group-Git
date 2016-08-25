@@ -17,6 +17,7 @@ use Path::Tiny;
 use Group::Git;
 use Config::Any;
 use Term::ANSIColor qw/colored/;
+use File::chdir;
 
 our $VERSION = version->new('0.5.8');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
@@ -100,6 +101,7 @@ sub main {
     print {$outfh} $cmd_start->() if $cmd_start;
 
     my @threads;
+    my $cwd = $CWD;
 
     while ($group->runs) {
         $group->runs(0);
@@ -113,7 +115,12 @@ sub main {
 
             push @threads, {
                 project => $project,
-                thread  => threads->new(sub { $cmd_body->($project) }),
+                thread  => threads->new(
+                    sub {
+                        local $CWD = $cwd;
+                        $cmd_body->($project);
+                    }
+                ),
             };
         }
     }

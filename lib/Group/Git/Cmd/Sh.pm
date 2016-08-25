@@ -52,6 +52,7 @@ sub sh {
         system $cmd;
         return;
     }
+
     my $out = `$cmd`;
 
     return $out if $self->verbose;
