@@ -64,6 +64,14 @@ The Bitbucket server helper will tag repositories with their project.
 
 =back
 
+=head2 Extending with your own commands
+
+C<Group::Git> looks for commands in the perl modules path C<Group::Git::Cmd>
+and it look in the path for any command in the form of `group-git-cmd` or
+`git-cmd` as well as supoorting all the built in git commands. If you want
+perform an operation you can write your own script put it your path and
+C<Group::Git> will find it execute it the same was git would.
+
 =head1 INSTALLATION
 
 To install this module, run the following commands:
