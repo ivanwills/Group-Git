@@ -320,6 +320,9 @@ This documentation refers to group-git version 0.5.8.
   -v --verbose  Show more details
 
   Other:
+  -M --max[=]int
+                Limit the number of symultanious threads running at once.
+                Default 10 threads
      --VERSION  Prints the version information
      --help     Prints this help information
      --man      Prints the full documentation for group-git
