@@ -339,8 +339,9 @@ This documentation refers to group-git version 0.5.8.
 
 =head1 DESCRIPTION
 
-Run any git command over all repositories in the current directory or sub
-directories if C<--recurse> is used.
+C<group-git> allows you to run any git command over all repositories in the
+current directory (or sub directories if C<--recurse> is used). It can help
+with the management of many git repositories with a simple tool set.
 
 =head2 Configuration
 
