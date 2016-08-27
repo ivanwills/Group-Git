@@ -60,7 +60,7 @@ sub main {
             'tag|t=s',
             'test|T!',
             'bw',
-            'separate!',
+            'separate|S!',
             'verbose|v+',
             'quiet|q',
         ]
@@ -166,6 +166,7 @@ sub do_cmd {
     my ($group, $cmd, $fallback) = @_;
     my $cmd_under = $cmd;
     $cmd_under =~ s/-/_/g;
+
     if ( $group->can($cmd) ) {
         return sub { $group->$cmd( @_ ) };
     }
@@ -300,9 +301,9 @@ This documentation refers to group-git version 0.5.8.
                 Only useful if you have a group-git.yml file defining Github,
                 Bitbucked or Gitosis types.
   -t --tag[=]str
-                Only opperate on repositories tagged with str (tags can be
-                specified in the config file see --man or with a file .[tag].tag
-                in the project directory)
+                Only opperate on repositories tagged with str. Tags can be
+                specified in the config file (see --man), with a file .[tag].tag
+                in the project directory or programatically by tagger plugin.
      --bw       Don't colour the repository names in the output.
 
   Finding projects:
@@ -313,7 +314,7 @@ This documentation refers to group-git version 0.5.8.
   -p --page     Turns on paginating out put uses $PAGER environment variable if
                 set or 'less -Rx4SFX' if not.
      --no-page  Turn off pagination.
-     --separate Add a new line separator before each repository output
+  -S --separate Add a new line separator before each repository output (Default)
      --no-separate
                 Don't show the new repository separator
   -q --quiet    Don't show project names before running git on the directory
