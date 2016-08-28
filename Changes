@@ -1,5 +1,25 @@
 Revision history for Group-Git
 
+0.5.9   2016-08-28
+        Updating for release of version 0.5.9
+        Upped minimum perl version (Ivan Wills)
+        Fixed spelling (Ivan Wills)
+        Cleaned up documentation a bit (Ivan Wills)
+        Better description (Ivan Wills)
+        Fixed references to README (Ivan Wills)
+        Fixed code blocks (Ivan Wills)
+        Converted syntax (Ivan Wills)
+        Converting to Markdown due to githubs woeful POD support (Ivan Wills)
+        More documentation (Ivan Wills)
+        Fied date (Ivan Wills)
+        Adding lots of documentation (Ivan Wills)
+        Added documentation of --max (Ivan Wills)
+        Fixed issue with large number of repositories causing exessive number of threads (Ivan Wills)
+        Added setting the directory when running each thread to stop leaking of directory changes (Ivan Wills)
+        Added threadding output (Ivan Wills)
+        Added separate option (Ivan Wills)
+        Adding README to documentation to keep up to date (Ivan Wills)
+
 0.5.8   2016-08-21
         Updating for release of version 0.5.8
         Updated date (Ivan Wills)

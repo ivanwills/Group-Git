@@ -15,7 +15,7 @@ use Carp;
 use English qw/ -no_match_vars /;
 use File::chdir;
 
-our $VERSION = version->new('0.5.8');
+our $VERSION = version->new('0.5.9');
 
 sub matches {
     my ($self, $project) = @_;
