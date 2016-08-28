@@ -43,5 +43,6 @@ add_stopwords(qw/
     org
     Taggers
     tagger
+    mech
 /);
 all_pod_files_spelling_ok();

@@ -114,7 +114,7 @@ This documentation refers to Group::Git::Stash version 0.5.8.
 =head1 DESCRIPTION
 
 Reads all repositories that the configured user has access to. Note: if no
-user is set up (or no password is supplied) then you will bie prompted to
+user is set up (or no password is supplied) then you will be prompted to
 enter the username and/or password.
 
 =head1 SUBROUTINES/METHODS
