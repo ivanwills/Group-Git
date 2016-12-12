@@ -10,7 +10,7 @@ use Moo;
 use strict;
 use warnings;
 use version;
-use Types::Standard qw/Str/;
+use Types::Standard qw/Str HashRef/;
 use Type::Utils;
 
 our $VERSION = version->new('0.5.9');
@@ -29,6 +29,11 @@ has git => (
     is  => 'rw',
     isa => Str,
 );
+has tags => (
+    is      => 'rw',
+    isa => HashRef,
+);
+
 has mech => (
     is      => 'rw',
     lazy    => 1,

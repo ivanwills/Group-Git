@@ -97,6 +97,10 @@ sub _repos {
         $repos{$file} = Group::Git::Repo->new(
             name => $file,
             git  => $url,
+            tags => {
+                map {m{/[.](.*?)[.]tag$}; $1 => 1}
+                glob "$file/.*.tag"
+            },
         );
     }
 
