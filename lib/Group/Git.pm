@@ -75,7 +75,7 @@ sub _repos {
     my @files = path('.')->children;
     my %tags;
     for my $tag ( keys %{ $self->conf->{tags} } ) {
-        $tags{$tag} = map { $_ => 1 } @{ $self->conf->{tags}{$tag} };
+        $tags{$tag} = { map { $_ => 1 } @{ $self->conf->{tags}{$tag} } };
     }
 
     while ( my $file = shift @files ) {
