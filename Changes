@@ -1,5 +1,15 @@
 Revision history for Group-Git
 
+0.5.10   2016-12-12
+        Updating for release of version 0.5.10
+        Fixing not rapping tag hash (Ivan Wills)
+        Adding a default tags (Ivan Wills)
+        Using the project object to get tags now (Ivan Wills)
+        Added saving tags to config (Ivan Wills)
+        Using sorted tag for repo determination (Ivan Wills)
+        Adding recording FS tags along with a repo object (Ivan Wills)
+        Added perl 5.24 to travis build (Ivan Wills)
+
 0.5.9   2016-08-28
         Updating for release of version 0.5.9
         Upped minimum perl version (Ivan Wills)
