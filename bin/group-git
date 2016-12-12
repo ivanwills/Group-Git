@@ -209,7 +209,7 @@ sub tagged {
     }
 
     # return true if the project is tagged in the config file or has a tag file
-    return $tagged->{$project} || -e "$project/.$tag.tag" || dyna_tags($tag, $project);
+    return $tagged->{$project} || $project->tags->{$tag} || dyna_tags($tag, $project);
 }
 
 sub dyna_tags {
