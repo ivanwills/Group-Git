@@ -31,7 +31,8 @@ has git => (
 );
 has tags => (
     is      => 'rw',
-    isa => HashRef,
+    isa     => HashRef,
+    default => sub {{}},
 );
 
 has mech => (
