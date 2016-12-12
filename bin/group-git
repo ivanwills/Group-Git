@@ -113,7 +113,7 @@ sub main {
             next if $match && $project !~ /$match/;
             next if $exclude{$project};
             next if %include && !$include{$project};
-            next if !tagged($conf, $opt->tag, $project);
+            next if !tagged($conf, $opt->tag, $project, $group->repos->{$project});
 
             push @threads, {
                 project => $project,
@@ -199,7 +199,7 @@ sub sorter {
 
 my $tagged;
 sub tagged {
-    my ($conf, $tag, $project) = @_;
+    my ($conf, $tag, $project, $object) = @_;
 
     # everything is "tagged" if none is specified
     return 1 if !$tag;
@@ -209,7 +209,7 @@ sub tagged {
     }
 
     # return true if the project is tagged in the config file or has a tag file
-    return $tagged->{$project} || $project->tags->{$tag} || dyna_tags($tag, $project);
+    return $tagged->{$project} || $object->tags->{$tag} || dyna_tags($tag, $project);
 }
 
 sub dyna_tags {
