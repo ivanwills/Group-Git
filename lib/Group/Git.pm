@@ -73,6 +73,10 @@ sub _repos {
     my ($self) = @_;
     my %repos;
     my @files = path('.')->children;
+    my %tags;
+    for my $tag ( keys %{ $self->conf->{tags} } ) {
+        $tags{$tag} = map { $_ => 1 } @{ $self->conf->{tags}{$tag} };
+    }
 
     while ( my $file = shift @files ) {
         next unless -d $file;
@@ -102,6 +106,14 @@ sub _repos {
                 glob "$file/.*.tag"
             },
         );
+
+        for my $tag (keys %{ $repos{$file}->tags } ) {
+            $tags{$tag}{$file} = 1;
+        }
+    }
+
+    for my $tag (keys %tags) {
+        $self->conf->{tags}{$tag} = [ sort keys %{ $tags{$tag} } ];
     }
 
     return \%repos;
