@@ -98,12 +98,15 @@ sub _repos {
             $url = '';
         }
 
+        my $glob = "$file/.*.tag";
+        $glob =~ s/\s/?/g;
+
         $repos{$file} = Group::Git::Repo->new(
             name => $file,
             git  => $url,
             tags => {
-                map {m{/[.](.*?)[.]tag$}; $1 => 1}
-                glob "$file/.*.tag"
+                map { m{/[.](.*?)[.]tag$}; $1 => 1 }
+                glob $glob
             },
         );
 
