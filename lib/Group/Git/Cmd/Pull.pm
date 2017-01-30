@@ -71,6 +71,18 @@ sub pull {
     my $dir;
 
     if ( -d $name ) {
+        {
+            local $CWD = $name;
+
+            # check that there is a remote
+            my $remotes = `git remote 2> /dev/null`;
+            chomp $remotes;
+
+            if ( ! $remotes && ! $self->verbose ) {
+                return;
+            }
+        }
+
         $dir = $name;
         my @args = map {
                 $opt->opt->{$_} eq '0'   ? "--no-$_"
