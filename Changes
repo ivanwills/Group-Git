@@ -1,5 +1,11 @@
 Revision history for Group-Git
 
+0.6.0   2017-02-26
+        Updating for release of version 0.6.0
+        Updated dates (Ivan Wills)
+        Making things quieter for repos with no remotes set (Ivan Wills)
+        Fixed issue with spaces in directory names (Ivan Wills)
+
 0.5.10   2016-12-12
         Updating for release of version 0.5.10
         Fixing not rapping tag hash (Ivan Wills)
