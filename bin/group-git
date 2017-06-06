@@ -126,9 +126,11 @@ sub main {
                 ),
             };
 
+            my $check = 0;
             while ( threads->list(threads::running) > $opt->max || @threads > $opt->max ) {
-                if ( $threads[0]{thread}->is_running ) {
-                    warn "Sleeping on $threads[0]{project} ---------\n" if $opt->verbose;
+                $check = ($check + 1) % $opt->max;
+                if ( $threads[$check]{thread}->is_running ) {
+                    warn "Sleeping on $threads[$check]{project} ---------\n" if $opt->verbose;
                     sleep 1;
                 }
                 else {
