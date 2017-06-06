@@ -134,7 +134,12 @@ sub main {
                     sleep 1;
                 }
                 else {
-                    process_thread((shift @threads), $opt, $outfh);
+                    my $thread = $threads[$check];
+                    @threads = (
+                        @threads[ 0 .. $check - 1 ],
+                        @threads[ $check + 1 .. @threads - 1 ]
+                    );
+                    process_thread($thread, $opt, $outfh);
                 }
             }
             if ($count++ % 10 == 0) {
