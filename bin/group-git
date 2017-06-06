@@ -104,6 +104,7 @@ sub main {
 
     my @threads;
     my $cwd = $CWD;
+    my $count = 0;
 
     while ($group->runs) {
         $group->runs(0);
@@ -125,13 +126,20 @@ sub main {
                 ),
             };
 
-            while ( threads->list(threads::running) > $opt->max ) {
-                if ( ! $threads[0]{thread}->is_running ) {
-                    process_thread((shift @threads), $opt, $outfh);
-                }
-                else {
+            while ( threads->list(threads::running) > $opt->max || @threads > $opt->max ) {
+                if ( $threads[0]{thread}->is_running ) {
+                    warn "Sleeping on $threads[0]{project} ---------\n" if $opt->verbose;
                     sleep 1;
                 }
+                else {
+                    process_thread((shift @threads), $opt, $outfh);
+                }
+            }
+            if ($count++ % 10 == 0) {
+                sleep 1;
+            }
+            else {
+                warn "There are currently " . @threads . " threads (of $count started)\n" if $opt->verbose;
             }
         }
     }
@@ -150,6 +158,7 @@ sub process_thread {
     my $project = $thread_object->{project};
     my $thread = $thread_object->{thread};
     my $out = $thread->join();
+    warn $project . ' ', ($out ? 'with changes' : 'no changes'), "\n" if $opt->verbose;
 
     if ($out) {
         $project = colored($project, 'blue') if !$opt->bw;
