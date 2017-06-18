@@ -57,7 +57,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::State - Runs git status on a git project
+Group::Git::Cmd::State - Quick state of each repository (branch name and changes)
 
 =head1 VERSION
 
@@ -81,12 +81,7 @@ This documentation refers to Group::Git::Cmd::State version 0.6.0.
 
 =item C<state ($name)>
 
-Runs git state on each directory if the state message includes:
-
- "nothing to commit"
-
-The state is suppressed to keep the output clean. This can be overridden
-if verbose is set.
+Shows the repository branch and weather there are changes in it.
 
 =item C<status_start ()>
 
