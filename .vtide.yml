@@ -20,6 +20,8 @@ editor:
       - lib/Group/Git/Cmd/Status.pm
       - lib/Group/Git/Cmd/Branch.pm
       - lib/Group/Git/Cmd/TagList.pm
+    cmd-more:
+      - lib/Group/Git/Cmd/State.pm
     taggers:
       - lib/Group/Git/Taggers.pm
       - lib/Group/Git/Taggers/Local.pm
@@ -46,6 +48,8 @@ terminals:
   4:
     edit: cmd-base
   5:
-    edit: taggers
+    edit: cmd-more
   6:
+    edit: taggers
+  7:
     edit: repos
