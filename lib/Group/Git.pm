@@ -19,7 +19,7 @@ use Types::Standard qw/Str Int Bool HashRef/;
 use Type::Utils;
 use Module::Pluggable require => 1, search_path => ['Group::Git::Cmd', 'Group::Git::Taggers'];
 
-our $VERSION = version->new('0.6.1');
+our $VERSION = version->new('0.6.2');
 our $AUTOLOAD;
 
 has conf => (
@@ -165,7 +165,7 @@ Group::Git - Base module for group of git repository operations.
 
 =head1 VERSION
 
-This documentation refers to Group::Git version 0.6.1.
+This documentation refers to Group::Git version 0.6.2.
 
 =head1 SYNOPSIS
 
