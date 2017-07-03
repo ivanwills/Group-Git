@@ -195,13 +195,13 @@ sub do_cmd {
             my $script = "$path/group-git-$cmd";
             next if !-x $script;
 
-            return sub { system $script, @_; }
+            return sub { $group->cmd( '', $script, @_); };
         }
     }
 
     return if !$fallback;
 
-    return sub { $group->cmd( $cmd, @_ ) };
+    return sub { $group->cmd( 'git', $cmd, @_ ) };
 }
 
 sub sorter {
