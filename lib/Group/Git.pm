@@ -123,14 +123,16 @@ sub _repos {
 }
 
 sub cmd {
-    my ($self, $command, $project) = @_;
+    my ($self, $type, $command, $project) = @_;
     return if !$project || !-d $project;
 
     local $CWD = $project;
     local @ARGV = @ARGV;
-    my $cmd = join ' ', 'git', map { $self->shell_quote } $command, @ARGV;
+    my $cmd = join ' ', map { $self->shell_quote }
+        grep { defined $_ && $_ ne '' }
+        $type, $command, @ARGV;
 
-    return `$cmd`;
+    return scalar `$cmd`;
 }
 
 sub shell_quote {
