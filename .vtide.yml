@@ -22,6 +22,7 @@ editor:
       - lib/Group/Git/Cmd/TagList.pm
     cmd-more:
       - lib/Group/Git/Cmd/State.pm
+      - lib/Group/Git/Cmd/Grep.pm
     taggers:
       - lib/Group/Git/Taggers.pm
       - lib/Group/Git/Taggers/Local.pm
