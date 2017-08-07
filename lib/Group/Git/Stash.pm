@@ -68,6 +68,10 @@ sub _repos {
                 git  => $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh},
             );
             push @{ $conf->{tags}{$project} }, "$dir";
+
+            if ( $repo->{project}{owner} ) {
+                push @{ $conf->{tags}{personal} }, "$dir";
+            }
         }
         $more  = !$response->{isLastPage};
         $start = $response->{nextPageStart};
