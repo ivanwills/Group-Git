@@ -93,7 +93,7 @@ sub grep {
     my @argv = @ARGV;
     $cmd .= shift @argv;
     if ( @argv ) {
-        $cmd .= ' -- ', join ' ', @argv;
+        $cmd .= ' -- ' . join ' ', @argv;
     }
 
     return `$cmd`;
