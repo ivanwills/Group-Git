@@ -136,7 +136,7 @@ sub cmd {
 }
 
 sub shell_quote {
-    s{ ( [^\w\-./?*] ) }{\\$1}gxms;
+    s{ ( [^\w\-./?*+] ) }{\\$1}gxms;
     return $_;
 }
 
