@@ -19,6 +19,7 @@ our $VERSION = version->new('0.6.3');
 
 requires 'repos';
 requires 'verbose';
+requires 'shell_quote';
 
 my $opt = Getopt::Alt->new(
     { help_package => __PACKAGE__, },
@@ -65,6 +66,7 @@ my $opt = Getopt::Alt->new(
         'no-index',
         'untracked',
         'branches|b',
+        'verbose',
     ]
 );
 
@@ -87,15 +89,16 @@ sub grep {
 
     my $cmd = 'git grep';
     for my $arg ( keys %{ $opt->opt } ) {
+        next if grep { $_ eq $arg } qw/verbose branches/;
         $cmd .= ( length $arg == 1 ? " -$arg" : " --$arg" ) . ( $arg eq 'max-depth' || $opt->opt->{$arg} ne 1 ? '=' . $opt->opt->{$arg} : '' );
     }
 
     my @argv = @ARGV;
-    $cmd .= shift @argv;
     if ( @argv ) {
-        $cmd .= ' -- ' . join ' ', @argv;
+        $cmd .= ' -- ' . join ' ', map { $self->shell_quote($_) } @argv;
     }
 
+    warn "$cmd\n" if $opt->opt->{verbose};
     return `$cmd`;
 }
 
