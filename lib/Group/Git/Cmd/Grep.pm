@@ -127,6 +127,10 @@ weather there are uncommitted changes) for each repository.
 
 =over 4
 
+=item C<grep_start ()>
+
+Initializes the command
+
 =item C<grep ($name)>
 
 Shows the repository branch and weather there are changes in it.
