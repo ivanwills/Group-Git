@@ -68,6 +68,7 @@ sub _repos {
                 git  => $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh},
             );
             push @{ $conf->{tags}{$project} }, "$dir";
+            push @{ $conf->{tags}{$repo->{project}{type}} }, "$dir";
 
             if ( $repo->{project}{owner} ) {
                 push @{ $conf->{tags}{personal} }, "$dir";
