@@ -99,7 +99,7 @@ sub grep {
     }
 
     warn "$cmd\n" if $opt->opt->{verbose};
-    return `$cmd`;
+    return scalar `$cmd`;
 }
 
 1;
