@@ -51,6 +51,10 @@ sub state {
     return $branch . ($status ? ' *' : '');
 }
 
+sub state_end {
+    return "\n";
+}
+
 1;
 
 __END__
