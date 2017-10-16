@@ -122,6 +122,11 @@ Reads all repositories that the configured user has access to. Note: if no
 user is set up (or no password is supplied) then you will be prompted to
 enter the username and/or password.
 
+=head2 Auto Tagging
+
+Stash repositories are automatically tagged with the project they belong to
+and the type of repository according to stash (e.g. NORMAL or PERSONAL).
+
 =head1 SUBROUTINES/METHODS
 
 =over 4
