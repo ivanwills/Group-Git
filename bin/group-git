@@ -172,6 +172,7 @@ sub main {
     }
 
     print {$outfh} $cmd_end->() if $cmd_end;
+    print {$outfh} "\n";
 
     return;
 }
