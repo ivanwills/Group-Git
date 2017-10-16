@@ -27,7 +27,7 @@ my $opt = Getopt::Alt->new(
     ]
 );
 
-sub status_start {
+sub state_start {
     $opt->process;
 
     return;
@@ -80,7 +80,7 @@ weather there are uncommitted changes) for each repository.
 
 Shows the repository branch and weather there are changes in it.
 
-=item C<status_start ()>
+=item C<state_start ()>
 
 Process the command line arguments for state
 

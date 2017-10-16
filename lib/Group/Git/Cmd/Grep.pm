@@ -135,7 +135,7 @@ Initializes the command
 
 Shows the repository branch and weather there are changes in it.
 
-=item C<status_start ()>
+=item C<grep_start ()>
 
 Process the command line arguments for grep
 
