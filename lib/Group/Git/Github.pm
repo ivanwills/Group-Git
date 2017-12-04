@@ -76,6 +76,11 @@ sub _github {
         : (
             login => $conf->{username} ? $conf->{username} : prompt( -prompt => 'github.com username : ' ),
             pass  => $conf->{password} ? $conf->{password} : prompt( -prompt => 'github.com password : ', -echo => '*' ),
+            (
+                $conf->{otp}
+                ? ( pass  => prompt( -prompt => 'github.com password : ', -echo => '*' ) )
+                : ()
+            )
         )
     );
 }
@@ -102,6 +107,15 @@ This documentation refers to Group::Git::Github version 0.6.5.
        conf => {
            username => 'joeblogs@gmail.com',
            password => 'myverysecurepassword',
+       },
+   );
+
+   # or if you have two factor auth turned on
+   my $ggg = Group::Git::Github->new(
+       conf => {
+           username => 'joeblogs@gmail.com',
+           password => 'myverysecurepassword',
+           ota      => 1,
        },
    );
 
