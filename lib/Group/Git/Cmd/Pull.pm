@@ -94,6 +94,7 @@ sub pull {
     }
     elsif ( $repo->git ) {
         $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git, $name;
+        $dir = $name;
     }
     else {
         return;
