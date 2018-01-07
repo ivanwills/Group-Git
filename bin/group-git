@@ -139,7 +139,8 @@ sub main {
                         warn "Abandoning $threads[$check]{project} as it's taking too long!\n";
 
                         # abandon thread
-                        threads->detach( $threads[$check]{thread} );
+                        eval { threads->detach( $threads[$check]{thread} ) };
+                        warn $@ if $@;
                         @threads = (
                             @threads[ 0 .. $check - 1 ],
                             @threads[ $check + 1 .. @threads - 1 ]
