@@ -140,7 +140,7 @@ sub main {
 
                         # abandon thread
                         eval { threads->detach( $threads[$check]{thread} ) };
-                        warn $@ if $@;
+                        warn $@ if $@ && $opt->verbose;
                         @threads = (
                             @threads[ 0 .. $check - 1 ],
                             @threads[ $check + 1 .. @threads - 1 ]
