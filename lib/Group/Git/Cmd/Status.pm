@@ -37,10 +37,6 @@ sub status_start {
 sub status {
     my ($self, $name) = @_;
     return unless -d $name;
-    if ( !$self->opt ) {
-        local $ARGV;
-        $opt->process;
-    }
 
     my $repo = $self->repos->{$name};
     my $cmd;
