@@ -88,6 +88,10 @@ Shows the repository branch and weather there are changes in it.
 
 Process the command line arguments for state
 
+=item C<state_end ()>
+
+For adding find new line
+
 =back
 
 =head1 DIAGNOSTICS
