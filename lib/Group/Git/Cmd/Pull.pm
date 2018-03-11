@@ -15,7 +15,7 @@ use English qw/ -no_match_vars /;
 use File::chdir;
 use Getopt::Alt;
 
-our $VERSION = version->new('0.6.6');
+our $VERSION = version->new('0.6.7');
 
 requires 'repos';
 requires 'verbose';
@@ -121,7 +121,7 @@ Group::Git::Cmd::Pull - Pull latest versions of all repositories or clone any th
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Pull version 0.6.6.
+This documentation refers to Group::Git::Cmd::Pull version 0.6.7.
 
 =head1 SYNOPSIS
 
