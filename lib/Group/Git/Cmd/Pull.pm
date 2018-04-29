@@ -13,6 +13,7 @@ use version;
 use Carp;
 use English qw/ -no_match_vars /;
 use File::chdir;
+use Path::Tiny;
 use Getopt::Alt;
 
 our $VERSION = version->new('0.6.7');
@@ -95,12 +96,16 @@ sub pull {
     elsif ( $repo->git ) {
         $cmd = join ' ', 'git', 'clone', map { $self->shell_quote } $repo->git, $name;
         $dir = $name;
+        my $path = path($name);
+        if ( $path->parent ne '.' && ! -f $path->parent ) {
+            $path->parent->mkpath;
+        }
     }
     else {
         return;
     }
 
-    local $CWD = $dir if $dir;
+    local $CWD = $dir if -f $dir;
     warn "$cmd\n" if $self->verbose > 1;
     return `$cmd 2>&1` if !$opt->opt->quiet;
 
