@@ -60,10 +60,13 @@ sub _repos {
             my $project = $repo->{project}{name};
             my $url     = $repo->{links}{self}[0]{href};
             my %clone   = map {($_->{name} => $_->{href})} @{ $repo->{links}{clone} };
-            my $dir     = $self->recurse ? path("$project/$repo->{name}") : path($repo->{name});
+            my $git     = $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh};
+            my ($dir)   = $self->recurse ? $git =~ m{([^/]+/[^/]+?)(?:[.]git)?$} : $git =~ m{/([^/]+?)(?:[.]git)?$};
+            my $name    = $self->recurse ? path("$project/$repo->{name}") : path($repo->{name});
+            $dir =~ s/^~//xms;
 
             $repos{$dir} = Group::Git::Repo->new(
-                name => $dir,
+                name => path($dir),
                 url  => $url,
                 git  => $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh},
             );
@@ -72,6 +75,9 @@ sub _repos {
 
             if ( $repo->{project}{owner} ) {
                 push @{ $conf->{tags}{personal} }, "$dir";
+            }
+            else {
+                push @{ $conf->{tags}{project} }, "$dir";
             }
         }
         $more  = !$response->{isLastPage};
