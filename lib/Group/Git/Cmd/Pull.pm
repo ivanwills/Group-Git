@@ -105,7 +105,7 @@ sub pull {
         return;
     }
 
-    local $CWD = $dir if -f $dir;
+    local $CWD = $dir if -d $dir;
     warn "$cmd\n" if $self->verbose > 1;
     return `$cmd 2>&1` if !$opt->opt->quiet;
 
