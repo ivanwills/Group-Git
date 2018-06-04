@@ -78,7 +78,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::TagList - Runs git status on a git project
+Group::Git::Cmd::TagList - Runs git tag-list on a git project
 
 =head1 VERSION
 
