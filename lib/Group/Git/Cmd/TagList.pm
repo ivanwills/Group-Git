@@ -86,10 +86,10 @@ This documentation refers to Group::Git::Cmd::TagList version 0.6.9.
 
 =head1 SYNOPSIS
 
-   grou-git tag-list [-v|--verbose] [-c|--count]
-   grou-git tag-list --help
-   grou-git tag-list --man
-   grou-git tag-list --version
+   group-git tag-list [-v|--verbose] [-c|--count]
+   group-git tag-list --help
+   group-git tag-list --man
+   group-git tag-list --version
 
   Options:
    -c --count       Show a count of repositories in each tag
