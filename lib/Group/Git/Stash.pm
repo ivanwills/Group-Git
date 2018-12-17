@@ -56,6 +56,7 @@ sub _repos {
         $mech->get( $url . $start );
         my $response = decode_json $mech->content;
 
+        REPO:
         for my $repo (@{ $response->{values} }) {
             my $project = $repo->{project}{name};
             my $url     = $repo->{links}{self}[0]{href};
@@ -69,6 +70,10 @@ sub _repos {
                 name => path($dir),
                 url  => $url,
                 git  => $conf->{clone_type} && $conf->{clone_type} eq 'http' ? $clone{http} : $clone{ssh},
+                tags => {
+                    $project => 1,
+                    ($repo->{project}{owner} ? 'personal' : 'project') => 1,
+                },
             );
             push @{ $conf->{tags}{$project} }, "$dir";
             push @{ $conf->{tags}{$repo->{project}{type}} }, "$dir";
