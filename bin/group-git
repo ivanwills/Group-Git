@@ -43,6 +43,7 @@ sub main {
             sub_command   => 1,
             auto_complete => \&auto,
             conf_prefix   => '',
+            conf_section  => 'defaults',
             default       => {
                 max      => 10,
                 runtime  => 600,
@@ -64,6 +65,7 @@ sub main {
             'test|T!',
             'bw',
             'separate|S!',
+            'defaults|d=s',
             'verbose|v+',
             'quiet|q',
         ]
@@ -353,6 +355,8 @@ This documentation refers to group-git version 0.7.0.
   -S --separate Add a new line separator before each repository output (Default)
      --no-separate
                 Don't show the new repository separator
+  -d --defaults[=]section
+                Specify a different default configuration section
   -q --quiet    Don't show project names before running git on the directory
   -v --verbose  Show more details
 
