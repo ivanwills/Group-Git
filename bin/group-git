@@ -56,7 +56,7 @@ sub main {
             'skip|s=s',
             'match|m=s',
             'max|M=i',
-            'runtime|max-runtime|R=i',
+            'runtime|max-runtime|mr=i',
             'remote|R!',
             'limit|l=i',
             'recurse|r!',
