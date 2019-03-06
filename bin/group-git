@@ -121,6 +121,7 @@ sub main {
             next if $exclude{$project};
             next if %include && !$include{$project};
             next if !tagged($conf, $opt->tag, $project, $group->repos->{$project});
+            next if exclude_tagged($conf, $project, $group->repos->{$project});
             last if $opt->limit && $total++ >= $opt->limit;
 
             push @threads, {
@@ -233,6 +234,20 @@ sub sorter {
     my $B = $b;
     $B =~ s/(\d+)/sprintf "%06d", $1/egxms;
     return lc $A cmp lc $B;
+}
+
+my $exclude_tagged;
+sub exclude_tagged {
+    my ($conf, $project, $object) = @_;
+
+    if ( !defined $exclude_tagged ) {
+        $exclude_tagged = { map { $_ => 1 } @{ $conf->{'exclude-tags'} || [] } };
+    }
+
+    my $Project = $exclude_tagged->{$project};
+    my $Object  = ( scalar grep { $object->tags->{$_} } keys %{$exclude_tagged} );
+    my $Dynamic = ( scalar grep { dyna_tags($_, $project) } keys %{$exclude_tagged} );
+    return $Project || $Object || $Dynamic;
 }
 
 my $tagged;
