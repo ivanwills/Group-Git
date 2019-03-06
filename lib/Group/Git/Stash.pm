@@ -26,8 +26,33 @@ has '+recurse' => (
 );
 has 'mech' => (
     is      => 'rw',
-    default => sub { WWW::Mechanize->new; },
+    lazy    => 1,
+    builder => '_mech',
 );
+
+sub _mech {
+    my ($self) = @_;
+    my $mech;
+
+    if ( ! -d $self->conf->{cache_dir} ) {
+        mkdir $self->conf->{cache_dir};
+    }
+
+    if ($self->conf->{cache_dir} && eval { require WWW::Mechanize::Cached; require CHI }) {
+        $mech = WWW::Mechanize::Cached->new(
+            cache => CHI->new(
+                driver     => 'File',
+                root_dir   => $self->conf->{cache_dir},
+                expires_in => '30 min',
+            ),
+        );
+    }
+    else {
+        $mech  = WWW::Mechanize->new;
+    }
+
+    return $mech;
+}
 
 sub _httpenc {
     my ($str) = @_;
