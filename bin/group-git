@@ -33,6 +33,7 @@ sub main {
         use_ext => 1,
     });
     $conf = {
+        cache_dir => '/tmp/group-git/',
         map { %$_        }
         map { values %$_ }
         @{$conf}
