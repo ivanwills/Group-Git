@@ -79,7 +79,8 @@ sub _repos {
 
     while ($more) {
         $mech->get( $url . $start );
-        my $response = decode_json $mech->content;
+        my $response = eval { decode_json $mech->content }
+            or die $@ . "Possibly check your password\n";
 
         REPO:
         for my $repo (@{ $response->{values} }) {
