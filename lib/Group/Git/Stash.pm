@@ -79,8 +79,13 @@ sub _repos {
 
     while ($more) {
         $mech->get( $url . $start );
-        my $response = eval { decode_json $mech->content }
-            or die $@ . "Possibly check your password\n";
+        my $response = eval { decode_json $mech->content };
+        if ( !$response ) {
+            die $@ || "Error occured processing stash server response\n";
+        }
+        elsif ( $response->{errors} ) {
+            die join '', map {"$_->{message}\n"} @{ $response->{errors} };
+        }
 
         REPO:
         for my $repo (@{ $response->{values} }) {
