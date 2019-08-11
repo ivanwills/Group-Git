@@ -100,3 +100,4 @@ temp*
 cmds
 ^MYMETA\.json$
 fatpacker*
+.vtide/
