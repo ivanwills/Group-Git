@@ -39,6 +39,11 @@ sub main {
         map { values %$_ }
         @{$conf}
     };
+    my $aliases = $conf->{aliases} || {};
+    $aliases = {
+        map { $_ => ref $aliases->{$_} ? $aliases->{$_} : [ split /\s+/, $aliases->{$_} ] }
+        keys %$aliases
+    };
 
     my ($opt, $cmd) = get_options(
         {
@@ -46,6 +51,7 @@ sub main {
             auto_complete => \&auto,
             conf_prefix   => '',
             conf_section  => 'defaults',
+            aliases       => $aliases,
             default       => {
                 max      => 10,
                 runtime  => 600,
