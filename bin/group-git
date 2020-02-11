@@ -96,7 +96,7 @@ sub main {
     }
 
     if ( $opt->tag_group ) {
-        $opt->tag([ @{ $opt->tag || [] }, @{ $conf->{'tag-group'}{$opt->tag_group} } ]);
+        $opt->tag([ @{ $opt->tag || [] }, @{ $conf->{'tag-group'}{$opt->tag_group} || [] } ]);
     }
 
     my $action = $cmd;
