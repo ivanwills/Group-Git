@@ -1,5 +1,5 @@
 ---
-count: 8
+count: 10
 default:
   restart: 0
   wait: 1
@@ -54,3 +54,5 @@ terminals:
     edit: taggers
   7:
     edit: repos
+  8:
+    edit: bin
