@@ -30,7 +30,7 @@ sub main {
 
     # do stuff here
     my $conf = Config::Any->load_stems({
-        stems   => [ qw/group group-git/ ],
+        stems   => [ qw/group group-git .group-git/, "$ENV{HOME}/.group", "$ENV{HOME}/.group-git", "/etc/group-git" ],
         use_ext => 1,
     });
     $conf = {
