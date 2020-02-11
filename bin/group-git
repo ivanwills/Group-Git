@@ -69,7 +69,8 @@ sub main {
             'limit|l=i',
             'recurse|r!',
             'page|p!',
-            'tag|t=s',
+            'tag|t=s@',
+            'tag_group|tag-group|g=s',
             'test|T!',
             'bw',
             'separate|S!',
@@ -92,6 +93,10 @@ sub main {
         require Pod::Usage;
         warn "No command specified!\n";
         Pod::Usage::pod2usage( -verbose => 1 );
+    }
+
+    if ( $opt->tag_group ) {
+        $opt->tag([ @{ $opt->tag || [] }, @{ $conf->{'tag-group'}{$opt->tag_group} } ]);
     }
 
     my $action = $cmd;
@@ -260,17 +265,25 @@ sub exclude_tagged {
 
 my $tagged;
 sub tagged {
-    my ($conf, $tag, $project, $object) = @_;
+    my ($conf, $tags, $project, $object) = @_;
 
     # everything is "tagged" if none is specified
-    return 1 if !$tag;
+    return 1 if !$tags || !@{$tags};
 
     if ( !defined $tagged ) {
-        $tagged = { map { $_ => 1 } @{ $conf->{tags}{$tag} || [] } };
+        $tagged = { map { $_ => 1 } map { @{ $conf->{tags}{$_} || [] } } @{$tags} };
     }
 
-    # return true if the project is tagged in the config file or has a tag file
-    return $tagged->{$project} || $object->tags->{$tag} || dyna_tags($tag, $project);
+    if ( $tagged->{$project} ) {
+        return 1;
+    }
+
+    for my $tag (@{ $tags }) {
+        # return true if the project is tagged in the config file or has a tag file
+        return 1 if $object->tags->{$tag} || dyna_tags($tag, $project);
+    }
+
+    return 0;
 }
 
 sub dyna_tags {
