@@ -52,6 +52,26 @@ sub main {
             conf_prefix   => '',
             conf_section  => 'defaults',
             aliases       => $aliases,
+            help_post     => sub {
+                $ENV{TMP} ||= $ENV{HOME};
+                my $cache = path("$ENV{TMP}/.group-git-commands");
+                if ( ! -f $cache ) {
+                    return '';
+                }
+                my $out = "All commands:\n";
+                my $line;
+                for my $cmd ( sort split /\n/, $cache->slurp ) {
+                    if ( length "$line $cmd" > 80 ) {
+                        $out .= " $line\n";
+                        $line = '';
+                    }
+                    $line .= " $cmd,";
+                }
+                $out .= " $line";
+                chop $out;
+
+                return "$out\n";
+            },
             default       => {
                 max      => 10,
                 runtime  => 600,
