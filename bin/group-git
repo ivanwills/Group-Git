@@ -59,7 +59,7 @@ sub main {
                     return '';
                 }
                 my $out = "All commands:\n";
-                my $line;
+                my $line = '';
                 for my $cmd ( sort split /\n/, $cache->slurp ) {
                     if ( length "$line $cmd" > 80 ) {
                         $out .= " $line\n";
