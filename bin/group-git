@@ -11,8 +11,8 @@ use warnings;
 use version;
 use threads;
 use List::MoreUtils qw/uniq/;
-use Getopt::Alt qw/get_options/;
-use English qw/ -no_match_vars /;
+use Getopt::Alt     qw/get_options/;
+use English         qw/ -no_match_vars /;
 use Path::Tiny;
 use Group::Git;
 use Config::Any;
@@ -21,7 +21,7 @@ use File::chdir;
 use Time::HiRes qw/sleep/;
 
 our $VERSION = version->new('0.7.7');
-my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
+my ($name) = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 main();
 exit 0;
@@ -29,23 +29,31 @@ exit 0;
 sub main {
 
     # do stuff here
-    my $conf = Config::Any->load_stems({
-        stems   => [ qw/group group-git .group-git/, "$ENV{HOME}/.group", "$ENV{HOME}/.group-git", "/etc/group-git" ],
-        use_ext => 1,
-    });
+    my $conf = Config::Any->load_stems(
+        {
+            stems => [
+                qw/group group-git .group-git/, "$ENV{HOME}/.group",
+                "$ENV{HOME}/.group-git",        "/etc/group-git"
+            ],
+            use_ext => 1,
+        }
+    );
     $conf = {
         cache_dir => '/tmp/group-git/',
-        map { %$_        }
-        map { values %$_ }
-        @{$conf}
+        map   { %$_ }
+          map { values %$_ } @{$conf}
     };
     my $aliases = $conf->{aliases} || {};
     $aliases = {
-        map { $_ => ref $aliases->{$_} ? $aliases->{$_} : [ split /\s+/, $aliases->{$_} ] }
-        keys %$aliases
+        map {
+                $_ => ref $aliases->{$_}
+              ? $aliases->{$_}
+              : [ split /\s+/, $aliases->{$_} ]
+          }
+          keys %$aliases
     };
 
-    my ($opt, $cmd) = get_options(
+    my ( $opt, $cmd ) = get_options(
         {
             sub_command   => 1,
             auto_complete => \&auto,
@@ -55,10 +63,27 @@ sub main {
             help_post     => sub {
                 $ENV{TMP} ||= $ENV{HOME};
                 my $cache = path("$ENV{TMP}/.group-git-commands");
-                if ( ! -f $cache ) {
-                    return '';
+
+                my @commands;
+                for my $dir (@INC) {
+                    next if !-d $dir;
+                    my $module_dir = path( $dir, qw/Group Git Cmd/ );
+                    next if !-d $module_dir;
+
+                    for my $module ( $module_dir->children ) {
+                        next if $module !~ /[.]pm$/;
+                        my $cmd = lc join '-', split /(?<=[a-z])(?=[A-Z])/,
+                          $module->basename;
+                        $cmd =~ s/[.]pm//;
+                        push @commands, $cmd;
+                    }
                 }
-                my $out = "All commands:\n";
+                my $sub = "Sub commands:\n  ".(join "\n  ", uniq sort @commands)."\n";
+
+                if ( !-f $cache ) {
+                    return $sub;
+                }
+                my $out  = "All commands:\n";
                 my $line = '';
                 for my $cmd ( sort split /\n/, $cache->slurp ) {
                     if ( length "$line $cmd" > 80 ) {
@@ -70,14 +95,14 @@ sub main {
                 $out .= " $line";
                 chop $out;
 
-                return "$out\n";
+                return "$sub\n$out\n";
             },
-            default       => {
+            default => {
                 max      => 10,
                 runtime  => 600,
                 page     => 1,
                 separate => 1,
-                %{ $conf },
+                %{$conf},
             }
         },
         [
@@ -100,33 +125,36 @@ sub main {
         ]
     );
 
-    my $module = $conf->{type} && $opt->remote ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
-    my $file   = "$module.pm";
+    my $module = $conf->{type}
+      && $opt->remote ? 'Group::Git::' . ucfirst $conf->{type} : 'Group::Git';
+    my $file = "$module.pm";
     $file =~ s{::}{/}g;
     require $file;
-    my $group = $module->new(
-        %{ $opt },
-        conf => $conf,
-    );
+    my $group = $module->new( %{$opt}, conf => $conf, );
 
-    if (!$cmd) {
+    if ( !$cmd ) {
         require Pod::Usage;
         warn "No command specified!\n";
         Pod::Usage::pod2usage( -verbose => 1 );
     }
 
     if ( $opt->tag_group ) {
-        $opt->tag([ @{ $opt->tag || [] }, @{ $conf->{'tag-group'}{$opt->tag_group} || [] } ]);
+        $opt->tag(
+            [
+                @{ $opt->tag || [] },
+                @{ $conf->{'tag-group'}{ $opt->tag_group } || [] }
+            ]
+        );
     }
 
-    my $action = $cmd;
-    my $skip   = $opt->skip;
-    my $match  = $opt->match;
+    my $action  = $cmd;
+    my $skip    = $opt->skip;
+    my $match   = $opt->match;
     my %exclude = map { $_ => 1 } @{ $conf->{exclude} || [] };
     my %include = map { $_ => 1 } @{ $conf->{include} || [] };
-    my $outfh = \*STDOUT;
+    my $outfh   = \*STDOUT;
 
-    if ($opt->page) {
+    if ( $opt->page ) {
         my $tmp;
         $outfh = $tmp if open $tmp, '|-', $ENV{PAGER} || 'less -Rx4SFX';
         $group->paging(1);
@@ -141,10 +169,10 @@ sub main {
     print {$outfh} $cmd_start->() if $cmd_start;
 
     my @threads;
-    my $cwd = $CWD;
+    my $cwd   = $CWD;
     my $count = 0;
 
-    while ($group->runs) {
+    while ( $group->runs ) {
         $group->runs(0);
 
         my $total = 0;
@@ -153,8 +181,11 @@ sub main {
             next if $match && $project !~ /$match/;
             next if $exclude{$project};
             next if %include && !$include{$project};
-            next if !tagged($conf, $opt->tag, $project, $group->repos->{$project});
-            next if exclude_tagged($conf, $project, $group->repos->{$project});
+            next
+              if !tagged( $conf, $opt->tag, $project,
+                $group->repos->{$project} );
+            next
+              if exclude_tagged( $conf, $project, $group->repos->{$project} );
             last if $opt->limit && $total++ >= $opt->limit;
 
             push @threads, {
@@ -169,13 +200,19 @@ sub main {
             };
 
             my $check = 0;
-            while ( threads->list(threads::running) > $opt->max || @threads > $opt->max ) {
-                $check = ($check + 1) % $opt->max;
+            while ( threads->list(threads::running) > $opt->max
+                || @threads > $opt->max )
+            {
+                $check = ( $check + 1 ) % $opt->max;
                 if ( $threads[$check]{thread}->is_running ) {
-                    warn "Sleeping on $threads[$check]{project} ---------\n" if $opt->verbose;
+                    warn "Sleeping on $threads[$check]{project} ---------\n"
+                      if $opt->verbose;
 
-                    if ( $opt->runtime && time > $threads[$check]{start} + $opt->runtime ) {
-                        warn "Abandoning $threads[$check]{project} as it's taking too long!\n";
+                    if ( $opt->runtime
+                        && time > $threads[$check]{start} + $opt->runtime )
+                    {
+                        warn
+"Abandoning $threads[$check]{project} as it's taking too long!\n";
 
                         # abandon thread
                         eval { threads->detach( $threads[$check]{thread} ) };
@@ -195,20 +232,23 @@ sub main {
                         @threads[ 0 .. $check - 1 ],
                         @threads[ $check + 1 .. @threads - 1 ]
                     );
-                    process_thread($thread, $opt, $outfh);
+                    process_thread( $thread, $opt, $outfh );
                 }
             }
-            if ($count++ % 100 == 0) {
+            if ( $count++ % 100 == 0 ) {
                 sleep 0.5;
             }
             else {
-                warn "There are currently " . @threads . " threads (of $count started)\n" if $opt->verbose;
+                warn "There are currently "
+                  . @threads
+                  . " threads (of $count started)\n"
+                  if $opt->verbose;
             }
         }
     }
 
     while ( my $thread = shift @threads ) {
-        process_thread($thread, $opt, $outfh);
+        process_thread( $thread, $opt, $outfh );
     }
 
     print {$outfh} $cmd_end->() if $cmd_end;
@@ -217,33 +257,34 @@ sub main {
 }
 
 sub process_thread {
-    my ($thread_object, $opt, $outfh) = @_;
+    my ( $thread_object, $opt, $outfh ) = @_;
     my $project = $thread_object->{project};
-    my $thread = $thread_object->{thread};
-    my $out = $thread->join();
-    warn $project . ' ', ($out ? 'with changes' : 'no changes'), "\n" if $opt->verbose;
+    my $thread  = $thread_object->{thread};
+    my $out     = $thread->join();
+    warn $project . ' ', ( $out ? 'with changes' : 'no changes' ), "\n"
+      if $opt->verbose;
 
     if ($out) {
-        $project = colored($project, 'blue') if !$opt->bw;
-        print {$outfh} "\n"                  if $opt->separate;
-        print {$outfh} "$project\n"          if ! $opt->quiet;
+        $project = colored( $project, 'blue' ) if !$opt->bw;
+        print {$outfh} "\n"         if $opt->separate;
+        print {$outfh} "$project\n" if !$opt->quiet;
         print {$outfh} $out;
-        print {$outfh} "-- $project --\n"    if $opt->verbose;
+        print {$outfh} "-- $project --\n" if $opt->verbose;
     }
 
     return;
 }
 
 sub do_cmd {
-    my ($group, $cmd, $fallback) = @_;
+    my ( $group, $cmd, $fallback ) = @_;
     my $cmd_under = $cmd;
     $cmd_under =~ s/-/_/g;
 
     if ( $group->can($cmd) ) {
-        return sub { $group->$cmd( @_ ) };
+        return sub { $group->$cmd(@_) };
     }
     elsif ( $group->can($cmd_under) ) {
-        return sub { $group->$cmd_under( @_ ) };
+        return sub { $group->$cmd_under(@_) };
     }
     else {
         for my $path ( split /[:;]/, $ENV{PATH} ) {
@@ -251,7 +292,7 @@ sub do_cmd {
             my $script = "$path/group-git-$cmd";
             next if !-x $script;
 
-            return sub { $group->cmd( '', $script, @_); };
+            return sub { $group->cmd( '', $script, @_ ); };
         }
     }
 
@@ -270,54 +311,62 @@ sub sorter {
 }
 
 my $exclude_tagged;
+
 sub exclude_tagged {
-    my ($conf, $project, $object) = @_;
+    my ( $conf, $project, $object ) = @_;
 
     if ( !defined $exclude_tagged ) {
-        $exclude_tagged = { map { $_ => 1 } @{ $conf->{'exclude-tags'} || [] } };
+        $exclude_tagged =
+          { map { $_ => 1 } @{ $conf->{'exclude-tags'} || [] } };
     }
 
     my $Project = $exclude_tagged->{$project};
-    my $Object  = ( scalar grep { $object->tags->{$_} } keys %{$exclude_tagged} );
-    my $Dynamic = ( scalar grep { dyna_tags($_, $project) } keys %{$exclude_tagged} );
+    my $Object =
+      ( scalar grep { $object->tags->{$_} } keys %{$exclude_tagged} );
+    my $Dynamic =
+      ( scalar grep { dyna_tags( $_, $project ) } keys %{$exclude_tagged} );
     return $Project || $Object || $Dynamic;
 }
 
 my $tagged;
+
 sub tagged {
-    my ($conf, $tags, $project, $object) = @_;
+    my ( $conf, $tags, $project, $object ) = @_;
 
     # everything is "tagged" if none is specified
     return 1 if !$tags || !@{$tags};
 
     if ( !defined $tagged ) {
-        $tagged = { map { $_ => 1 } map { @{ $conf->{tags}{$_} || [] } } @{$tags} };
+        $tagged =
+          { map { $_ => 1 } map { @{ $conf->{tags}{$_} || [] } } @{$tags} };
     }
 
     if ( $tagged->{$project} ) {
         return 1;
     }
 
-    for my $tag (@{ $tags }) {
-        # return true if the project is tagged in the config file or has a tag file
-        return 1 if $object->tags->{$tag} || dyna_tags($tag, $project);
+    for my $tag ( @{$tags} ) {
+
+     # return true if the project is tagged in the config file or has a tag file
+        return 1 if $object->tags->{$tag} || dyna_tags( $tag, $project );
     }
 
     return 0;
 }
 
 sub dyna_tags {
-    my ($tag, $project) = @_;
+    my ( $tag, $project ) = @_;
 
-    if ( $Group::Git::taggers->{$tag} && ! ref $Group::Git::taggers->{$tag} ) {
+    if ( $Group::Git::taggers->{$tag} && !ref $Group::Git::taggers->{$tag} ) {
         $Group::Git::taggers->{$tag} = $Group::Git::taggers->{$tag}->new;
     }
 
-    return $Group::Git::taggers->{$tag} && $Group::Git::taggers->{$tag}->matches($project);
+    return $Group::Git::taggers->{$tag}
+      && $Group::Git::taggers->{$tag}->matches($project);
 }
 
 sub auto {
-    my ($opt, $auto, $errors) = @_;
+    my ( $opt, $auto, $errors ) = @_;
 
     my @commands = _commands();
 
@@ -334,22 +383,24 @@ sub _commands {
 
     # get all the commands
     my @commands;
+
     # first up the module commands
     for my $dir (@INC) {
         next if !-d $dir;
-        my $module_dir = path($dir, qw/Group Git Cmd/);
+        my $module_dir = path( $dir, qw/Group Git Cmd/ );
         next if !-d $module_dir;
 
         for my $module ( $module_dir->children ) {
             next if $module !~ /[.]pm$/;
-            my $cmd = lc join '-', split /(?<=[a-z])(?=[A-Z])/, $module->basename;
+            my $cmd = lc join '-', split /(?<=[a-z])(?=[A-Z])/,
+              $module->basename;
             $cmd =~ s/[.]pm//;
             push @commands, $cmd;
         }
     }
 
     # then get any found in the path
-    for my $dir (split /:/, $ENV{PATH}) {
+    for my $dir ( split /:/, $ENV{PATH} ) {
         next if !-d $dir;
 
         for my $file ( path($dir)->children ) {
@@ -359,14 +410,14 @@ sub _commands {
         }
     }
 
-    for my $env ($ENV{__git_all_commands}, $ENV{__git_porcelain_commands}) {
+    for my $env ( $ENV{__git_all_commands}, $ENV{__git_porcelain_commands} ) {
         next if !$env;
         $env =~ s/^.*[(][)]\s*//;
         push @commands, split /\s+/, $env;
     }
 
     # save the found commands for next time
-    $cache->spew(join "\n", @commands);
+    $cache->spew( join "\n", @commands );
 
     return ( sort uniq @commands );
 }
